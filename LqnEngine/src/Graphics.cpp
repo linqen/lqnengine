@@ -47,9 +47,9 @@ void Graphics::Clear() {
 	// Check to make sure you have a valid Direct3D device
 	if (NULL == pd3dDevice)
 		return;
-	// Clear the back buffer to a blue color
+	// Clear the back buffer to a green color
 	pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET,
-		D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+		D3DCOLOR_XRGB(0, 255, 0), 1.0f, 0);
 }
 
 void Graphics::Begin() {}
