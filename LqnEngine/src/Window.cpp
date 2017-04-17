@@ -1,18 +1,20 @@
 #include "..\includes\Window.h"
+
+#include <iostream>
 // ---------------------------------------------------------------------
 // Create Window
 // Crea la Window en cuestión con un título y tamaño específico
 // ---------------------------------------------------------------------
 
-wstring		className;
-Window::Window() {
 
+
+Window::Window() {
+	Window::className = L"Window";
 }
 bool Window::createWindow(HINSTANCE hInstance, wstring title,
 	int width, int height)
 {
-	className = L"Ventana";
-	Window::hWnd = CreateWindow((LPCWSTR)(className.c_str()),	// Nombre de la clase
+	hWnd = CreateWindow((LPCWSTR)(className.c_str()),	// Nombre de la clase
 		(LPCWSTR)(title.c_str()),		// Título de la Window
 		WS_OVERLAPPEDWINDOW,			// Tipo de Window
 		0,								// Posición X inicial
@@ -24,9 +26,10 @@ bool Window::createWindow(HINSTANCE hInstance, wstring title,
 		hInstance,						// Handler de la instancia de la Window (en XP es ignorado)
 		NULL							// Siempre va NULL en estos casos
 	);
-
-
-	if (!Window::hWnd) {	// Si hubo error retorno false
+	//DWORD asd = GetLastError();
+	//string debug;
+	//debug = asd;
+	if (!hWnd) {	// Si hubo error retorno false
 		return false;
 	}
 
@@ -45,6 +48,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message) {
 	case WM_COMMAND:	// Selección del menú
 		break;
+//	case WM_PAINT:		// Repintar la ventana
+//		break;
 	case WM_DESTROY:	// Destruir la Window
 		PostQuitMessage(0);
 		break;
@@ -74,11 +79,6 @@ void Window::registerClass(HINSTANCE hInstance)
 	RegisterClass(&wc);									// Registrando la clase
 }
 HWND Window::getHwnd() {
-	if (hWnd != NULL) {
-		return hWnd;
-	}
-	else
-	{
-		return NULL;
-	}
+	return hWnd;
+
 }

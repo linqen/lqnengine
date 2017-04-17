@@ -1,16 +1,8 @@
-// ---------------------------------------------------------------------
-// Archivo: main.cpp
-// Desc: Ejemplo de creación de Windows
-//
-// Autor: Juan Pablo (McKrackeN) Bettini
-// ---------------------------------------------------------------------
+
 #include "..\..\LqnEngine\includes\Game.h"
 using namespace std;
 
-// ---------------------------------------------------------------------
-// WinMain
-// Es el equivalente a la clásica función int main ();
-// ---------------------------------------------------------------------
+
 int APIENTRY WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR     lpCmdLine,
@@ -18,7 +10,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 {
 
 
-	hInstance = hPrevInstance;
 	string desc;
 	Game game = Game();
 	if (!game.Initialize(hInstance)) {

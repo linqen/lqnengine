@@ -6,6 +6,7 @@ Game::Game() {
 bool Game::Initialize(HINSTANCE hInstance) {
 	static MSG	msg;			// Estructura de mensajes
 	static bool	done = false;	// Si debo interrumpir el loop
+	
 	window = Window();
 	graphics = Graphics();
 	// Registro la clase

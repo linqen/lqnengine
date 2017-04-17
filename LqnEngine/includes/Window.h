@@ -8,6 +8,7 @@ using namespace std;
 class LQN_API Window {
 private:
 	HWND hWnd;
+	wstring		className;
 public:
 	bool createWindow(HINSTANCE hInstance, wstring title, int width, int height);
 	void registerClass(HINSTANCE hInstance);
