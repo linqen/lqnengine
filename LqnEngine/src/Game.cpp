@@ -55,7 +55,10 @@ bool Game::Shutdown() {
 	return true;
 }
 
+bool Game::OnInit() { return true; }
 
 void Game::OnDraw() {}
 
 bool Game::OnUpdate() { return true; }
+
+bool Game::OnShutDown() { return true; }

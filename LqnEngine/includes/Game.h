@@ -12,10 +12,10 @@ public:
 	void Loop();
 	bool Shutdown();
 protected:
-	bool OnInit();
-	bool OnUpdate();
-	void OnDraw();
-	bool OnShutDown();
+	virtual bool OnInit();
+	virtual bool OnUpdate();
+	virtual void OnDraw();
+	virtual bool OnShutDown();
 	Graphics graphics;
 	Window window;
 };

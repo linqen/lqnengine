@@ -1,5 +1,6 @@
 
-#include "..\..\LqnEngine\includes\Game.h"
+//#include "..\..\LqnEngine\includes\Game.h"
+#include "..\includes\MiJuego.h"
 using namespace std;
 
 
@@ -11,7 +12,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 
 	string desc;
-	Game game = Game();
+	MiJuego game = MiJuego();
 	if (!game.Initialize(hInstance)) {
 		return 1;
 	}
