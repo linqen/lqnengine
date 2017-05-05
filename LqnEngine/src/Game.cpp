@@ -11,7 +11,6 @@ bool Game::Initialize(HINSTANCE hInstance) {
 	graphics = Graphics();
 	// Registro la clase
 	window.registerClass(hInstance);
-	//registerClass(hInstance);
 
 	// Creo la Window
 	if (!window.createWindow(hInstance,

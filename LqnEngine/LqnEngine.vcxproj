@@ -27,6 +27,7 @@
     <ClInclude Include="includes\Game.h" />
     <ClInclude Include="includes\Graphics.h" />
     <ClInclude Include="includes\ImportExport.h" />
+    <ClInclude Include="includes\Vertex.h" />
     <ClInclude Include="includes\Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

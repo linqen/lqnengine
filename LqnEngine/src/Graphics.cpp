@@ -15,14 +15,14 @@ bool Graphics::Initialize(HWND wndHandle) {
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
 	d3dpp.Windowed = TRUE;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
+	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
 	d3dpp.BackBufferCount = 1;
-	d3dpp.BackBufferHeight = 480;
-	d3dpp.BackBufferWidth = 640;
+	d3dpp.BackBufferHeight = 600;
+	d3dpp.BackBufferWidth = 800;
 	d3dpp.hDeviceWindow = wndHandle;
 
 	// Create a default DirectX device 
-	if( FAILED( pD3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, wndHandle, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &pd3dDevice ) ) ) 
+	if( FAILED( pD3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, wndHandle, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &pd3dDevice ) ) ) 
 	{ 
 		return false;
 	}
@@ -30,14 +30,6 @@ bool Graphics::Initialize(HWND wndHandle) {
 	return Graphics::SetupScene();
 }
 
-void Graphics::Shutdown() {
-	// Release the device and the Direct3D object 
-	if( pd3dDevice != NULL ) 
-		pd3dDevice->Release( );
-
-	if (pD3D != NULL) 
-		pD3D->Release();
-}
 
 void Graphics::Present() {
 	// Present the back buffer contents to the display 
@@ -49,8 +41,8 @@ void Graphics::Clear() {
 	if (NULL == pd3dDevice)
 		return;
 	// Clear the back buffer to a green color
-	pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET,
-		D3DCOLOR_XRGB(0, 255, 0), 1.0f, 0);
+	pd3dDevice->Clear(0, 0, D3DCLEAR_TARGET/* | D3DCLEAR_ZBUFFER*/,
+		D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 }
 
 bool Graphics::SetupScene()
@@ -64,6 +56,29 @@ bool Graphics::SetupScene()
 		//Error::setError(5);
 		return false;
 	}
+
+	hRes = pd3dDevice->CreateVertexBuffer(3 * sizeof(Vertex),
+		D3DUSAGE_WRITEONLY,
+		Vertex::fvf,
+		D3DPOOL_MANAGED,
+		&vBuffer,
+		NULL);
+
+	Vertex vertices[] =
+	{
+		{ 320.0f, 50.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ 520.0f, 400.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ 120.0f, 400.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(255, 0, 0), },
+	};
+
+	//Vertex* vertex;
+	VOID* pVoid;    // the void pointer
+	vBuffer->Lock(0, 0, (void**)&pVoid,
+		0);
+	memcpy(pVoid, vertices, sizeof(vertices));
+
+	hRes = vBuffer->Unlock();
+	//End of Vertex Buffer
 
 	// Registro el viewport obtenido
 	//FileLog::Write("Viewport {x=%d, y=%d, w=%d, h=%d}\n", _viewport.X, _viewport.Y, _viewport.Width, _viewport.Height);
@@ -93,7 +108,7 @@ bool Graphics::SetupScene()
 	D3DXMATRIX mProjectionMatrix;
 	float fAspectRatio = (float)viewport.Width / viewport.Height;
 
-	//D3DXMatrixPerspectiveFovLH(&mProjectionMatrix, D3DX_PI/4.0f, fAspectRatio, 1.0f, 1000.0f);
+	//D3DXMatrixPerspectiveFovLH(&mProjectionMatrix, D3DX_PI*0.5f, fAspectRatio, 1.0f, 1000.0f);
 	D3DXMatrixOrthoLH(&mProjectionMatrix, (float)viewport.Width, (float)viewport.Height, -25.0f, 25.0f);
 	hRes = pd3dDevice->SetTransform(D3DTS_PROJECTION, &mProjectionMatrix);
 
@@ -103,34 +118,60 @@ bool Graphics::SetupScene()
 	}
 
 	//_pDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(80, 80, 80));			//ambient light
-	pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//_pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_FLAT);
-	//_pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE); // D3DCULL_CCW
+	//pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE); // D3DCULL_CCW
 
-
-															// TEMPORAL
-	pd3dDevice->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
-	pd3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	pd3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+	// TEMPORAL
+	//pd3dDevice->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
+	//pd3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	//pd3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
 
 	// Fijo valores por defecto para operaciones con el canal alpha
-	pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	pd3dDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-	pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	//pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	//pd3dDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	//pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	//pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	// Deshabilito los speculars
-	pd3dDevice->SetRenderState(D3DRS_SPECULARENABLE, FALSE);
+	//pd3dDevice->SetRenderState(D3DRS_SPECULARENABLE, FALSE);
 
 	// Deshabilito el stencil
-	pd3dDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
-
+	//pd3dDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+	
 	return true;
 }
 
 
-void Graphics::Begin() {}
+void Graphics::Begin() {
 
-void Graphics::End() {}
+	pd3dDevice->BeginScene();
+	pd3dDevice->SetFVF(Vertex::fvf);
+	pd3dDevice->SetVertexShader(NULL);
+	pd3dDevice->SetStreamSource(
+		0,
+		vBuffer,
+		0,
+		sizeof(Vertex));
+	HRESULT hRes = pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
+	
+}
+
+void Graphics::End() {
+	pd3dDevice->EndScene();
+}
+
+
+void Graphics::Shutdown() {
+	// Release the device and the Direct3D object 
+	vBuffer->Release();
+
+	if (pd3dDevice != NULL)
+		pd3dDevice->Release();
+
+	if (pD3D != NULL)
+		pD3D->Release();
+
+}
