@@ -57,29 +57,30 @@ bool Graphics::SetupScene()
 		return false;
 	}
 
-	hRes = pd3dDevice->CreateVertexBuffer(3 * sizeof(VertexUV),
+	hRes = pd3dDevice->CreateVertexBuffer(4 * sizeof(VertexUV),
 		D3DUSAGE_WRITEONLY,
 		VertexUV::fvf,
 		D3DPOOL_MANAGED,
 		&vBuffer,
 		NULL);
 
-	VertexUV vertices[] =
-	{
-		{ 320.0f, 50.0f, 0.5f, 0.5f, 0.0f },
-		{ 520.0f, 400.0f, 0.5f, 0.0f, 1.0f },
-		{ 120.0f, 400.0f, 0.5f, 1.0f, 1.0f},
-	};
-
-
-	//Ésto se supone debería hacerme un cuadrado :(
+	//Esto dibuja un triangulo
 	//VertexUV vertices[] =
 	//{
-	//	{ 120.0f, 400.0f, 0.5f, 0.0f, 1.0f },
-	//	{ 120.0f, 50.0f, 0.5f, 0.0f, 0.0f },
-	//	{ 520.0f, 50.0f, 0.5f, 1.0f, 0.0f },
-	//	{ 520.0f, 400.0f, 0.5f, 1.0f, 1.0f },
+	//	{ 320.0f, 50.0f, 0.5f, 0.5f, 0.0f },
+	//	{ 520.0f, 400.0f, 0.5f, 0.0f, 1.0f },
+	//	{ 120.0f, 400.0f, 0.5f, 1.0f, 1.0f},
 	//};
+
+
+	//Ésto dibuja un cuadrado si está activado TriangleStrip
+	VertexUV vertices[] =
+	{
+		{ 120.0f, 400.0f, 0.5f, 0.0f, 1.0f },
+		{ 120.0f, 50.0f, 0.5f, 0.0f, 0.0f },
+		{ 520.0f, 400.0f, 0.5f, 1.0f, 1.0f },
+		{ 520.0f, 50.0f, 0.5f, 1.0f, 0.0f },
+	};
 
 	//Vertex* vertex;
 	VOID* pVoid;    // the void pointer
