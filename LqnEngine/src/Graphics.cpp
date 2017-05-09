@@ -57,18 +57,29 @@ bool Graphics::SetupScene()
 		return false;
 	}
 
-	hRes = pd3dDevice->CreateVertexBuffer(3 * sizeof(Vertex),
+	hRes = pd3dDevice->CreateVertexBuffer(4 * sizeof(VertexUV),
 		D3DUSAGE_WRITEONLY,
-		Vertex::fvf,
+		VertexUV::fvf,
 		D3DPOOL_MANAGED,
 		&vBuffer,
 		NULL);
 
-	Vertex vertices[] =
+	//Esto dibuja un triangulo
+	//VertexUV vertices[] =
+	//{
+	//	{ 320.0f, 50.0f, 0.5f, 0.5f, 0.0f },
+	//	{ 520.0f, 400.0f, 0.5f, 0.0f, 1.0f },
+	//	{ 120.0f, 400.0f, 0.5f, 1.0f, 1.0f},
+	//};
+
+
+	//Ésto dibuja un cuadrado si está activado TriangleStrip
+	VertexUV vertices[] =
 	{
-		{ 320.0f, 50.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ 520.0f, 400.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ 120.0f, 400.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ 120.0f, 400.0f, 0.5f, 0.0f, 1.0f },
+		{ 120.0f, 50.0f, 0.5f, 0.0f, 0.0f },
+		{ 520.0f, 400.0f, 0.5f, 1.0f, 1.0f },
+		{ 520.0f, 50.0f, 0.5f, 1.0f, 0.0f },
 	};
 
 	//Vertex* vertex;
@@ -79,6 +90,12 @@ bool Graphics::SetupScene()
 
 	hRes = vBuffer->Unlock();
 	//End of Vertex Buffer
+
+	//Create Texture
+
+	//D3DXCreateTextureFromFile(pd3dDevice, L"C:\\Users\\Sebastian\\Pictures\\Fotos\\prueba.png", &m_texture);
+
+	D3DXCreateTextureFromFile(pd3dDevice, L"wood.png", &m_texture);
 
 	// Registro el viewport obtenido
 	//FileLog::Write("Viewport {x=%d, y=%d, w=%d, h=%d}\n", _viewport.X, _viewport.Y, _viewport.Width, _viewport.Height);
@@ -148,14 +165,15 @@ bool Graphics::SetupScene()
 void Graphics::Begin() {
 
 	pd3dDevice->BeginScene();
-	pd3dDevice->SetFVF(Vertex::fvf);
+	pd3dDevice->SetTexture(0,m_texture);
+	pd3dDevice->SetFVF(VertexUV::fvf);
 	pd3dDevice->SetVertexShader(NULL);
 	pd3dDevice->SetStreamSource(
 		0,
 		vBuffer,
 		0,
-		sizeof(Vertex));
-	HRESULT hRes = pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
+		sizeof(VertexUV));
+	HRESULT hRes = pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 	
 }
 

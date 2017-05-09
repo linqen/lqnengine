@@ -52,6 +52,5 @@
     </ClInclude>
     <ClInclude Include="includes\Entity2D.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
+    </ClInclude>  </ItemGroup>
 </Project>
