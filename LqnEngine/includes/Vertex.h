@@ -7,9 +7,9 @@ using namespace std;
 #include <d3d9.h>
 
 struct LQN_API Vertex {
-	FLOAT x, y, z,rhw;
+	FLOAT x, y, z;
 	DWORD color;    // from the D3DFVF_DIFFUSE flag
-	static const DWORD fvf = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
+	static const DWORD fvf = D3DFVF_XYZ | D3DFVF_DIFFUSE;
 };
 
 #endif

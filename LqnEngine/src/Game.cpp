@@ -8,7 +8,7 @@ bool Game::Initialize(HINSTANCE hInstance) {
 	static bool	done = false;	// Si debo interrumpir el loop
 	
 	window = Window();
-	graphics = Graphics();
+	//graphics = Graphics();
 	// Registro la clase
 	window.registerClass(hInstance);
 
@@ -22,6 +22,8 @@ bool Game::Initialize(HINSTANCE hInstance) {
 	if (!graphics.Initialize(window.getHwnd())) {
 		return false;
 	}
+
+	OnInit();
 	return true;
 }
 
@@ -40,6 +42,7 @@ void Game::Loop() {
 		}
 		else
 		{
+			//OnInit();
 			OnUpdate();
 			graphics.Clear();
 			graphics.Begin();

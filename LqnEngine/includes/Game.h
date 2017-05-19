@@ -4,6 +4,7 @@ using namespace std;
 #include "Window.h"
 #include "Graphics.h"
 #include "ImportExport.h"
+#include "Quad.h"
 
 class LQN_API Game {
 public:

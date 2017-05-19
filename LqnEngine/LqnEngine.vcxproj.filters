@@ -52,5 +52,12 @@
     </ClInclude>
     <ClInclude Include="includes\Entity2D.h">
       <Filter>Header Files</Filter>
-    </ClInclude>  </ItemGroup>
+    </ClInclude>
+    <ClInclude Include="includes\VertexBufferManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Quad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
