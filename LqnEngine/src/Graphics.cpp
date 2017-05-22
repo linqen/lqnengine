@@ -16,7 +16,7 @@ bool Graphics::Initialize(HWND wndHandle) {
 	d3dpp.Windowed = TRUE;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-	//d3dpp.BackBufferCount = 1;
+	d3dpp.BackBufferCount = 1;
 	d3dpp.BackBufferHeight = 600;
 	d3dpp.BackBufferWidth = 800;
 	d3dpp.hDeviceWindow = wndHandle;
@@ -29,7 +29,10 @@ bool Graphics::Initialize(HWND wndHandle) {
 		return false;
 	}
 
-	if (!vertexManager.Create(pd3dDevice, true)){
+	if (!vertexManager.Create(pd3dDevice, true)) {
+		return false;
+	}
+	if (!textureVertexManager.Create(pd3dDevice, true)) {
 		return false;
 	}
 	return Graphics::SetupScene();
@@ -145,6 +148,7 @@ void Graphics::End() {
 void Graphics::Shutdown() {
 	// Release the device and the Direct3D object 
 	vertexManager.Release();
+	textureVertexManager.Release();
 
 	if (pd3dDevice != NULL)
 		pd3dDevice->Release();
@@ -196,4 +200,9 @@ void Graphics::Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexC
 	//memcpy(pVoid, vertices, sizeof(vertices));
 	//vBuffer->Unlock();
 	//End of Vertex Buffer
+}
+//
+void Graphics::DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount) {
+	textureVertexManager.Bind();
+	textureVertexManager.Draw(vertexUV, primitive, vertexCount);
 }

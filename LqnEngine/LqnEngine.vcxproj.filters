@@ -59,5 +59,8 @@
     <ClInclude Include="includes\Quad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="includes\Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

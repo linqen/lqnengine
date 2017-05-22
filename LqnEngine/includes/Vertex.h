@@ -3,7 +3,6 @@
 using namespace std;
 
 #include "ImportExport.h"
-#include <Windows.h>
 #include <d3d9.h>
 
 struct LQN_API Vertex {

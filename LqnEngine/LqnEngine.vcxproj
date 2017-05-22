@@ -31,6 +31,7 @@
     <ClInclude Include="includes\Graphics.h" />
     <ClInclude Include="includes\ImportExport.h" />
     <ClInclude Include="includes\Quad.h" />
+    <ClInclude Include="includes\Sprite.h" />
     <ClInclude Include="includes\Vertex.h" />
     <ClInclude Include="includes\VertexBufferManager.h" />
     <ClInclude Include="includes\VertexUV.h" />
