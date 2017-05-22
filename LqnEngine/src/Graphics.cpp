@@ -38,7 +38,6 @@ bool Graphics::Initialize(HWND wndHandle) {
 	return Graphics::SetupScene();
 }
 
-
 void Graphics::Present() {
 	// Present the back buffer contents to the display 
 	pd3dDevice->Present( NULL, NULL, NULL, NULL ); 
@@ -50,7 +49,7 @@ void Graphics::Clear() {
 		return;
 	// Clear the back buffer to a black color
 	pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-		D3DCOLOR_XRGB(0, 65, 120), 1.0f, 0);
+		D3DCOLOR_XRGB(65, 65, 120), 1.0f, 0);
 }
 
 bool Graphics::SetupScene()
@@ -61,10 +60,6 @@ bool Graphics::SetupScene()
 	if (FAILED(hRes)) {
 		return false;
 	}
-
-	//Create Texture
-	//D3DXCreateTextureFromFile(pd3dDevice, L"C:\\Users\\Sebastian\\Pictures\\Fotos\\prueba.png", &m_texture);
-	//D3DXCreateTextureFromFile(pd3dDevice, L"wood.png", &m_texture);
 
 	// -----------------------------------------------------------------------
 	// Fijo la Matriz del Mundo, que es la que transforma de coordenadas
@@ -126,36 +121,21 @@ bool Graphics::SetupScene()
 
 
 void Graphics::Begin() {
-
 	pd3dDevice->BeginScene();
-	//pd3dDevice->SetTexture(0,m_texture);
-	//pd3dDevice->SetFVF(VertexUV::fvf);
-	//pd3dDevice->SetVertexShader(NULL);
-	//pd3dDevice->SetStreamSource(
-	//	0,
-	//	vBuffer,
-	//	0,
-	//	sizeof(VertexUV));
-	//HRESULT hRes = pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
-	
 }
 
 void Graphics::End() {
 	pd3dDevice->EndScene();
 }
 
-
 void Graphics::Shutdown() {
 	// Release the device and the Direct3D object 
 	vertexManager.Release();
 	textureVertexManager.Release();
-
 	if (pd3dDevice != NULL)
 		pd3dDevice->Release();
-
 	if (pD3D != NULL)
 		pD3D->Release();
-
 }
 
 void Graphics::LoadIdentity() {
@@ -201,10 +181,19 @@ void Graphics::Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexC
 	//vBuffer->Unlock();
 	//End of Vertex Buffer
 }
-//
+
 void Graphics::DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount, IDirect3DTexture9* texture) {
 	textureVertexManager.Bind();
-	pd3dDevice->SetTexture(0, texture);
 	textureVertexManager.Draw(vertexUV, primitive, vertexCount);
 
+}
+
+IDirect3DTexture9* Graphics::LoadTexture(LPCWSTR texturePath) {
+	IDirect3DTexture9* temporalTexture = 0;
+	D3DXCreateTextureFromFile(pd3dDevice, texturePath, &temporalTexture);
+	return temporalTexture;
+}
+
+void Graphics::BindTexture(IDirect3DTexture9* textureToBind) {
+	pd3dDevice->SetTexture(0, textureToBind);
 }

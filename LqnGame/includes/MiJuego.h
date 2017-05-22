@@ -3,6 +3,7 @@
 class MiJuego :public Game {
 	Quad* cuadradito;
 	Sprite* sprite;
+	Quad* cuadradito2;
 protected:
 	bool OnInit();
 	bool OnUpdate();

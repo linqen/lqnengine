@@ -21,8 +21,6 @@ public:
 	VertexBufferManager<Vertex, Vertex::fvf> vertexManager;
 	VertexBufferManager<VertexUV, VertexUV::fvf> textureVertexManager;
 	D3DXMATRIX d3dmat;
-	//IDirect3DVertexBuffer9* vBuffer = 0;
-	IDirect3DTexture9* m_texture = 0;
 
 	bool Initialize(HWND wndHandle);
 	bool SetupScene();
@@ -37,6 +35,8 @@ public:
 	void Scale(float xScale, float yScale, float zScale);
 	void Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount);
 	void DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount, IDirect3DTexture9*);
+	IDirect3DTexture9* LoadTexture(LPCWSTR texturePath);
+	void Graphics::BindTexture(IDirect3DTexture9* textureToBind);
 };
 
 #endif

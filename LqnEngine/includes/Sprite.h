@@ -13,21 +13,20 @@ class LQN_API Sprite : public Entity2D {
 public:
 	Sprite(Graphics *graphics) : Entity2D(graphics) {
 		vertex = new VertexUV[4];
-		vertex[0] = { 120.0f, 400.0f, 0.5f, 0.0f, 0.0f };
-		vertex[1] = { 120.0f, 50.0f, 0.5f, 0.0f, 1.0f };
-		vertex[2] = { 520.0f, 400.0f, 0.5f, 1.0f, 0.0f };
-		vertex[3] = { 520.0f, 50.0f, 0.5f, 1.0f, 1.0f };
+		vertex[0] = { -200.0f, 200.0f, 0.5f, 0.0f, 0.0f };
+		vertex[1] = { -200.0f, -200.0f, 0.5f, 0.0f, 1.0f };
+		vertex[2] = { 200.0f, 200.0f, 0.5f, 1.0f, 0.0f };
+		vertex[3] = { 200.0f, -200.0f, 0.5f, 1.0f, 1.0f };
 
 	}
 
 	void Draw() {
+		Entity2D::graphics->BindTexture(m_texture);
 		Entity2D::Draw();
 		Entity2D::graphics->DrawSprite(vertex, D3DPT_TRIANGLESTRIP, 4, m_texture);
 	}
-	void setTexture(string texturePath) {
-		wstring stemp = wstring(texturePath.begin(), texturePath.end());
-		LPCWSTR sw = stemp.c_str();
-		D3DXCreateTextureFromFile(graphics->pd3dDevice, sw, &m_texture);
+	void setTexture(LPCWSTR texturePath) {
+		m_texture = graphics->LoadTexture(texturePath);
 	}
 };
 
