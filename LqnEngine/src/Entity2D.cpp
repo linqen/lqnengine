@@ -17,9 +17,9 @@ void Entity2D::Update() {
 }
 
 void Entity2D::Draw() {
-	//xPos += 10;
+	xPos += 10;
 	//xScale += 0.01f;
-	zRot += 0.005f;
+	//zRot += 0.005f;
 	graphics->LoadIdentity();
 	graphics->Translate(xPos, yPos, zPos);
 	graphics->RotateZ(zRot);

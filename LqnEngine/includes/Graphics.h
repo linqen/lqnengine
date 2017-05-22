@@ -36,7 +36,7 @@ public:
 	void RotateZ(float zRot);
 	void Scale(float xScale, float yScale, float zScale);
 	void Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount);
-	void DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount);
+	void DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount, IDirect3DTexture9*);
 };
 
 #endif

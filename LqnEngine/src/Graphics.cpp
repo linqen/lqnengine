@@ -202,7 +202,9 @@ void Graphics::Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexC
 	//End of Vertex Buffer
 }
 //
-void Graphics::DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount) {
+void Graphics::DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount, IDirect3DTexture9* texture) {
 	textureVertexManager.Bind();
+	pd3dDevice->SetTexture(0, texture);
 	textureVertexManager.Draw(vertexUV, primitive, vertexCount);
+
 }

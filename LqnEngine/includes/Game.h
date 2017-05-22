@@ -5,6 +5,7 @@ using namespace std;
 #include "Graphics.h"
 #include "ImportExport.h"
 #include "Quad.h"
+#include "Sprite.h"
 
 class LQN_API Game {
 public:
