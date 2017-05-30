@@ -5,8 +5,9 @@ bool MiJuego::OnInit() {
 	cuadradito->xPos = 500.0f;
 	cuadradito->yPos = 500.0f;
 	sprite = new Sprite(&graphics);
-	sprite->setTexture(L"..\\Textures\\tiles.png");
-	sprite->setTextureZone(0, 80, 16, 16);
+	sprite->SetTexture(L"..\\Textures\\tiles.png");
+	//sprite->SetTextureZone(0, 80, 16, 16);
+	sprite->SetAnimation(0, 0, 32, 32,60);
 	//sprite->setTexture(L"..\\Textures\\prueba.png");
 	cuadradito2 = new Quad(&graphics);
 
@@ -14,6 +15,7 @@ bool MiJuego::OnInit() {
 	return true; 
 }
 bool MiJuego::OnUpdate() {
+	sprite->Update();
 	return true;
 }
 void MiJuego::OnDraw() {
