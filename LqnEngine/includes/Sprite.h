@@ -17,9 +17,7 @@ public:
 		vertex[1] = { -200.0f, -200.0f, 0.5f, 0.0f, 1.0f };
 		vertex[2] = { 200.0f, 200.0f, 0.5f, 1.0f, 0.0f };
 		vertex[3] = { 200.0f, -200.0f, 0.5f, 1.0f, 1.0f };
-
 	}
-
 	void Draw() {
 		Entity2D::graphics->BindTexture(m_texture);
 		Entity2D::Draw();
@@ -27,6 +25,14 @@ public:
 	}
 	void setTexture(LPCWSTR texturePath) {
 		m_texture = graphics->LoadTexture(texturePath);
+	}
+	void setTextureZone(float offSetX,float offSetY,float tileWidth,float tileHeight) {
+		D3DSURFACE_DESC desc;
+		float textWidth = m_texture->GetLevelDesc(0,&desc);
+		vertex[0].setUV(offSetX/desc.Width, offSetY/desc.Height);
+		vertex[1].setUV(offSetX/desc.Width, (offSetY+ tileHeight)/desc.Height);
+		vertex[2].setUV((offSetX+ tileWidth)/desc.Width, offSetY/desc.Height);
+		vertex[3].setUV((offSetX+ tileWidth)/desc.Width, (offSetY+ tileHeight)/desc.Height);
 	}
 };
 

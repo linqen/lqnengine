@@ -17,7 +17,7 @@ void Entity2D::Update() {
 }
 
 void Entity2D::Draw() {
-	xPos += 3;
+	//xPos += 3;
 	//yScale += 0.01f;
 	//xScale += 0.01f;
 	//zRot += 0.005f;

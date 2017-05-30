@@ -137,24 +137,27 @@ void Graphics::Shutdown() {
 	if (pD3D != NULL)
 		pD3D->Release();
 }
-
+//Load Identity Matrix
 void Graphics::LoadIdentity() {
 	D3DXMatrixIdentity(&d3dmat);
 	pd3dDevice->SetTransform(D3DTS_WORLD, &d3dmat);
 }
+//Translate the matrix based on the coordinates
 void Graphics::Translate(float xPos, float yPos, float zPos) {
 	D3DXMatrixTranslation(&d3dmat, xPos, yPos, zPos);
 	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
 }
+//Rotate the matrix based on Z value
 void Graphics::RotateZ(float zRot) {
 	D3DXMatrixRotationZ(&d3dmat, zRot);
 	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
 }
+//Scale the matrix based on XYZ coordinates
 void Graphics::Scale(float xScale, float yScale, float zScale) {
 	D3DXMatrixScaling(&d3dmat, xScale, yScale, zScale);
 	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
 }
-
+//Draw 2D Object
 void Graphics::Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount) {
 	vertexManager.Bind();
 	vertexManager.Draw(vertex, primitive, vertexCount);
@@ -181,16 +184,19 @@ void Graphics::Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexC
 	//vBuffer->Unlock();
 	//End of Vertex Buffer
 }
-
+//Draw Sprite
 void Graphics::DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount, IDirect3DTexture9* texture) {
 	textureVertexManager.Bind();
 	textureVertexManager.Draw(vertexUV, primitive, vertexCount);
 
 }
-
+//Load a texture, return null if can't load
 IDirect3DTexture9* Graphics::LoadTexture(LPCWSTR texturePath) {
 	IDirect3DTexture9* temporalTexture = 0;
-	D3DXCreateTextureFromFile(pd3dDevice, texturePath, &temporalTexture);
+	HRESULT result = D3DXCreateTextureFromFile(pd3dDevice, texturePath, &temporalTexture);
+	if (FAILED(result)) {
+		return NULL;
+	}
 	return temporalTexture;
 }
 
