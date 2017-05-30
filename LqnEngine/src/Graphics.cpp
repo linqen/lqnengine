@@ -98,6 +98,11 @@ bool Graphics::SetupScene()
 	pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+	// Fijo valores por defecto para operaciones con el canal alpha
+	pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	pd3dDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	//D3DXMatrixPerspectiveFovLH(&mProjectionMatrix, D3DXToRadian(45), fAspectRatio, -51.0f, 100.0f);
 	//_pDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(80, 80, 80));			//ambient light
@@ -107,11 +112,6 @@ bool Graphics::SetupScene()
 	// TEMPORAL
 	//pd3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	//pd3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
-	// Fijo valores por defecto para operaciones con el canal alpha
-	//pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	//pd3dDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-	//pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	//pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 	// Deshabilito los speculars
 	//pd3dDevice->SetRenderState(D3DRS_SPECULARENABLE, FALSE);
 	// Deshabilito el stencil

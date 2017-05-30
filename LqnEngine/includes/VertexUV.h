@@ -8,8 +8,7 @@ using namespace std;
 struct LQN_API VertexUV {
 	FLOAT x, y, z;
 	FLOAT u, v;
-	//DWORD color = D3DCOLOR_ARGB(0, 0, 0, 0);    // from the D3DFVF_DIFFUSE flag
-	static const DWORD fvf = D3DFVF_XYZ | D3DFVF_TEX1 /*| D3DFVF_DIFFUSE*/;
+	static const DWORD fvf = D3DFVF_XYZ | D3DFVF_TEX1;
 
 public :
 	VertexUV() {}
