@@ -23,6 +23,10 @@ bool Game::Initialize(HINSTANCE hInstance) {
 		return false;
 	}
 
+	if (!textureManager.Create(&graphics)) {
+		return false;
+	}
+
 	OnInit();
 	return true;
 }

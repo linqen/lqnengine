@@ -185,7 +185,7 @@ void Graphics::Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexC
 	//End of Vertex Buffer
 }
 //Draw Sprite
-void Graphics::DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount, IDirect3DTexture9* texture) {
+void Graphics::DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount) {
 	textureVertexManager.Bind();
 	textureVertexManager.Draw(vertexUV, primitive, vertexCount);
 
@@ -200,6 +200,18 @@ IDirect3DTexture9* Graphics::LoadTexture(LPCWSTR texturePath) {
 	return temporalTexture;
 }
 
-void Graphics::BindTexture(IDirect3DTexture9* textureToBind) {
-	pd3dDevice->SetTexture(0, textureToBind);
+void Graphics::BindTexture(Texture* textureToBind) {
+	if (textureToBind == NULL)
+	{
+		pd3dDevice->SetTexture(0, NULL);
+		lastTexture = textureToBind;
+	}
+	else if (textureToBind != lastTexture) {
+		pd3dDevice->SetTexture(0, textureToBind->GetD3DTexture());
+		lastTexture = textureToBind;
+	}
+}
+
+void Graphics::ReleaseTexture(Texture* textureToUnload) {
+	textureToUnload->GetD3DTexture()->Release();
 }

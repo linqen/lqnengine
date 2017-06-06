@@ -9,6 +9,7 @@ using namespace std;
 #include "Vertex.h"
 #include "VertexUV.h"
 #include "VertexBufferManager.h"
+#include "Texture.h"
 
 #pragma comment (lib,"d3d9.lib")
 #pragma comment (lib,"d3dx9.lib")
@@ -20,6 +21,7 @@ public:
 	D3DVIEWPORT9 viewport;
 	VertexBufferManager<Vertex, Vertex::fvf> vertexManager;
 	VertexBufferManager<VertexUV, VertexUV::fvf> textureVertexManager;
+	Texture* lastTexture;
 	D3DXMATRIX d3dmat;
 
 	bool Initialize(HWND wndHandle);
@@ -34,9 +36,10 @@ public:
 	void RotateZ(float zRot);
 	void Scale(float xScale, float yScale, float zScale);
 	void Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount);
-	void DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount, IDirect3DTexture9*);
+	void DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount);
 	IDirect3DTexture9* LoadTexture(LPCWSTR texturePath);
-	void Graphics::BindTexture(IDirect3DTexture9* textureToBind);
+	void Graphics::BindTexture(Texture* textureToBind);
+	void Graphics::ReleaseTexture(Texture* textureToUnload);
 };
 
 #endif

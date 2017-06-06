@@ -6,6 +6,7 @@ using namespace std;
 #include "ImportExport.h"
 #include "Quad.h"
 #include "Sprite.h"
+#include "TextureManager.h"
 
 class LQN_API Game {
 public:
@@ -19,6 +20,7 @@ protected:
 	virtual void OnDraw();
 	virtual bool OnShutDown();
 	Graphics graphics;
+	TextureManager textureManager;
 	Window window;
 };
 
