@@ -2,11 +2,11 @@
 bool MiJuego::OnInit() {
 	sprite = new Sprite(&graphics, &textureManager);
 	sprite->SetTexture(L"tiles.png");
-	sprite->SetAnimation(0, 0, 32, 32, 60);
+	sprite->SetAnimation(0, 0, 32, 32, 1);
 
 	sprite2 = new Sprite(&graphics, &textureManager);
 	sprite2->SetTexture(L"characters.png");
-	sprite2->xPos= -500;
+	sprite2->xPos= 500;
 	sprite2->SetTextureZone(126, 256, 44, 64);
 	return true; 
 }

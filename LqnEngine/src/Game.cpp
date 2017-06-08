@@ -26,6 +26,9 @@ bool Game::Initialize(HINSTANCE hInstance) {
 	if (!textureManager.Create(&graphics)) {
 		return false;
 	}
+	if (!time.Initialize()) {
+		return false;
+	}
 
 	OnInit();
 	return true;
@@ -46,13 +49,13 @@ void Game::Loop() {
 		}
 		else
 		{
-			//OnInit();
 			OnUpdate();
 			graphics.Clear();
 			graphics.Begin();
 			OnDraw();
 			graphics.End();
 			graphics.Present();
+			time.SetFrameTime();
 		}
 	}
 }
@@ -61,7 +64,9 @@ bool Game::Shutdown() {
 	return true;
 }
 
-bool Game::OnInit() { return true; }
+bool Game::OnInit() {
+	return true; 
+}
 
 void Game::OnDraw() {}
 

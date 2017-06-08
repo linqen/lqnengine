@@ -6,12 +6,14 @@ using namespace std;
 #include "Entity2D.h"
 #include "TextureManager.h"
 #include <string>
+#include "Time.h"
 
 class LQN_API Sprite : public Entity2D {
 private:
 	VertexUV *vertex;
 	TextureManager* textureManager;
 	Texture* m_texture;
+	Time time;
 	float m_offSetX;
 	float m_offSetY;
 	float actualOffSetX;
@@ -48,7 +50,7 @@ public:
 		Entity2D::Update();
 		//This is to animate, using a clock
 		if (isAnimation) {
-			timer += 1.0f;
+			timer += time.deltaTime;
 			if (timer >= m_animTime) {
 				Animate();
 				timer = 0.0f;

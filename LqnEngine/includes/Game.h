@@ -7,7 +7,7 @@ using namespace std;
 #include "Quad.h"
 #include "Sprite.h"
 #include "TextureManager.h"
-
+#include "Time.h"
 class LQN_API Game {
 public:
 	Game();
@@ -22,6 +22,7 @@ protected:
 	Graphics graphics;
 	TextureManager textureManager;
 	Window window;
+	Time time;
 };
 
 

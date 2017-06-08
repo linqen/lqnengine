@@ -22,6 +22,7 @@
     <ClCompile Include="src\Entity2D.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
+    <ClCompile Include="src\Time.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +35,7 @@
     <ClInclude Include="includes\Sprite.h" />
     <ClInclude Include="includes\Texture.h" />
     <ClInclude Include="includes\TextureManager.h" />
+    <ClInclude Include="includes\Time.h" />
     <ClInclude Include="includes\Vertex.h" />
     <ClInclude Include="includes\VertexBufferManager.h" />
     <ClInclude Include="includes\VertexUV.h" />
