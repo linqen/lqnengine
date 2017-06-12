@@ -3,6 +3,8 @@
 class MiJuego :public Game {
 	Sprite* sprite;
 	Sprite* sprite2;
+	Quad* quad;
+	Time time;
 protected:
 	bool OnInit();
 	bool OnUpdate();

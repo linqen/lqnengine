@@ -13,7 +13,6 @@ private:
 	VertexUV *vertex;
 	TextureManager* textureManager;
 	Texture* m_texture;
-	Time time;
 	float m_offSetX;
 	float m_offSetY;
 	float actualOffSetX;
@@ -50,7 +49,7 @@ public:
 		Entity2D::Update();
 		//This is to animate, using a clock
 		if (isAnimation) {
-			timer += time.deltaTime;
+			timer += Time::deltaTime;
 			if (timer >= m_animTime) {
 				Animate();
 				timer = 0.0f;

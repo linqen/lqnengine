@@ -22,7 +22,6 @@ protected:
 	Graphics graphics;
 	TextureManager textureManager;
 	Window window;
-	Time time;
 };
 
 
