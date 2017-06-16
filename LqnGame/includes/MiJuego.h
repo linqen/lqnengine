@@ -5,6 +5,7 @@ class MiJuego :public Game {
 	Sprite* sprite2;
 	Quad* quad;
 	Time time;
+	bool movingRight;
 protected:
 	bool OnInit();
 	bool OnUpdate();

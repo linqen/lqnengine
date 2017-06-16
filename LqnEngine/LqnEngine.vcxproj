@@ -33,6 +33,7 @@
     <ClInclude Include="includes\ImportExport.h" />
     <ClInclude Include="includes\Quad.h" />
     <ClInclude Include="includes\Sprite.h" />
+    <ClInclude Include="includes\SpriteAnimation.h" />
     <ClInclude Include="includes\Texture.h" />
     <ClInclude Include="includes\TextureManager.h" />
     <ClInclude Include="includes\Time.h" />

@@ -1,26 +1,46 @@
 #include "..\includes\MiJuego.h"
 bool MiJuego::OnInit() {
-	sprite = new Sprite(&graphics, &textureManager);
-	sprite->SetTexture(L"tiles.png");
-	sprite->SetAnimation(0, 0, 32, 32, 1);
 
+	//Sprite
+	sprite = new Sprite(&graphics, &textureManager);
+	sprite->SetTexture(L"characters.png");
+	SpriteAnimation * animacion = new SpriteAnimation(3,3,0,0,42.6f,64,0.15);
+	sprite->SetAnimation(animacion);
+
+	//Sprite2
 	sprite2 = new Sprite(&graphics, &textureManager);
 	sprite2->SetTexture(L"characters.png");
 	sprite2->xPos= 500;
 	sprite2->SetTextureZone(126, 256, 44, 64);
+
+	//Quad
 	quad = new Quad(&graphics);
+	quad->yPos = 500;
+	quad->xPos = -2000;
+	movingRight = true;
 	return true; 
 }
 bool MiJuego::OnUpdate() {
 	sprite->Update();
 	sprite2->Update();
-	//quad->xPos += Time::deltaTime * 500;
+	
+	if (quad->xPos <= 2000&&movingRight) {
+		quad->xPos += Time::deltaTime * 500;
+		if (quad->xPos >= 2000)
+			movingRight = false;
+	}
+	if(!movingRight) {
+		quad->xPos -= Time::deltaTime * 500;
+		movingRight = false;
+			if (quad->xPos <= -2000)
+				movingRight = true;
+	}
 	return true;
 }
 void MiJuego::OnDraw() {
 	sprite->Draw();
 	sprite2->Draw();
-	//quad->Draw();
+	quad->Draw();
 }
 bool MiJuego::OnShutDown() {
 	return true;

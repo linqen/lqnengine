@@ -74,5 +74,8 @@
     <ClInclude Include="includes\Time.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="includes\SpriteAnimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
