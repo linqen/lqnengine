@@ -193,7 +193,12 @@ void Graphics::DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float
 //Load a texture, return null if can't load
 IDirect3DTexture9* Graphics::LoadTexture(LPCWSTR texturePath) {
 	IDirect3DTexture9* temporalTexture = 0;
-	HRESULT result = D3DXCreateTextureFromFile(pd3dDevice, texturePath, &temporalTexture);
+	//Used D3DXCreateTextureFromFileEx with D3DX_DEFAULT_NONPOW2 to let the texture on the
+	//original size
+	HRESULT result = D3DXCreateTextureFromFileEx(
+		pd3dDevice, texturePath, D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT, 0,
+		D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL,
+		&temporalTexture);
 	if (FAILED(result)) {
 		return NULL;
 	}
