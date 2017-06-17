@@ -16,8 +16,6 @@ private:
 	Texture* m_texture;
 	SpriteAnimation* m_spriteAnimation = NULL;
 	int actualFrame;
-	float m_offSetX;
-	float m_offSetY;
 	float actualOffSetX;
 	float actualOffSetY;
 	float m_tileWidth;
@@ -99,7 +97,7 @@ private:
 	void SetFrame(int frame) {
 		//Move the offset to the position based on frame
 		actualOffSetX = m_spriteAnimation->moffSetX + ((frame%m_spriteAnimation->mframesbyWidth) * m_spriteAnimation->mframeWidth);
-		actualOffSetY = m_spriteAnimation->moffSetX + ((frame / m_spriteAnimation->mframesbyWidth) * m_spriteAnimation->mframeHeight);
+		actualOffSetY = m_spriteAnimation->moffSetY + ((frame / m_spriteAnimation->mframesbyWidth) * m_spriteAnimation->mframeHeight);
 		//Set the new texture zone
 		SetTextureZone(actualOffSetX, actualOffSetY, m_spriteAnimation->mframeWidth, m_spriteAnimation->mframeHeight);
 	}

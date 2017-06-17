@@ -3,8 +3,8 @@ bool MiJuego::OnInit() {
 
 	//Sprite
 	sprite = new Sprite(&graphics, &textureManager);
-	sprite->SetTexture(L"characters.png");
-	SpriteAnimation * animacion = new SpriteAnimation(3,3,0,0,42.6f,64,0.15);
+	sprite->SetTexture(L"sonic.png");
+	SpriteAnimation * animacion = new SpriteAnimation(6,6,129,57,35,35,0.15);
 	sprite->SetAnimation(animacion);
 
 	//Sprite2
@@ -12,6 +12,8 @@ bool MiJuego::OnInit() {
 	sprite2->SetTexture(L"characters.png");
 	sprite2->xPos= 500;
 	sprite2->SetTextureZone(126, 256, 44, 64);
+
+	//87 175
 
 	//Quad
 	quad = new Quad(&graphics);
