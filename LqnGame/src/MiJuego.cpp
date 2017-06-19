@@ -25,6 +25,18 @@ bool MiJuego::OnInit() {
 bool MiJuego::OnUpdate() {
 	sprite->Update();
 	sprite2->Update();
+	if (input.GetKey(KeyCode::UPARROW)) {
+		sprite->yPos += 30;
+	}
+	if (input.GetKey(KeyCode::DOWNARROW)) {
+		sprite->yPos -= 30;
+	}
+	if (input.GetKey(KeyCode::RIGHTARROW)) {
+		sprite->xPos += 30;
+	}
+	if (input.GetKey(KeyCode::LEFTARROW)) {
+		sprite->xPos -= 30;
+	}
 	
 	if (quad->xPos <= 2000&&movingRight) {
 		quad->xPos += Time::deltaTime * 500;

@@ -8,6 +8,7 @@ using namespace std;
 #include "Sprite.h"
 #include "TextureManager.h"
 #include "Time.h"
+#include "Input.h"
 class LQN_API Game {
 public:
 	Game();
@@ -22,6 +23,7 @@ protected:
 	Graphics graphics;
 	TextureManager textureManager;
 	Window window;
+	Input input;
 };
 
 

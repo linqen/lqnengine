@@ -6,9 +6,9 @@ Game::Game() {
 bool Game::Initialize(HINSTANCE hInstance) {
 	static MSG	msg;			// Estructura de mensajes
 	static bool	done = false;	// Si debo interrumpir el loop
-	
-	window = Window();
-	//graphics = Graphics();
+	int screenWidth = 800;
+	int screenHeight = 600;
+
 	// Registro la clase
 	window.registerClass(hInstance);
 
@@ -27,6 +27,9 @@ bool Game::Initialize(HINSTANCE hInstance) {
 		return false;
 	}
 	if (!Time::Initialize()) {
+		return false;
+	}
+	if (!input.Initialize(hInstance, window.getHwnd(), screenWidth, screenHeight)) {
 		return false;
 	}
 
@@ -49,6 +52,7 @@ void Game::Loop() {
 		}
 		else
 		{
+			input.Frame();
 			OnUpdate();
 			graphics.Clear();
 			graphics.Begin();
@@ -61,6 +65,7 @@ void Game::Loop() {
 }
 bool Game::Shutdown() {
 	graphics.Shutdown();
+	input.Shutdown();
 	return true;
 }
 

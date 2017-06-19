@@ -1,6 +1,7 @@
 #ifndef TIME_H
 #define TIME_H
 #include "Window.h"
+#include "ImportExport.h"
 #include <timeapi.h>
 #pragma comment (lib,"winmm.lib")
 class LQN_API Time {

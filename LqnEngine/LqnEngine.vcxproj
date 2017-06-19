@@ -22,6 +22,7 @@
     <ClCompile Include="src\Entity2D.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
+    <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Time.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
@@ -31,6 +32,8 @@
     <ClInclude Include="includes\Game.h" />
     <ClInclude Include="includes\Graphics.h" />
     <ClInclude Include="includes\ImportExport.h" />
+    <ClInclude Include="includes\Input.h" />
+    <ClInclude Include="includes\KeyCode.h" />
     <ClInclude Include="includes\Quad.h" />
     <ClInclude Include="includes\Sprite.h" />
     <ClInclude Include="includes\SpriteAnimation.h" />
