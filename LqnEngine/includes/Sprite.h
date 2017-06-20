@@ -25,10 +25,10 @@ private:
 public:
 	Sprite(Graphics *graphics,TextureManager *ptextureManager) : Entity2D(graphics) {
 		vertex = new VertexUV[4];
-		vertex[0] = { -200.0f, 200.0f, 0.5f, 0.0f, 0.0f };
-		vertex[1] = { -200.0f, -200.0f, 0.5f, 0.0f, 1.0f };
-		vertex[2] = { 200.0f, 200.0f, 0.5f, 1.0f, 0.0f };
-		vertex[3] = { 200.0f, -200.0f, 0.5f, 1.0f, 1.0f };
+		vertex[0] = { -width, height, 0.5f, 0.0f, 0.0f };
+		vertex[1] = { -width, -height, 0.5f, 0.0f, 1.0f };
+		vertex[2] = { width, height, 0.5f, 1.0f, 0.0f };
+		vertex[3] = { width, -height, 0.5f, 1.0f, 1.0f };
 		textureManager = ptextureManager;
 	}
 	void Draw() {
@@ -47,6 +47,10 @@ public:
 			}
 		}
 
+	}
+
+	void OnCollision(Entity*collision) {
+		//No es llamado actualmente desde collisionManager
 	}
 
 	void SetTexture(LPCWSTR texturePath) {

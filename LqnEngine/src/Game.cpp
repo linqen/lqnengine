@@ -15,7 +15,7 @@ bool Game::Initialize(HINSTANCE hInstance) {
 	// Creo la Window
 	if (!window.createWindow(hInstance,
 		L"El mejor titulo",
-		800, 600)) {
+		screenWidth, screenHeight)) {
 		return false;
 	}
 
@@ -30,6 +30,9 @@ bool Game::Initialize(HINSTANCE hInstance) {
 		return false;
 	}
 	if (!input.Initialize(hInstance, window.getHwnd(), screenWidth, screenHeight)) {
+		return false;
+	}
+	if(!colManager.Initialize()){
 		return false;
 	}
 
@@ -54,6 +57,7 @@ void Game::Loop() {
 		{
 			input.Frame();
 			OnUpdate();
+			colManager.CheckCollision();
 			graphics.Clear();
 			graphics.Begin();
 			OnDraw();

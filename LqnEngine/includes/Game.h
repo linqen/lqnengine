@@ -9,6 +9,7 @@ using namespace std;
 #include "TextureManager.h"
 #include "Time.h"
 #include "Input.h"
+#include "CollisionManager.h"
 class LQN_API Game {
 public:
 	Game();
@@ -24,6 +25,7 @@ protected:
 	TextureManager textureManager;
 	Window window;
 	Input input;
+	CollisionManager colManager;
 };
 
 

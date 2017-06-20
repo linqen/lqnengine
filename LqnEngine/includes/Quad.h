@@ -10,10 +10,10 @@ class LQN_API Quad : public Entity2D{
 public:
 	Quad(Graphics *graphics) : Entity2D (graphics){
 		vertex = new Vertex[4];
-		vertex[0] = { -200.0f, 200.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0) };
-		vertex[1] = { -200.0f, -200.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0) };
-		vertex[2] = { 200.0f, 200.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0) };
-		vertex[3] = { 200.0f, -200.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0) };
+		vertex[0] = { -width, height, 0.0f, D3DCOLOR_XRGB(0, 255, 0) };
+		vertex[1] = { -width, -height, 0.0f, D3DCOLOR_XRGB(0, 255, 0) };
+		vertex[2] = { width, height, 0.0f, D3DCOLOR_XRGB(0, 255, 0) };
+		vertex[3] = { width, -height, 0.0f, D3DCOLOR_XRGB(0, 255, 0) };
 
 	}
 

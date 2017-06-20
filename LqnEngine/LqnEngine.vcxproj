@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\CollisionManager.cpp" />
     <ClCompile Include="src\Entity2D.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\CollisionManager.h" />
     <ClInclude Include="includes\Entity.h" />
     <ClInclude Include="includes\Entity2D.h" />
     <ClInclude Include="includes\Game.h" />

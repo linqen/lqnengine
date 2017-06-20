@@ -7,11 +7,13 @@ using namespace std;
 
 class LQN_API Entity2D : public Entity {
 public:
-	float xPos, yPos, zPos, zRot, xScale, yScale, zScale;
+	float xPos, yPos, zPos, zRot, xScale, yScale, zScale,width,height,collisionWidth,collisionHeight,mass;
+	bool isTrigger, isKinematic;
 	Graphics * graphics;
 	Entity2D(Graphics *graphics);
 	virtual void Update();
 	virtual void Draw();
+	virtual void OnCollision(Entity2D* collision);
 };
 
 
