@@ -49,8 +49,7 @@ public:
 
 	}
 
-	void OnCollision(Entity*collision) {
-		//No es llamado actualmente desde collisionManager
+	void OnCollision(Entity2D*collision) {
 	}
 
 	void SetTexture(LPCWSTR texturePath) {

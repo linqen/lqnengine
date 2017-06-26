@@ -12,7 +12,12 @@ bool MiJuego::OnInit() {
 	sprite2->xPos= 500;
 	sprite2->SetTextureZone(126, 256, 44, 64);
 
+	//sprite->isKinematic = true;
 	//sprite2->isKinematic = true;
+
+	//sprite->isTrigger = true;
+	//sprite2->isTrigger = true;
+
 	colManager.AddCollisionable(sprite, 1);
 	colManager.AddCollisionable(sprite2, 2);
 
