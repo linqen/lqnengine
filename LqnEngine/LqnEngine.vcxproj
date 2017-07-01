@@ -41,6 +41,8 @@
     <ClInclude Include="includes\SpriteAnimation.h" />
     <ClInclude Include="includes\Texture.h" />
     <ClInclude Include="includes\TextureManager.h" />
+    <ClInclude Include="includes\Tile.h" />
+    <ClInclude Include="includes\TileMap.h" />
     <ClInclude Include="includes\Time.h" />
     <ClInclude Include="includes\Vertex.h" />
     <ClInclude Include="includes\VertexBufferManager.h" />

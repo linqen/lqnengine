@@ -1,6 +1,23 @@
 #include "..\includes\MiJuego.h"
 bool MiJuego::OnInit() {
 
+	const int level[] =
+	{
+		0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0,
+		1, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3,
+		0, 1, 0, 0, 2, 0, 3, 3, 3, 0, 1, 1, 1, 0, 0, 0,
+		0, 1, 1, 0, 3, 3, 3, 0, 0, 0, 1, 1, 1, 2, 0, 0,
+		0, 0, 1, 0, 3, 0, 2, 2, 0, 0, 1, 1, 1, 1, 2, 0,
+		2, 0, 1, 0, 3, 0, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1,
+		0, 0, 1, 0, 3, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1,
+	};
+
+	//TileMap
+	tilemap = new TileMap(&graphics, &textureManager, L"tiles.png",
+		32, 32, level, 16, 16);
+
+
 	//Sprite
 	sprite = new Sprite(&graphics, &textureManager);
 	sprite->SetTexture(L"sonic.png");
@@ -59,9 +76,10 @@ bool MiJuego::OnUpdate() {
 	return true;
 }
 void MiJuego::OnDraw() {
-	sprite->Draw();
-	sprite2->Draw();
-	quad->Draw();
+	//sprite->Draw();
+	//sprite2->Draw();
+	//quad->Draw();
+	tilemap->Draw();
 }
 bool MiJuego::OnShutDown() {
 	return true;

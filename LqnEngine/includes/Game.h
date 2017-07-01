@@ -6,6 +6,7 @@ using namespace std;
 #include "ImportExport.h"
 #include "Quad.h"
 #include "Sprite.h"
+#include "TileMap.h"
 #include "TextureManager.h"
 #include "Time.h"
 #include "Input.h"
