@@ -1,22 +1,38 @@
 #include "..\includes\MiJuego.h"
 bool MiJuego::OnInit() {
-
-	const int level[] =
+	//The level definition
+	vector<vector<int>> level1;
+	level1 =
 	{
-		0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0,
-		1, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3,
-		0, 1, 0, 0, 2, 0, 3, 3, 3, 0, 1, 1, 1, 0, 0, 0,
-		0, 1, 1, 0, 3, 3, 3, 0, 0, 0, 1, 1, 1, 2, 0, 0,
-		0, 0, 1, 0, 3, 0, 2, 2, 0, 0, 1, 1, 1, 1, 2, 0,
-		2, 0, 1, 0, 3, 0, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1,
-		0, 0, 1, 0, 3, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1,
+		{ 228,229,230,231 },
+		{ 244,245,246,247 }
 	};
-
 	//TileMap
-	tilemap = new TileMap(&graphics, &textureManager, L"tiles.png",
-		32, 32, level, 16, 16);
+	tilemap = new TileMap(&graphics, &textureManager, L"tileset.png",
+		32, 32, level1, 16, 16);
+	tilemap->SetXPos(-1600);
+	tilemap->SetYPos(1600);
 
+	//The level definition
+	vector<vector<int>> level2;
+	level2 =
+	{
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+	};
+	//TileMap
+	tilemap2 = new TileMap(&graphics, &textureManager, L"tileset.png",
+		32, 32, level2, 16, 16);
+	tilemap2->SetXPos(-1600);
+	tilemap2->SetYPos(1600);
 
 	//Sprite
 	sprite = new Sprite(&graphics, &textureManager);
@@ -76,9 +92,10 @@ bool MiJuego::OnUpdate() {
 	return true;
 }
 void MiJuego::OnDraw() {
-	//sprite->Draw();
-	//sprite2->Draw();
-	//quad->Draw();
+	sprite->Draw();
+	sprite2->Draw();
+	quad->Draw();
+	tilemap2->Draw();
 	tilemap->Draw();
 }
 bool MiJuego::OnShutDown() {

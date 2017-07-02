@@ -88,7 +88,6 @@ bool Graphics::SetupScene()
 	D3DXMATRIX mProjectionMatrix;
 	D3DXMatrixIdentity(&mProjectionMatrix);
 	float fAspectRatio = (float)viewport.Width / viewport.Height;
-
 	D3DXMatrixOrthoLH(&mProjectionMatrix, (float)viewport.Width*5, (float)viewport.Height*5, -25.0f, 25.0f);
 	hRes = pd3dDevice->SetTransform(D3DTS_PROJECTION, &mProjectionMatrix);
 	if (FAILED(hRes)) {
@@ -161,28 +160,6 @@ void Graphics::Scale(float xScale, float yScale, float zScale) {
 void Graphics::Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount) {
 	vertexManager.Bind();
 	vertexManager.Draw(vertex, primitive, vertexCount);
-	//Esto dibuja un triangulo
-	//VertexUV vertices[] =
-	//{
-	//	{ 320.0f, 50.0f, 0.5f, 0.5f, 0.0f },
-	//	{ 520.0f, 400.0f, 0.5f, 0.0f, 1.0f },
-	//	{ 120.0f, 400.0f, 0.5f, 1.0f, 1.0f},
-	//};
-	////Ésto dibuja un cuadrado si está activado TriangleStrip
-	//VertexUV vertices[] =
-	//{
-	//	{ 120.0f, 400.0f, 0.5f, 0.0f, 1.0f },
-	//	{ 120.0f, 50.0f, 0.5f, 0.0f, 0.0f },
-	//	{ 520.0f, 400.0f, 0.5f, 1.0f, 1.0f },
-	//	{ 520.0f, 50.0f, 0.5f, 1.0f, 0.0f },
-	//};
-	//Vertex* vertex;
-	//VOID* pVoid;    // the void pointer
-	//vBuffer->Lock(0, 0, (void**)&pVoid,
-	//	0);
-	//memcpy(pVoid, vertices, sizeof(vertices));
-	//vBuffer->Unlock();
-	//End of Vertex Buffer
 }
 //Draw Sprite
 void Graphics::DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount) {

@@ -28,6 +28,4 @@ protected:
 	Input input;
 	CollisionManager colManager;
 };
-
-
 #endif

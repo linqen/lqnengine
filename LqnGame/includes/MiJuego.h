@@ -5,6 +5,7 @@ class MiJuego :public Game {
 	Sprite* sprite2;
 	Quad* quad;
 	TileMap* tilemap;
+	TileMap* tilemap2;
 	bool movingRight;
 protected:
 	bool OnInit();

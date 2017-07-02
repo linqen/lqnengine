@@ -46,7 +46,6 @@ public:
 				timer = 0.0f;
 			}
 		}
-
 	}
 
 	void OnCollision(Entity2D*collision) {
