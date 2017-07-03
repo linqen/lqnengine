@@ -24,6 +24,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
     <ClCompile Include="src\Input.cpp" />
+    <ClCompile Include="src\LogFile.cpp" />
     <ClCompile Include="src\Time.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
@@ -36,6 +37,7 @@
     <ClInclude Include="includes\ImportExport.h" />
     <ClInclude Include="includes\Input.h" />
     <ClInclude Include="includes\KeyCode.h" />
+    <ClInclude Include="includes\LogFile.h" />
     <ClInclude Include="includes\Quad.h" />
     <ClInclude Include="includes\Sprite.h" />
     <ClInclude Include="includes\SpriteAnimation.h" />

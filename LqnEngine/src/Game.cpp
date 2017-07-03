@@ -19,6 +19,10 @@ bool Game::Initialize(HINSTANCE hInstance) {
 		return false;
 	}
 
+	if (!LogFile::Initialize("ErrorLog.txt")) {
+		return false;
+	}
+
 	if (!graphics.Initialize(window.getHwnd())) {
 		return false;
 	}

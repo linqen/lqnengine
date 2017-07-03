@@ -11,6 +11,7 @@ using namespace std;
 #include "Time.h"
 #include "Input.h"
 #include "CollisionManager.h"
+#include "LogFile.h"
 class LQN_API Game {
 public:
 	Game();
