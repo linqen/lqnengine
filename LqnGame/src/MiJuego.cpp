@@ -36,7 +36,7 @@ bool MiJuego::OnInit() {
 
 	//Sprite
 	sprite = new Sprite(&graphics, &textureManager);
-	sprite->SetTexture(L"sonic.png");
+	sprite->SetTexture(L"sonic2.png");
 	SpriteAnimation * animacion = new SpriteAnimation(6,6,129,57,35,35,0.1);
 	sprite->SetAnimation(animacion);
 	//Sprite2

@@ -177,6 +177,7 @@ IDirect3DTexture9* Graphics::LoadTexture(LPCWSTR texturePath) {
 		D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL,
 		&temporalTexture);
 	if (FAILED(result)) {
+		LogFile::Write("Texture Not Found");
 		return NULL;
 	}
 	return temporalTexture;

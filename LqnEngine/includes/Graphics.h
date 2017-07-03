@@ -10,6 +10,7 @@ using namespace std;
 #include "VertexUV.h"
 #include "VertexBufferManager.h"
 #include "Texture.h"
+#include "LogFile.h"
 
 #pragma comment (lib,"d3d9.lib")
 #pragma comment (lib,"d3dx9.lib")
