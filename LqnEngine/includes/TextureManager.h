@@ -25,23 +25,24 @@ public:
 		}
 	}
 	Texture* LoadTexture(wstring textureFileName) {
-		wstring fullPath = TEXTURESFOLDER;
-		fullPath.append(textureFileName.c_str());
-		LPCWSTR fileName = fullPath.c_str();
+		wstring fileName = TEXTURESFOLDER;
+		fileName.append(textureFileName.c_str());
+		LPCWSTR fullPath = fileName.c_str();
 		if (textures.empty()) {
-			Texture* texture = new Texture(fileName, graphics->LoadTexture(fileName));
+			Texture* texture = new Texture(textureFileName, graphics->LoadTexture(fullPath));
 			texture->refCount++;
 			textures.push_back(texture);
 			return texture;
 		}
 		for (size_t i = 0; i < textures.size(); i++)
 		{
-			if (textures[i]->GetTextureFileName() == fileName) {
+			
+			if (textures[i]->GetTextureFileName() == textureFileName) {
 				textures[i]->refCount++;
 				return textures[i];
 			}
 			else {
-				Texture* texture = new Texture(fileName, graphics->LoadTexture(fileName));
+				Texture* texture = new Texture(textureFileName, graphics->LoadTexture(fullPath));
 				texture->refCount++;
 				textures.push_back(texture);
 				return texture;

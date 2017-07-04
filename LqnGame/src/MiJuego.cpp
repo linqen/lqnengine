@@ -9,7 +9,7 @@ bool MiJuego::OnInit() {
 	};
 	//TileMap
 	tilemap = new TileMap(&graphics, &textureManager, L"tileset.png",
-		32, 32, level1, 16, 16);
+		32, 32, level1, 16);
 	tilemap->SetXPos(-1600);
 	tilemap->SetYPos(1600);
 
@@ -30,13 +30,13 @@ bool MiJuego::OnInit() {
 	};
 	//TileMap
 	tilemap2 = new TileMap(&graphics, &textureManager, L"tileset.png",
-		32, 32, level2, 16, 16);
+		32, 32, level2, 16);
 	tilemap2->SetXPos(-1600);
 	tilemap2->SetYPos(1600);
 
 	//Sprite
 	sprite = new Sprite(&graphics, &textureManager);
-	sprite->SetTexture(L"sonic2.png");
+	sprite->SetTexture(L"sonic.png");
 	SpriteAnimation * animacion = new SpriteAnimation(6,6,129,57,35,35,0.1);
 	sprite->SetAnimation(animacion);
 	//Sprite2

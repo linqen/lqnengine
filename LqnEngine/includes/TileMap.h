@@ -18,7 +18,7 @@ private:
 	Tile *actualTile;
 public:
 	TileMap(Graphics *graphics, TextureManager *ptextureManager, LPCWSTR texturePath, float tileSizeWidth, float tileSizeHeight,
-		vector<vector<int>> tiles, unsigned int width, unsigned int height) : Entity2D(graphics) {
+		vector<vector<int>> tiles, unsigned int tilesPerWidth) : Entity2D(graphics) {
 		textureManager = ptextureManager;
 		m_texture = textureManager->LoadTexture(texturePath);
 		for (unsigned int i = 0; i < tiles.size(); i++)
@@ -28,8 +28,8 @@ public:
 				//Use -i to create the next tile under the previous one, and not above it
 				actualTile = new Tile(graphics,tileSizeWidth,tileSizeHeight,j,-i);
 				actualTile->SetTexture(m_texture);
-				float actualOffSetX = ((tileNumber%width) * tileSizeWidth);
-				float actualOffSetY = ((tileNumber / width) * tileSizeHeight);
+				float actualOffSetX = ((tileNumber%tilesPerWidth) * tileSizeWidth);
+				float actualOffSetY = ((tileNumber / tilesPerWidth) * tileSizeHeight);
 				actualTile->SetTextureZone(actualOffSetX, actualOffSetY, tileSizeWidth, tileSizeHeight);
 				m_tiles.push_back(actualTile);
 				actualTile->xScale = 5;
