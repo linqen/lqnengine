@@ -64,6 +64,9 @@ bool MiJuego::OnInit() {
 bool MiJuego::OnUpdate() {
 	sprite->Update();
 	sprite2->Update();
+	input.GetMouseLocation(mouseX, mouseY);
+	sprite2->xPos = mouseX;
+	sprite2->yPos = -mouseY;
 
 	if (input.GetKey(KeyCode::UPARROW)) {
 		sprite->yPos += 30;

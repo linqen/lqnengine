@@ -1,5 +1,5 @@
 #include "..\includes\Game.h"
-
+#define LOGNAME "ErrorLog.txt"
 Game::Game() {
 }
 
@@ -12,31 +12,40 @@ bool Game::Initialize(HINSTANCE hInstance) {
 	// Registro la clase
 	window.registerClass(hInstance);
 
+	if (!LogFile::Initialize(LOGNAME)) {
+		LogFile::Write("Can't set up LogFile");
+		return false;
+	}
+
 	// Creo la Window
 	if (!window.createWindow(hInstance,
 		L"El mejor titulo",
 		screenWidth, screenHeight)) {
+		LogFile::Write("Can't create window");
 		return false;
 	}
 
-	if (!LogFile::Initialize("ErrorLog.txt")) {
+
+	if (!Time::Initialize()) {
+		LogFile::Write("Can't initialize timer");
 		return false;
 	}
 
 	if (!graphics.Initialize(window.getHwnd())) {
+		LogFile::Write("Can't load engine");
 		return false;
 	}
 
 	if (!textureManager.Create(&graphics)) {
-		return false;
-	}
-	if (!Time::Initialize()) {
+		LogFile::Write("Can't create texture manager");
 		return false;
 	}
 	if (!input.Initialize(hInstance, window.getHwnd(), screenWidth, screenHeight)) {
+		LogFile::Write("Can't initialize input");
 		return false;
 	}
 	if(!colManager.Initialize()){
+		LogFile::Write("Can't initialize collision manager");
 		return false;
 	}
 

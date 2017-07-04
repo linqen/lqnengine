@@ -24,9 +24,11 @@ public:
 	void SetD3DTexture(IDirect3DTexture9* texture)
 	{
 		m_texture = texture;
-		m_texture->GetLevelDesc(0, &desc);
-		height = desc.Height;
-		width = desc.Width;
+		if (m_texture != NULL) {
+			m_texture->GetLevelDesc(0, &desc);
+			height = desc.Height;
+			width = desc.Width;
+		}
 	}
 private:
 	wstring textureFileName;

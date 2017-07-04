@@ -7,6 +7,8 @@ class MiJuego :public Game {
 	TileMap* tilemap;
 	TileMap* tilemap2;
 	bool movingRight;
+	int mouseX;
+	int mouseY;
 protected:
 	bool OnInit();
 	bool OnUpdate();
