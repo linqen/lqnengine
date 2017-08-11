@@ -1,5 +1,6 @@
 #ifndef TILE_H
 #define TILE_H
+#define TILEREDUCTION 20
 using namespace std;
 
 #include "VertexUV.h"
@@ -17,8 +18,8 @@ public:
 	Tile() {}
 	Tile(Graphics *graphics,float tileWidth,float tileHeight,int positionX,int positionY) : Entity2D(graphics) {
 		vertex = new (nothrow) VertexUV[4];
-		width = tileWidth;
-		height = tileHeight;
+		width = tileWidth/ TILEREDUCTION;
+		height = tileHeight/ TILEREDUCTION;
 		vertex[0] = { (positionX*width), (positionY+1)*height, 0.5f, 0.0f, 0.0f };
 		vertex[1] = { (positionX*width), (positionY*height), 0.5f, 0.0f, 1.0f };
 		vertex[2] = { (positionX+1)*width, (positionY + 1)*height, 0.5f, 1.0f, 0.0f };

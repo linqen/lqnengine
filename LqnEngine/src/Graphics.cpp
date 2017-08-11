@@ -72,11 +72,20 @@ bool Graphics::SetupScene()
 	// Fijo la matriz de vista, que es la transforma a todos los vértices
 	// para cambiar el punto de visión de la escena
 	// -----------------------------------------------------------------------
+	//2D
+	//D3DXMATRIX lookAtMat;
+	//D3DXMatrixIdentity(&lookAtMat);
+	//D3DXVECTOR3 eyePos(viewport.Width / 2.0f, viewport.Height / 2.0f, -5.0f);
+	//D3DXVECTOR3 lookPos(viewport.Width / 2.0f, viewport.Height / 2.0f, 0.0f);
+	//D3DXVECTOR3 upVec(0.0f, 1.0f, 0.0f);
+	//D3DXMatrixLookAtLH(&lookAtMat, &eyePos, &lookPos, &upVec);
+	//pd3dDevice->SetTransform(D3DTS_VIEW, &lookAtMat);
 
+	//3D
 	D3DXMATRIX lookAtMat;
 	D3DXMatrixIdentity(&lookAtMat);
-	D3DXVECTOR3 eyePos(viewport.Width / 2.0f, viewport.Height / 2.0f, -5.0f);
-	D3DXVECTOR3 lookPos(viewport.Width / 2.0f, viewport.Height / 2.0f, 0.0f);
+	D3DXVECTOR3 eyePos(0, 0, -0.1f);
+	D3DXVECTOR3 lookPos(0, 0, 0.0f);
 	D3DXVECTOR3 upVec(0.0f, 1.0f, 0.0f);
 	D3DXMatrixLookAtLH(&lookAtMat, &eyePos, &lookPos, &upVec);
 	pd3dDevice->SetTransform(D3DTS_VIEW, &lookAtMat);
@@ -85,10 +94,18 @@ bool Graphics::SetupScene()
 	// Seteo la Matriz de Proyección, que es la que transforma nuestro mundo
 	// 3d en un viewport 2d que es mostrado en pantalla
 	// -----------------------------------------------------------------------
+	//Modo 2D
+	//D3DXMATRIX mProjectionMatrix;
+	//D3DXMatrixIdentity(&mProjectionMatrix);
+	//float fAspectRatio = (float)viewport.Width / viewport.Height;
+	//D3DXMatrixOrthoLH(&mProjectionMatrix, (float)viewport.Width * 5, (float)viewport.Height * 5, -25.0f, 25.0f);
+	//hRes = pd3dDevice->SetTransform(D3DTS_PROJECTION, &mProjectionMatrix);
+
+	//Modo 3D
 	D3DXMATRIX mProjectionMatrix;
 	D3DXMatrixIdentity(&mProjectionMatrix);
 	float fAspectRatio = (float)viewport.Width / viewport.Height;
-	D3DXMatrixOrthoLH(&mProjectionMatrix, (float)viewport.Width*5, (float)viewport.Height*5, -25.0f, 25.0f);
+	D3DXMatrixPerspectiveFovLH(&mProjectionMatrix, D3DXToRadian(60), fAspectRatio, 0.1f, 1000.0f);
 	hRes = pd3dDevice->SetTransform(D3DTS_PROJECTION, &mProjectionMatrix);
 	if (FAILED(hRes)) {
 		return false;

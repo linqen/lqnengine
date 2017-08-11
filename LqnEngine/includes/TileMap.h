@@ -46,6 +46,11 @@ public:
 			m_tiles[i]->yPos = y;
 		}
 	}
+	void SetZPos(float z) {
+		for (unsigned int i = 0; i < m_tiles.size(); i++) {
+			m_tiles[i]->zPos = z;
+		}
+	}
 	void Draw() {
 		for (unsigned int i = 0; i < m_tiles.size(); i++) {
 			m_tiles[i]->Draw();

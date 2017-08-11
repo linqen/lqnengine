@@ -6,8 +6,8 @@ Game::Game() {
 bool Game::Initialize(HINSTANCE hInstance) {
 	static MSG	msg;			// Estructura de mensajes
 	static bool	done = false;	// Si debo interrumpir el loop
-	int screenWidth = 800;
-	int screenHeight = 600;
+	int screenWidth = 1000;
+	int screenHeight = 750;
 
 	// Registro la clase
 	window.registerClass(hInstance);

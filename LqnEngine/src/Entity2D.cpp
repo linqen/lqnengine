@@ -10,8 +10,8 @@ Entity2D::Entity2D(Graphics *graphics) {
 	this->xScale = 1;
 	this->yScale = 1;
 	this->zScale = 1;
-	this->width = 200;
-	this->height = 200;
+	this->width = 10;
+	this->height = 10;
 	this->collisionWidth = width*2;
 	this->collisionHeight = height*2;
 	this->mass = 1;
