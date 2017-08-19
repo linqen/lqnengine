@@ -6,6 +6,7 @@ class MiJuego :public Game {
 	Quad* quad;
 	TileMap* tilemap;
 	TileMap* tilemap2;
+	Camera* camera;
 	bool movingRight;
 	int mouseX;
 	int mouseY;

@@ -29,6 +29,7 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\Camera.h" />
     <ClInclude Include="includes\CollisionManager.h" />
     <ClInclude Include="includes\Entity.h" />
     <ClInclude Include="includes\Entity2D.h" />
@@ -56,7 +57,7 @@
     <ProjectGuid>{A8C451A7-25ED-47D1-8FEA-0A82CD81592C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>LqnEngine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

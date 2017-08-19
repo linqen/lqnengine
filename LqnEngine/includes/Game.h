@@ -3,6 +3,7 @@
 using namespace std;
 #include "Window.h"
 #include "Graphics.h"
+#include "Camera.h"
 #include "ImportExport.h"
 #include "Quad.h"
 #include "Sprite.h"

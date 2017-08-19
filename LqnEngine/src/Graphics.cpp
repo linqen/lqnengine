@@ -17,8 +17,8 @@ bool Graphics::Initialize(HWND wndHandle) {
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
 	d3dpp.BackBufferCount = 1;
-	d3dpp.BackBufferHeight = 600;
-	d3dpp.BackBufferWidth = 800;
+	d3dpp.BackBufferHeight = viewport.Height;
+	d3dpp.BackBufferWidth = viewport.Width;
 	d3dpp.hDeviceWindow = wndHandle;
 	d3dpp.EnableAutoDepthStencil = TRUE;
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
@@ -88,7 +88,7 @@ bool Graphics::SetupScene()
 	D3DXVECTOR3 lookPos(0, 0, 0.0f);
 	D3DXVECTOR3 upVec(0.0f, 1.0f, 0.0f);
 	D3DXMatrixLookAtLH(&lookAtMat, &eyePos, &lookPos, &upVec);
-	pd3dDevice->SetTransform(D3DTS_VIEW, &lookAtMat);
+	//pd3dDevice->SetTransform(D3DTS_VIEW, &lookAtMat);
 
 	// -----------------------------------------------------------------------
 	// Seteo la Matriz de Proyección, que es la que transforma nuestro mundo
@@ -106,10 +106,7 @@ bool Graphics::SetupScene()
 	D3DXMatrixIdentity(&mProjectionMatrix);
 	float fAspectRatio = (float)viewport.Width / viewport.Height;
 	D3DXMatrixPerspectiveFovLH(&mProjectionMatrix, D3DXToRadian(60), fAspectRatio, 0.1f, 1000.0f);
-	hRes = pd3dDevice->SetTransform(D3DTS_PROJECTION, &mProjectionMatrix);
-	if (FAILED(hRes)) {
-		return false;
-	}
+	//hRes = pd3dDevice->SetTransform(D3DTS_PROJECTION, &mProjectionMatrix);
 
 	pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -216,4 +213,13 @@ void Graphics::BindTexture(Texture* textureToBind) {
 
 void Graphics::ReleaseTexture(Texture* textureToUnload) {
 	textureToUnload->GetD3DTexture()->Release();
+}
+
+void Graphics::SetViewTransform(D3DXMATRIX * viewTransform) {
+
+	pd3dDevice->SetTransform(D3DTS_VIEW, viewTransform);
+}
+
+void Graphics::SetProjectionMatrix(D3DXMATRIX * projectionMatrix) {
+	pd3dDevice->SetTransform(D3DTS_PROJECTION, projectionMatrix);
 }

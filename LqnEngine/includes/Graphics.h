@@ -39,8 +39,10 @@ public:
 	void Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount);
 	void DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount);
 	IDirect3DTexture9* LoadTexture(LPCWSTR texturePath);
-	void Graphics::BindTexture(Texture* textureToBind);
-	void Graphics::ReleaseTexture(Texture* textureToUnload);
+	void BindTexture(Texture* textureToBind);
+	void ReleaseTexture(Texture* textureToUnload);
+	void SetViewTransform(D3DXMATRIX * viewTransform);
+	void SetProjectionMatrix(D3DXMATRIX * projectionMatrix);
 };
 
 #endif

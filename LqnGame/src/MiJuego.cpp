@@ -1,5 +1,8 @@
 #include "..\includes\MiJuego.h"
 bool MiJuego::OnInit() {
+
+	camera = new Camera(&graphics, 60, 0.1f, 1000.0f);
+
 	//The level definition
 	vector<vector<int>> level1;
 	level1 =
@@ -67,24 +70,48 @@ bool MiJuego::OnInit() {
 	return true; 
 }
 bool MiJuego::OnUpdate() {
+	camera->Update();
 	sprite->Update();
 	sprite2->Update();
 	input.GetMouseLocation(mouseX, mouseY);
 	//sprite2->xPos = mouseX;
 	//sprite2->yPos = -mouseY;
+	if (input.GetKey(KeyCode::E)) {
+		camera->Yaw(5 * Time::deltaTime);
+	}
 
-	if (input.GetKey(KeyCode::UPARROW)) {
-		sprite->yPos += 50 * Time::deltaTime;
+	if (input.GetKey(KeyCode::Q)) {
+		camera->Yaw(-5 * Time::deltaTime);
 	}
-	if (input.GetKey(KeyCode::DOWNARROW)) {
-		sprite->yPos -= 50 * Time::deltaTime;
+
+	if (input.GetKey(KeyCode::W)) {
+		camera->MoveForward(5 * Time::deltaTime);
 	}
-	if (input.GetKey(KeyCode::RIGHTARROW)) {
-		sprite->xPos += 50 * Time::deltaTime;
+
+	if (input.GetKey(KeyCode::S)) {
+		camera->MoveForward(-5 * Time::deltaTime);
 	}
-	if (input.GetKey(KeyCode::LEFTARROW)) {
-		sprite->xPos -= 50 * Time::deltaTime;
+	if (input.GetKey(KeyCode::D)) {
+		camera->MoveRight(5 * Time::deltaTime);
 	}
+
+	if (input.GetKey(KeyCode::A)) {
+		camera->MoveRight(-5 * Time::deltaTime);
+	}
+
+
+	//if (input.GetKey(KeyCode::UPARROW)) {
+	//	sprite->yPos += 50 * Time::deltaTime;
+	//}
+	//if (input.GetKey(KeyCode::DOWNARROW)) {
+	//	sprite->yPos -= 50 * Time::deltaTime;
+	//}
+	//if (input.GetKey(KeyCode::RIGHTARROW)) {
+	//	sprite->xPos += 50 * Time::deltaTime;
+	//}
+	//if (input.GetKey(KeyCode::LEFTARROW)) {
+	//	sprite->xPos -= 50 * Time::deltaTime;
+	//}
 	
 	if (quad->xPos <= 200&&movingRight) {
 		quad->xPos += Time::deltaTime * 50;
