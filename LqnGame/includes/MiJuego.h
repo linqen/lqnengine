@@ -10,6 +10,8 @@ class MiJuego :public Game {
 	bool movingRight;
 	int mouseX;
 	int mouseY;
+	int lastMouseX;
+	int lastMouseY;
 protected:
 	bool OnInit();
 	bool OnUpdate();

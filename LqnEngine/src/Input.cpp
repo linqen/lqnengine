@@ -68,7 +68,7 @@ bool Input::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, int scre
 
 	
 	// Set the cooperative level of the mouse to share with other programs.
-	result = m_mouse->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	result = m_mouse->SetCooperativeLevel(hwnd,  DISCL_EXCLUSIVE | DISCL_FOREGROUND);
 	if (FAILED(result))
 	{
 		return false;
@@ -185,11 +185,11 @@ void Input::ProcessInput()
 	m_mouseY += m_mouseState.lY;
 
 	// Ensure the mouse location doesn't exceed the screen width or height.
-	if (m_mouseX < 0) { m_mouseX = 0; }
-	if (m_mouseY < 0) { m_mouseY = 0; }
+	//if (m_mouseX < 0) { m_mouseX = 0; }
+	//if (m_mouseY < 0) { m_mouseY = 0; }
 
-	if (m_mouseX > m_screenWidth) { m_mouseX = m_screenWidth; }
-	if (m_mouseY > m_screenHeight) { m_mouseY = m_screenHeight; }
+	//if (m_mouseX > m_screenWidth) { m_mouseX = m_screenWidth; }
+	//if (m_mouseY > m_screenHeight) { m_mouseY = m_screenHeight; }
 
 	return;
 }

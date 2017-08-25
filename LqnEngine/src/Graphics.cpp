@@ -1,6 +1,6 @@
 #include "..\includes\Graphics.h"
 
-bool Graphics::Initialize(HWND wndHandle) {
+bool Graphics::Initialize(HWND wndHandle, int screenWidth, int screenHeight) {
 	pD3D = NULL;
 	pd3dDevice = NULL;
 
@@ -9,22 +9,23 @@ bool Graphics::Initialize(HWND wndHandle) {
 	{
 		return false;
 	}
-	//Cuando tengo el device llamo al create del manager con if
 	// Fill the presentation parameters structure
 	D3DPRESENT_PARAMETERS d3dpp;
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
-	d3dpp.Windowed = TRUE;
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	d3dpp.Windowed = FALSE;
+	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
+	d3dpp.SwapEffect = D3DSWAPEFFECT_COPY;
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
 	d3dpp.BackBufferCount = 1;
-	d3dpp.BackBufferHeight = viewport.Height;
-	d3dpp.BackBufferWidth = viewport.Width;
+	d3dpp.BackBufferHeight = screenHeight;
+	d3dpp.BackBufferWidth = screenWidth;
 	d3dpp.hDeviceWindow = wndHandle;
 	d3dpp.EnableAutoDepthStencil = TRUE;
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
+	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
 
 	// Create a default DirectX device 
-	if( FAILED( pD3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, wndHandle, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &pd3dDevice ) ) ) 
+	if( FAILED( pD3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, wndHandle, D3DCREATE_HARDWARE_VERTEXPROCESSING, &d3dpp, &pd3dDevice ) ) ) 
 	{ 
 		return false;
 	}

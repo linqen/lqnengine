@@ -79,7 +79,7 @@ public:
 		m_Position += Dist*(*Dir);
 		m_bChanged = true;
 	}
-	void Pich(float Angle) { 
+	void Pitch(float Angle) { 
 		m_RotateAroundRight += Angle; 
 		m_bChanged = true; 
 	}
@@ -131,6 +131,7 @@ public:
 				m_Right.y, m_Up.y, m_LookAt.y, 0.0f,
 				m_Right.z, m_Up.z, m_LookAt.z, 0.0f,
 				fView41, fView42, fView43, 1.0f);
+
 		}
 		//Set view transform 
 		graphics->SetViewTransform(m_MatView);
@@ -138,7 +139,11 @@ public:
 		m_RotateAroundRight = m_RotateAroundUp = m_RotateAroundLookAt = 0.0f;
 		m_bChanged = false;
 	}
+	//This is normally used to make a FPS cam
+	void SetRightVectorYCoord(float y) {
+		m_Right.y = y;
 
+	}
 private:
 	Graphics * graphics;
 	//Proyection related variables

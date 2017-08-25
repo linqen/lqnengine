@@ -25,7 +25,7 @@ public:
 	Texture* lastTexture;
 	D3DXMATRIX d3dmat;
 
-	bool Initialize(HWND wndHandle);
+	bool Initialize(HWND wndHandle, int screenWidth, int screenHeight);
 	bool SetupScene();
 	void Shutdown();
 	void Clear();

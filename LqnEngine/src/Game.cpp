@@ -6,8 +6,8 @@ Game::Game() {
 bool Game::Initialize(HINSTANCE hInstance) {
 	static MSG	msg;			// Estructura de mensajes
 	static bool	done = false;	// Si debo interrumpir el loop
-	int screenWidth = 1000;
-	int screenHeight = 750;
+	int screenWidth = 1920;
+	int screenHeight = 1080;
 
 	// Registro la clase
 	window.registerClass(hInstance);
@@ -31,7 +31,7 @@ bool Game::Initialize(HINSTANCE hInstance) {
 		return false;
 	}
 
-	if (!graphics.Initialize(window.getHwnd())) {
+	if (!graphics.Initialize(window.getHwnd(), screenWidth, screenHeight)) {
 		LogFile::Write("Can't load engine");
 		return false;
 	}
@@ -69,7 +69,7 @@ void Game::Loop() {
 		else
 		{
 			input.Frame();
-			OnUpdate();
+			done = !OnUpdate();
 			colManager.CheckCollision();
 			graphics.Clear();
 			graphics.Begin();
