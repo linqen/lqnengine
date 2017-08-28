@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\CollisionManager.cpp" />
     <ClCompile Include="src\Entity2D.cpp" />
+    <ClCompile Include="src\Entity3D.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
     <ClCompile Include="src\Input.cpp" />
@@ -33,12 +34,14 @@
     <ClInclude Include="includes\CollisionManager.h" />
     <ClInclude Include="includes\Entity.h" />
     <ClInclude Include="includes\Entity2D.h" />
+    <ClInclude Include="includes\Entity3D.h" />
     <ClInclude Include="includes\Game.h" />
     <ClInclude Include="includes\Graphics.h" />
     <ClInclude Include="includes\ImportExport.h" />
     <ClInclude Include="includes\Input.h" />
     <ClInclude Include="includes\KeyCode.h" />
     <ClInclude Include="includes\LogFile.h" />
+    <ClInclude Include="includes\Mesh.h" />
     <ClInclude Include="includes\Quad.h" />
     <ClInclude Include="includes\Sprite.h" />
     <ClInclude Include="includes\SpriteAnimation.h" />

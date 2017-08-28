@@ -3,9 +3,12 @@
 class MiJuego :public Game {
 	Sprite* sprite;
 	Sprite* sprite2;
+	Mesh* mesh;
 	Quad* quad;
 	TileMap* tilemap;
 	TileMap* tilemap2;
+	//Vertex *vertex;
+	//short * index;
 	Camera* camera;
 	bool movingRight;
 	int mouseX;

@@ -6,6 +6,7 @@ using namespace std;
 #include "Camera.h"
 #include "ImportExport.h"
 #include "Quad.h"
+#include "Mesh.h"
 #include "Sprite.h"
 #include "TileMap.h"
 #include "TextureManager.h"

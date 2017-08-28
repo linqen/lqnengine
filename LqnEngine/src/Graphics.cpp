@@ -12,7 +12,7 @@ bool Graphics::Initialize(HWND wndHandle, int screenWidth, int screenHeight) {
 	// Fill the presentation parameters structure
 	D3DPRESENT_PARAMETERS d3dpp;
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
-	d3dpp.Windowed = FALSE;
+	d3dpp.Windowed = TRUE;
 	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_COPY;
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
@@ -175,6 +175,11 @@ void Graphics::Scale(float xScale, float yScale, float zScale) {
 void Graphics::Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount) {
 	vertexManager.Bind();
 	vertexManager.Draw(vertex, primitive, vertexCount);
+}
+//Draw 3D Object
+void Graphics::Draw3D(VertexUV* vertex,int* index,int vertexCount,int indexCount, _D3DPRIMITIVETYPE primitive) {
+
+
 }
 //Draw Sprite
 void Graphics::DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount) {

@@ -37,6 +37,7 @@ public:
 	void RotateZ(float zRot);
 	void Scale(float xScale, float yScale, float zScale);
 	void Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount);
+	void Draw3D(VertexUV* vertex, int* index, int vertexCount, int indexCount, _D3DPRIMITIVETYPE primitive);
 	void DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount);
 	IDirect3DTexture9* LoadTexture(LPCWSTR texturePath);
 	void BindTexture(Texture* textureToBind);
