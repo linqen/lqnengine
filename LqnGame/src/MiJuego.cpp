@@ -5,75 +5,74 @@ bool MiJuego::OnInit() {
 
 	vector<Vertex> vertex =
 	{
-		{ -3.0f, 3.0f, -3.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ 3.0f, 3.0f, -3.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ -3.0f, -3.0f, -3.0f, D3DCOLOR_XRGB(255, 0, 0), },
-		{ 3.0f, -3.0f, -3.0f, D3DCOLOR_XRGB(0, 255, 255), },
-		{ -3.0f, 3.0f, 3.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ 3.0f, 3.0f, 3.0f, D3DCOLOR_XRGB(255, 0, 0), },
-		{ -3.0f, -3.0f, 3.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ 3.0f, -3.0f, 3.0f, D3DCOLOR_XRGB(0, 255, 255), },
+		// fuselage
+		{ 3.0f, 0.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ 0.0f, 3.0f, -3.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ 0.0f, 0.0f, 10.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ -3.0f, 0.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 255), },
+
+		// left gun
+		{ 3.2f, -1.0f, -3.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ 3.2f, -1.0f, 11.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ 2.0f, 1.0f, 2.0f, D3DCOLOR_XRGB(255, 0, 0), },
+
+		// right gun
+		{ -3.2f, -1.0f, -3.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ -3.2f, -1.0f, 11.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ -2.0f, 1.0f, 2.0f, D3DCOLOR_XRGB(255, 0, 0), },
 	};
+
 	vector<short>  index
 	{
-		0, 1, 2,    // side 1
+		0, 1, 2,    // fuselage
 		2, 1, 3,
-		4, 0, 6,    // side 2
-		6, 0, 2,
-		7, 5, 6,    // side 3
-		6, 5, 4,
-		3, 1, 7,    // side 4
-		7, 1, 5,
-		4, 5, 0,    // side 5
-		0, 5, 1,
-		3, 7, 2,    // side 6
-		2, 7, 6,
+		3, 1, 0,
+		0, 2, 3,
+		4, 5, 6,    // wings
+		7, 8, 9,
 	};
 
 
 
 
-	mesh = new Mesh(&graphics, &textureManager, vertex, index, 8, 36);
-	mesh->yPos = 50;
-	mesh->xPos = -200;
-	mesh->zPos = 100;
-	mesh->xScale = 100;
+	mesh = new Mesh(&graphics, &textureManager, vertex, index);
+	mesh->zPos = 10;
 
 	//The level definition
-	//vector<vector<int>> level1;
-	//level1 =
-	//{
-	//	{ 228,229,230,231 },
-	//	{ 244,245,246,247 }
-	//};
-	////TileMap
-	//tilemap = new TileMap(&graphics, &textureManager, L"tileset.png",
-	//	32, 32, level1, 16);
-	//tilemap->SetXPos(-50);
-	//tilemap->SetYPos(50);
-	//tilemap->SetZPos(110);
+	vector<vector<int>> level1;
+	level1 =
+	{
+		{ 228,229,230,231 },
+		{ 244,245,246,247 }
+	};
+	//TileMap
+	tilemap = new TileMap(&graphics, &textureManager, L"tileset.png",
+		32, 32, level1, 16);
+	tilemap->SetXPos(-50);
+	tilemap->SetYPos(50);
+	tilemap->SetZPos(110);
 
 	////The level definition
-	//vector<vector<int>> level2;
-	//level2 =
-	//{
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//};
-	////TileMap
-	//tilemap2 = new TileMap(&graphics, &textureManager, L"tileset.png",
-	//	32, 32, level2, 16);
-	//tilemap2->SetXPos(-50);
-	//tilemap2->SetYPos(50);
-	//tilemap2->SetZPos(110);
+	vector<vector<int>> level2;
+	level2 =
+	{
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+	};
+	//TileMap
+	tilemap2 = new TileMap(&graphics, &textureManager, L"tileset.png",
+		32, 32, level2, 16);
+	tilemap2->SetXPos(-50);
+	tilemap2->SetYPos(50);
+	tilemap2->SetZPos(110);
 
 	//Sprite
 	sprite = new Sprite(&graphics, &textureManager);
@@ -82,27 +81,27 @@ bool MiJuego::OnInit() {
 	sprite->SetAnimation(animacion);
 	sprite->zPos = 100;
 	//Sprite2
-	//sprite2 = new Sprite(&graphics, &textureManager);
-	//sprite2->SetTexture(L"characters.png");
-	//sprite2->xPos= 50;
-	//sprite2->zPos = 100;
-	//sprite2->SetTextureZone(126, 256, 44, 64);
+	sprite2 = new Sprite(&graphics, &textureManager);
+	sprite2->SetTexture(L"characters.png");
+	sprite2->xPos= 50;
+	sprite2->zPos = 100;
+	sprite2->SetTextureZone(126, 256, 44, 64);
 
-	//sprite->isKinematic = true;
-	//sprite2->isKinematic = true;
+	sprite->isKinematic = true;
+	sprite2->isKinematic = true;
 
-	//sprite->isTrigger = true;
-	//sprite2->isTrigger = true;
+	sprite->isTrigger = true;
+	sprite2->isTrigger = true;
 
-	//colManager.AddCollisionable(sprite, 1);
-	//colManager.AddCollisionable(sprite2, 2);
+	colManager.AddCollisionable(sprite, 1);
+	colManager.AddCollisionable(sprite2, 2);
 
 	//Quad
-	//quad = new Quad(&graphics);
-	//quad->yPos = 50;
-	//quad->xPos = -200;
-	//quad->zPos = 100;
-	//movingRight = true;
+	quad = new Quad(&graphics);
+	quad->yPos = 50;
+	quad->xPos = -200;
+	quad->zPos = 100;
+	movingRight = true;
 	return true;
 }
 bool MiJuego::OnUpdate() {
@@ -113,10 +112,9 @@ bool MiJuego::OnUpdate() {
 	mesh->Update();
 	camera->Update();
 	sprite->Update();
-	//sprite2->Update();
+	sprite2->Update();
 	input.GetMouseLocation(mouseX, mouseY);
-	//sprite2->xPos = mouseX;
-	//sprite2->yPos = -mouseY;
+
 	float mouseSens = 0.05;
 	//First Person Rotation
 	if (mouseX != lastMouseX) {
@@ -178,26 +176,26 @@ bool MiJuego::OnUpdate() {
 		sprite->xPos -= 50 * Time::deltaTime;
 	}
 
-	//if (quad->xPos <= 200&&movingRight) {
-	//	quad->xPos += Time::deltaTime * 50;
-	//	if (quad->xPos >= 200)
-	//		movingRight = false;
-	//}
-	//if(!movingRight) {
-	//	quad->xPos -= Time::deltaTime * 50;
-	//	movingRight = false;
-	//		if (quad->xPos <= -200)
-	//			movingRight = true;
-	//}
+	if (quad->xPos <= 200&&movingRight) {
+		quad->xPos += Time::deltaTime * 50;
+		if (quad->xPos >= 200)
+			movingRight = false;
+	}
+	if(!movingRight) {
+		quad->xPos -= Time::deltaTime * 50;
+		movingRight = false;
+			if (quad->xPos <= -200)
+				movingRight = true;
+	}
 	return true;
 }
 void MiJuego::OnDraw() {
 	mesh->Draw();
-	//tilemap2->Draw();
-	//tilemap->Draw();
-	//sprite->Draw();
-	//sprite2->Draw();
-	//quad->Draw();
+	tilemap2->Draw();
+	tilemap->Draw();
+	sprite->Draw();
+	sprite2->Draw();
+	quad->Draw();
 }
 bool MiJuego::OnShutDown() {
 	return true;
