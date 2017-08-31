@@ -3,23 +3,23 @@ bool MiJuego::OnInit() {
 
 	camera = new Camera(&graphics, 60, 0.1f, 1000.0f);
 
-	vector<Vertex> vertex =
+	vector<VertexUV> vertexUV =
 	{
 		// fuselage
-		{ 3.0f, 0.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ 0.0f, 3.0f, -3.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ 0.0f, 0.0f, 10.0f, D3DCOLOR_XRGB(255, 0, 0), },
-		{ -3.0f, 0.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 255), },
+		{ 3.0f, 0.0f, 0.0f, 0,1.0f, },
+		{ 0.0f, 3.0f, -3.0f, 0,1.0f, },
+		{ 0.0f, 0.0f, 10.0f, 0.5f,1.0f, },
+		{ -3.0f, 0.0f, 0.0f, 0.5f,1.0f, },
 
 		// left gun
-		{ 3.2f, -1.0f, -3.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ 3.2f, -1.0f, 11.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ 2.0f, 1.0f, 2.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ 3.2f, -1.0f, -3.0f, 0,1.0f, },
+		{ 3.2f, -1.0f, 11.0f, 0.5f,1.0f, },
+		{ 2.0f, 1.0f, 2.0f, 0.5f,1.0f, },
 
 		// right gun
-		{ -3.2f, -1.0f, -3.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ -3.2f, -1.0f, 11.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ -2.0f, 1.0f, 2.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ -3.2f, -1.0f, -3.0f, 0,1.0f, },
+		{ -3.2f, -1.0f, 11.0f, 0.5f,1.0f, },
+		{ -2.0f, 1.0f, 2.0f, 0.5f,1.0f, },
 	};
 
 	vector<short>  index
@@ -33,9 +33,10 @@ bool MiJuego::OnInit() {
 	};
 
 
+	
 
-
-	mesh = new Mesh(&graphics, &textureManager, vertex, index);
+	mesh = new Mesh(&graphics, &textureManager, vertexUV, index);
+	mesh->SetTexture(L"tileset.png");
 	mesh->zPos = 10;
 
 	//The level definition
