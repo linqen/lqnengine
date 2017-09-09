@@ -5,6 +5,7 @@ using namespace std;
 #include "VertexUV.h"
 #include "Entity3D.h"
 #include "TextureManager.h"
+#include "ObjImporter.h"
 #include <vector>
 
 class LQN_API Mesh : public Entity3D {
@@ -19,6 +20,7 @@ class LQN_API Mesh : public Entity3D {
 public:
 	Mesh(Graphics *graphics, TextureManager* ptextureManager, vector<VertexUV> pvertex, vector<short> pindex) : Entity3D(graphics) {
 		textureManager = ptextureManager;
+		m_texture = NULL;
 		vertex = new vector<VertexUV>();
 		index = new vector<short>();
 		for (size_t i = 0; i < pvertex.size(); i++)
@@ -26,6 +28,31 @@ public:
 
 		for (size_t i = 0; i < pindex.size(); i++)
 		{index->push_back(pindex[i]);}
+
+		//VertexBuffer
+		graphics->pd3dDevice->CreateVertexBuffer(vertex->size() * sizeof(VertexUV),
+			0,
+			VertexUV::fvf,
+			D3DPOOL_MANAGED,
+			&vBuffer,
+			NULL);
+
+		//IndexBuffer
+		graphics->pd3dDevice->CreateIndexBuffer(index->size() * sizeof(short),
+			0,
+			D3DFMT_INDEX16,
+			D3DPOOL_MANAGED,
+			&iBuffer,
+			NULL);
+
+	}
+	Mesh(Graphics *graphics, TextureManager* ptextureManager, const char * path) : Entity3D(graphics) {
+		textureManager = ptextureManager;
+		m_texture = NULL;
+		vertex = new vector<VertexUV>();
+		index = new vector<short>();
+
+		ObjImporter::LoadOBJ(path, &vertex, &index);
 
 		//VertexBuffer
 		graphics->pd3dDevice->CreateVertexBuffer(vertex->size() * sizeof(VertexUV),

@@ -3,41 +3,45 @@ bool MiJuego::OnInit() {
 
 	camera = new Camera(&graphics, 60, 0.1f, 1000.0f);
 
-	vector<VertexUV> vertexUV =
-	{
-		// fuselage
-		{ 3.0f, 0.0f, 0.0f, 0,1.0f, },
-		{ 0.0f, 3.0f, -3.0f, 0,1.0f, },
-		{ 0.0f, 0.0f, 10.0f, 0.5f,1.0f, },
-		{ -3.0f, 0.0f, 0.0f, 0.5f,1.0f, },
+	//vector<VertexUV> vertexUV =
+	//{
+	//	// fuselage
+	//	{ 3.0f, 0.0f, 0.0f, 0,1.0f, },
+	//	{ 0.0f, 3.0f, -3.0f, 0,1.0f, },
+	//	{ 0.0f, 0.0f, 10.0f, 0.5f,1.0f, },
+	//	{ -3.0f, 0.0f, 0.0f, 0.5f,1.0f, },
 
-		// left gun
-		{ 3.2f, -1.0f, -3.0f, 0,1.0f, },
-		{ 3.2f, -1.0f, 11.0f, 0.5f,1.0f, },
-		{ 2.0f, 1.0f, 2.0f, 0.5f,1.0f, },
+	//	// left gun
+	//	{ 3.2f, -1.0f, -3.0f, 0,1.0f, },
+	//	{ 3.2f, -1.0f, 11.0f, 0.5f,1.0f, },
+	//	{ 2.0f, 1.0f, 2.0f, 0.5f,1.0f, },
 
-		// right gun
-		{ -3.2f, -1.0f, -3.0f, 0,1.0f, },
-		{ -3.2f, -1.0f, 11.0f, 0.5f,1.0f, },
-		{ -2.0f, 1.0f, 2.0f, 0.5f,1.0f, },
-	};
+	//	// right gun
+	//	{ -3.2f, -1.0f, -3.0f, 0,1.0f, },
+	//	{ -3.2f, -1.0f, 11.0f, 0.5f,1.0f, },
+	//	{ -2.0f, 1.0f, 2.0f, 0.5f,1.0f, },
+	//};
 
-	vector<short>  index
-	{
-		0, 1, 2,    // fuselage
-		2, 1, 3,
-		3, 1, 0,
-		0, 2, 3,
-		4, 5, 6,    // wings
-		7, 8, 9,
-	};
+	//vector<short>  index
+	//{
+	//	0, 1, 2,    // fuselage
+	//	2, 1, 3,
+	//	3, 1, 0,
+	//	0, 2, 3,
+	//	4, 5, 6,    // wings
+	//	7, 8, 9,
+	//};
 
 
 	
 
-	mesh = new Mesh(&graphics, &textureManager, vertexUV, index);
-	mesh->SetTexture(L"tileset.png");
-	mesh->zPos = 10;
+	mesh = new Mesh(&graphics, &textureManager, "..\\LqnGame\\Meshes\\lobo.obj");
+	mesh->SetTexture(L"13.jpg");
+	mesh->zPos = 40;
+	mesh->yPos = -40;
+	mesh->xPos = 50;
+	
+
 
 	//The level definition
 	vector<vector<int>> level1;
