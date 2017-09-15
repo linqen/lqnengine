@@ -6,6 +6,8 @@ Entity3D::Entity3D(Graphics *graphics) {
 	this->xPos = 0;
 	this->yPos = 0;
 	this->zPos = 0;
+	this->xRot = 0;
+	this->yRot = 0;
 	this->zRot = 0;
 	this->xScale = 1;
 	this->yScale = 1;
@@ -26,6 +28,8 @@ void Entity3D::Update() {
 void Entity3D::Draw() {
 	graphics->LoadIdentity();
 	graphics->Translate(xPos, yPos, zPos);
+	graphics->RotateX(xRot);
+	graphics->RotateY(yRot);
 	graphics->RotateZ(zRot);
 	graphics->Scale(xScale, yScale, zScale);
 }

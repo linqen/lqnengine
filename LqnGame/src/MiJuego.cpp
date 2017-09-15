@@ -40,7 +40,8 @@ bool MiJuego::OnInit() {
 	mesh->zPos = 40;
 	mesh->yPos = -40;
 	mesh->xPos = 50;
-	
+	mesh->yRot = 3.14;
+	//mesh->xRot = 1;
 
 
 	//The level definition

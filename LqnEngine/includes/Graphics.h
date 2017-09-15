@@ -34,6 +34,8 @@ public:
 	void Present();
 	void LoadIdentity();
 	void Translate(float xPos,float yPos,float zPos);
+	void RotateX(float xRot);
+	void RotateY(float yRot);
 	void RotateZ(float zRot);
 	void Scale(float xScale, float yScale, float zScale);
 	void Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount);

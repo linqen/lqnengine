@@ -161,6 +161,16 @@ void Graphics::Translate(float xPos, float yPos, float zPos) {
 	D3DXMatrixTranslation(&d3dmat, xPos, yPos, zPos);
 	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
 }
+//Rotate the matrix based on X value
+void Graphics::RotateX(float xRot) {
+	D3DXMatrixRotationX(&d3dmat, xRot);
+	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
+}
+//Rotate the matrix based on Y value
+void Graphics::RotateY(float yRot) {
+	D3DXMatrixRotationY(&d3dmat, yRot);
+	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
+}
 //Rotate the matrix based on Z value
 void Graphics::RotateZ(float zRot) {
 	D3DXMatrixRotationZ(&d3dmat, zRot);
