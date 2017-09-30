@@ -14,6 +14,9 @@ using namespace std;
 #include "Input.h"
 #include "CollisionManager.h"
 #include "LogFile.h"
+#include "Scene.h"
+#include "GameObject.h"
+#include "Component.h"
 class LQN_API Game {
 public:
 	Game();

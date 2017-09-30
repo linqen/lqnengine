@@ -17,8 +17,8 @@ private:
 	Texture* m_texture;
 	Tile *actualTile;
 public:
-	TileMap(Graphics *graphics, TextureManager *ptextureManager, LPCWSTR texturePath, float tileSizeWidth, float tileSizeHeight,
-		vector<vector<int>> tiles, unsigned int tilesPerWidth) : Entity2D(graphics) {
+	TileMap(Graphics* graphics, TextureManager *ptextureManager, LPCWSTR texturePath, float tileSizeWidth, float tileSizeHeight,
+		vector<vector<int>> tiles, unsigned int tilesPerWidth) :Entity2D(graphics) {
 		textureManager = ptextureManager;
 		m_texture = textureManager->LoadTexture(texturePath);
 		for (unsigned int i = 0; i < tiles.size(); i++)
@@ -32,23 +32,23 @@ public:
 				float actualOffSetY = ((tileNumber / tilesPerWidth) * tileSizeHeight);
 				actualTile->SetTextureZone(actualOffSetX, actualOffSetY, tileSizeWidth, tileSizeHeight);
 				m_tiles.push_back(actualTile);
-				actualTile->xScale = 5;
-				actualTile->yScale = 5;
+				actualTile->gameObject->xScale = 5;
+				actualTile->gameObject->yScale = 5;
 			}
 	}
 	void SetXPos(float x) {
 		for (unsigned int i = 0; i < m_tiles.size(); i++) {
-			m_tiles[i]->xPos = x;
+			m_tiles[i]->gameObject->xPos = x;
 		}
 	}
 	void SetYPos(float y) {
 		for (unsigned int i = 0; i < m_tiles.size(); i++) {
-			m_tiles[i]->yPos = y;
+			m_tiles[i]->gameObject->yPos = y;
 		}
 	}
 	void SetZPos(float z) {
 		for (unsigned int i = 0; i < m_tiles.size(); i++) {
-			m_tiles[i]->zPos = z;
+			m_tiles[i]->gameObject->zPos = z;
 		}
 	}
 	void Draw() {

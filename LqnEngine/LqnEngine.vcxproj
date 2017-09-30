@@ -33,18 +33,23 @@
   <ItemGroup>
     <ClInclude Include="includes\Camera.h" />
     <ClInclude Include="includes\CollisionManager.h" />
+    <ClInclude Include="includes\Component.h" />
     <ClInclude Include="includes\Entity.h" />
     <ClInclude Include="includes\Entity2D.h" />
     <ClInclude Include="includes\Entity3D.h" />
     <ClInclude Include="includes\Game.h" />
+    <ClInclude Include="includes\GameObject.h" />
     <ClInclude Include="includes\Graphics.h" />
     <ClInclude Include="includes\ImportExport.h" />
     <ClInclude Include="includes\Input.h" />
     <ClInclude Include="includes\KeyCode.h" />
     <ClInclude Include="includes\LogFile.h" />
     <ClInclude Include="includes\Mesh.h" />
+    <ClInclude Include="includes\Node.h" />
+    <ClInclude Include="includes\NodeWithChildren.h" />
     <ClInclude Include="includes\ObjImporter.h" />
     <ClInclude Include="includes\Quad.h" />
+    <ClInclude Include="includes\Scene.h" />
     <ClInclude Include="includes\Sprite.h" />
     <ClInclude Include="includes\SpriteAnimation.h" />
     <ClInclude Include="includes\Texture.h" />

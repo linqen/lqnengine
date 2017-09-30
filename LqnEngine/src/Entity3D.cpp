@@ -1,17 +1,7 @@
 #include "..\includes\Entity3D.h"
 #include <timeapi.h>
 
-Entity3D::Entity3D(Graphics *graphics) {
-	this->graphics = graphics;
-	this->xPos = 0;
-	this->yPos = 0;
-	this->zPos = 0;
-	this->xRot = 0;
-	this->yRot = 0;
-	this->zRot = 0;
-	this->xScale = 1;
-	this->yScale = 1;
-	this->zScale = 1;
+Entity3D::Entity3D(Graphics * graphics):Entity(graphics){
 	this->width = 10;
 	this->height = 10;
 	this->collisionWidth = width * 2;
@@ -26,11 +16,11 @@ void Entity3D::Update() {
 }
 
 void Entity3D::Draw() {
-	graphics->LoadIdentity();
-	graphics->Translate(xPos, yPos, zPos);
-	graphics->RotateX(xRot);
-	graphics->RotateY(yRot);
-	graphics->RotateZ(zRot);
-	graphics->Scale(xScale, yScale, zScale);
+	//graphics->LoadIdentity();
+	//graphics->Translate(xPos, yPos, zPos);
+	//graphics->RotateX(xRot);
+	//graphics->RotateY(yRot);
+	//graphics->RotateZ(zRot);
+	//graphics->Scale(xScale, yScale, zScale);
 }
 void Entity3D::OnCollision(Entity3D* collision) {}

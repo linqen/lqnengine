@@ -15,8 +15,8 @@ private:
 	VertexUV *vertex;
 	Texture* m_texture;
 public:
-	Tile() {}
-	Tile(Graphics *graphics,float tileWidth,float tileHeight,int positionX,int positionY) : Entity2D(graphics) {
+	//Tile() {}
+	Tile(Graphics* graphics,float tileWidth,float tileHeight,int positionX,int positionY) : Entity2D(graphics){
 		vertex = new (nothrow) VertexUV[4];
 		width = tileWidth/ TILEREDUCTION;
 		height = tileHeight/ TILEREDUCTION;

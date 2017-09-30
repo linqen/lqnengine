@@ -11,6 +11,7 @@ using namespace std;
 #include "VertexBufferManager.h"
 #include "Texture.h"
 #include "LogFile.h"
+#include <vector>
 
 #pragma comment (lib,"d3d9.lib")
 #pragma comment (lib,"d3dx9.lib")
@@ -24,6 +25,7 @@ public:
 	VertexBufferManager<VertexUV, VertexUV::fvf> textureVertexManager;
 	Texture* lastTexture;
 	D3DXMATRIX d3dmat;
+	vector <D3DXMATRIX*> matrixStack;
 
 	bool Initialize(HWND wndHandle, int screenWidth, int screenHeight);
 	bool SetupScene();
@@ -44,8 +46,11 @@ public:
 	IDirect3DTexture9* LoadTexture(LPCWSTR texturePath);
 	void BindTexture(Texture* textureToBind);
 	void ReleaseTexture(Texture* textureToUnload);
+	void SetWorldTransform(D3DXMATRIX * worldTransform);
 	void SetViewTransform(D3DXMATRIX * viewTransform);
 	void SetProjectionMatrix(D3DXMATRIX * projectionMatrix);
+	void PushCurrentlMatrix();
+	void PopLastMatrix();
 };
 
 #endif

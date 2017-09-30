@@ -231,6 +231,11 @@ void Graphics::ReleaseTexture(Texture* textureToUnload) {
 	textureToUnload->GetD3DTexture()->Release();
 }
 
+void Graphics::SetWorldTransform(D3DXMATRIX * worldTransform) {
+	d3dmat = *worldTransform;
+	pd3dDevice->SetTransform(D3DTS_WORLD, &d3dmat);
+}
+
 void Graphics::SetViewTransform(D3DXMATRIX * viewTransform) {
 
 	pd3dDevice->SetTransform(D3DTS_VIEW, viewTransform);
@@ -238,4 +243,12 @@ void Graphics::SetViewTransform(D3DXMATRIX * viewTransform) {
 
 void Graphics::SetProjectionMatrix(D3DXMATRIX * projectionMatrix) {
 	pd3dDevice->SetTransform(D3DTS_PROJECTION, projectionMatrix);
+}
+
+void Graphics::PushCurrentlMatrix() {
+	matrixStack.push_back(&d3dmat);
+}
+void Graphics::PopLastMatrix() {
+	SetWorldTransform(matrixStack.back());
+	matrixStack.pop_back();
 }

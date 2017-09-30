@@ -151,6 +151,8 @@ private:
 	float angleOnDegrees;
 	float nearPlane, farPlane;
 	D3DXMATRIX * mProjectionMatrix;
+	//Final view transformation matrix 
+	D3DXMATRIX * m_MatView;
 
 	//View related variables
 	//Stores the position and three vectors 
@@ -166,8 +168,6 @@ private:
 	float m_RotateAroundUp;
 	float m_RotateAroundRight;
 	float m_RotateAroundLookAt;
-	//Final view transformation matrix 
-	D3DXMATRIX * m_MatView;
 
 };
 #endif

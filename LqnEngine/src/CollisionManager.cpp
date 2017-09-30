@@ -28,13 +28,13 @@ void CollisionManager::CheckCollision() {
 	for (size_t i = 0; i < layer1.size(); i++)
 	{
 		ent1 = layer1[i];
-		x1 = ent1->xPos;
-		y1 = ent1->yPos;
+		x1 = ent1->gameObject->xPos;
+		y1 = ent1->gameObject->yPos;
 		for (size_t j = 0; j < layer2.size(); j++)
 		{
 			ent2 = layer2[j];
-			x2 = ent2->xPos;
-			y2 = ent2->yPos;
+			x2 = ent2->gameObject->xPos;
+			y2 = ent2->gameObject->yPos;
 			//use abs for absolute values (Not negatives)
 			dx = abs(x2 - x1);
 			dy = abs(y2 - y1);
@@ -63,7 +63,7 @@ void CollisionManager::MoveOnCollision(Entity2D* ent1, Entity2D* ent2,float px, 
 
 	if (px < py) {
 		//horizontal
-		if (ent1->xPos < ent2->xPos) {
+		if (ent1->gameObject->xPos < ent2->gameObject->xPos) {
 			MoveOnCollisionX(ent1, -px*mass1);
 			MoveOnCollisionX(ent2, px*mass2);
 		}
@@ -74,7 +74,7 @@ void CollisionManager::MoveOnCollision(Entity2D* ent1, Entity2D* ent2,float px, 
 	}
 	else {
 		//vertical
-		if (ent1->yPos < ent2->yPos) {
+		if (ent1->gameObject->yPos < ent2->gameObject->yPos) {
 			MoveOnCollisionY(ent1, -py*mass1);
 			MoveOnCollisionY(ent2, py*mass2);
 		}
@@ -86,12 +86,12 @@ void CollisionManager::MoveOnCollision(Entity2D* ent1, Entity2D* ent2,float px, 
 }
 void CollisionManager::MoveOnCollisionX(Entity2D* entity, float movement) {
 	if (!entity->isKinematic) {
-		entity->xPos += movement;
+		entity->gameObject->xPos += movement;
 	}
 }
 void CollisionManager::MoveOnCollisionY(Entity2D* entity, float movement) {
 	if (!entity->isKinematic) {
-		entity->yPos += movement;
+		entity->gameObject->yPos += movement;
 	}
 }
 

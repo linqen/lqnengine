@@ -8,7 +8,7 @@ using namespace std;
 class LQN_API Quad : public Entity2D{
 	Vertex *vertex;
 public:
-	Quad(Graphics *graphics) : Entity2D (graphics){
+	Quad(Graphics* graphics):Entity2D(graphics){
 		vertex = new Vertex[4];
 		vertex[0] = { -width, height, 0.0f, D3DCOLOR_XRGB(0, 255, 0) };
 		vertex[1] = { -width, -height, 0.0f, D3DCOLOR_XRGB(0, 255, 0) };

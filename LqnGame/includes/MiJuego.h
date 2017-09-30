@@ -1,15 +1,20 @@
 #include "..\..\LqnEngine\includes\Game.h"
 
 class MiJuego :public Game {
-	Sprite* sprite;
-	Sprite* sprite2;
-	Mesh* mesh;
-	Quad* quad;
-	TileMap* tilemap;
-	TileMap* tilemap2;
+	//Sprite* sprite;
+	//Sprite* sprite2;
+	//Mesh* mesh;
+	//Quad* quad;
+	//TileMap* tilemap;
+	//TileMap* tilemap2;
 	//Vertex *vertex;
 	//short * index;
+	Scene * scene;
+	GameObject * goQuad;
 	Camera* camera;
+	GameObject * goMesh;
+	Mesh * mesh;
+
 	bool movingRight;
 	int mouseX;
 	int mouseY;
