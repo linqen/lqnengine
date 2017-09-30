@@ -39,6 +39,7 @@ public:
 	}
 
 	void AddChildren(NodeWithChildren* newNode) {
+		newNode->parent = this;
 		childrens.push_back(newNode);
 	}
 

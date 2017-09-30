@@ -1,16 +1,18 @@
 #include "..\includes\MiJuego.h"
 bool MiJuego::OnInit() {
 
-	camera = new Camera(&graphics, 60, 0.1f, 1000.0f);
-
 	scene = new Scene(&graphics);
+	
+	goCamera = new GameObject(&graphics);
+	scene->AddChildren(goCamera);
+	camera = new Camera(&graphics, 60, 0.1f, 1000.0f);
+	goCamera->AddComponent(camera);
+
 	goQuad = new GameObject(&graphics);
 	scene->AddChildren(goQuad);
 	Quad * quad = new Quad(&graphics);
 	goQuad->AddComponent(quad);
 	
-	//goQuad->yPos = 50;
-	//goQuad->xPos = -200;
 	goQuad->zPos = 100;
 
 	goMesh = new GameObject(&graphics);
@@ -97,7 +99,6 @@ bool MiJuego::OnUpdate() {
 		return false;
 	}
 	
-	camera->Update();
 	scene->Update();
 	input.GetMouseLocation(mouseX, mouseY);
 

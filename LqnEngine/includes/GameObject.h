@@ -9,6 +9,10 @@ public:
 	GameObject(Graphics * graphics) :NodeWithChildren(graphics) {};
 
 	virtual void Update() {
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			components[i]->Update();
+		}
 		NodeWithChildren::Update();
 	}
 

@@ -2,11 +2,12 @@
 #define CAMERA_H
 #include "ImportExport.h"
 #include "Graphics.h"
+#include "Component.h"
 #include <d3dx9.h>
-class LQN_API Camera {
+class LQN_API Camera : public Component {
 public:
 	//Create a camera with default values
-	Camera(Graphics * rGraphics) {
+	Camera(Graphics * rGraphics) : Component(rGraphics) {
 		graphics = rGraphics;
 		m_Position = D3DXVECTOR3(0.0f, 0.0f, 0.0f); 
 		//Set position to 0,0,0 
@@ -28,7 +29,7 @@ public:
 		SetCameraAngle(angleOnDegrees, nearPlane, farPlane);
 	}
 	//Create a camera specifying projection values
-	Camera(Graphics * rGraphics, float rAngleOnDegrees, float rNearPlane, float rFarPlane) {
+	Camera(Graphics * rGraphics, float rAngleOnDegrees, float rNearPlane, float rFarPlane) : Component(rGraphics) {
 		graphics = rGraphics;
 		//Projection
 		nearPlane = rNearPlane;
@@ -92,7 +93,11 @@ public:
 		m_bChanged = true; 
 	}
 
-	void Update() {
+	virtual void Update() {
+		Component::Update();
+	}
+
+	virtual void Draw() {
 		if (m_bChanged) { 
 			//Matrices to store the transformations about our axes 
 			D3DXMATRIX MatTotal; 
@@ -138,6 +143,7 @@ public:
 		//Reset update members
 		m_RotateAroundRight = m_RotateAroundUp = m_RotateAroundLookAt = 0.0f;
 		m_bChanged = false;
+		Component::Draw();
 	}
 	//This is normally used to make a FPS cam
 	void SetRightVectorYCoord(float y) {

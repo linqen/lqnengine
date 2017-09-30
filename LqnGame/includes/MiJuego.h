@@ -12,8 +12,9 @@ class MiJuego :public Game {
 	Scene * scene;
 	GameObject * goQuad;
 	Camera* camera;
-	GameObject * goMesh;
+	GameObject * goCamera;
 	Mesh * mesh;
+	GameObject * goMesh;
 
 	bool movingRight;
 	int mouseX;
