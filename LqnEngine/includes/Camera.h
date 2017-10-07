@@ -60,8 +60,10 @@ public:
 		graphics->SetProjectionMatrix(mProjectionMatrix);
 	}
 
-	void SetPosition(D3DXVECTOR3 *Pos) {
-		m_Position = *Pos; 
+	void SetPosition(D3DXVECTOR3 Pos) {
+		m_Position.x = Pos.x;
+		m_Position.y = Pos.y;
+		m_Position.z = Pos.z;
 		m_bChanged = true;
 	}
 	void MoveForward(float Dist) { 

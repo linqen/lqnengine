@@ -11,8 +11,8 @@ public:
 	string GetName() { return name; }
 	Entity(Graphics* graphics):Component(graphics) {}
 protected:
-	virtual void Update() {};
-	virtual void Draw() {};
+	virtual void Update() { Component::Update(); };
+	virtual void Draw() { Component::Draw(); };
 private:
 	string name;
 };

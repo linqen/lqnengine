@@ -17,6 +17,7 @@ using namespace std;
 #include "Scene.h"
 #include "GameObject.h"
 #include "Component.h"
+#include "CameraMovement.h"
 class LQN_API Game {
 public:
 	Game();

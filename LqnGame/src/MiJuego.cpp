@@ -7,6 +7,10 @@ bool MiJuego::OnInit() {
 	scene->AddChildren(goCamera);
 	camera = new Camera(&graphics, 60, 0.1f, 1000.0f);
 	goCamera->AddComponent(camera);
+	cameraMov = new CameraMovement(&graphics, camera, &input);
+	goCamera->AddComponent(cameraMov);
+	goCamera->zPos = -300;
+	camera->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -50.0f));
 
 	goQuad = new GameObject(&graphics);
 	scene->AddChildren(goQuad);
@@ -27,163 +31,113 @@ bool MiJuego::OnInit() {
 	mesh->gameObject->yRot = 3.14;
 
 
+	goTileMap2 = new GameObject(&graphics);
 	////The level definition
-	//vector<vector<int>> level1;
-	//level1 =
-	//{
-	//	{ 228,229,230,231 },
-	//	{ 244,245,246,247 }
-	//};
-	////TileMap
-	//tilemap = new TileMap(&graphics, &textureManager, L"tileset.png",
-	//	32, 32, level1, 16);
-	//tilemap->SetXPos(-50);
-	//tilemap->SetYPos(50);
-	//tilemap->SetZPos(110);
+	vector<vector<int>> level2;
+	level2 =
+	{
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+		{ 163,163,163,163,163,163,163,163,163,163, },
+	};
+	//TileMap
+	tilemap2 = new TileMap(&graphics, &textureManager, L"tileset.png",
+		32, 32, level2, 16);
+	goTileMap2->AddComponent(tilemap2);
+	goTileMap2->zPos = 100;
+	goTileMap2->xScale = 5;
+	goTileMap2->yScale = 5;
+	scene->AddChildren(goTileMap2);
 
-	//////The level definition
-	//vector<vector<int>> level2;
-	//level2 =
-	//{
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//	{ 163,163,163,163,163,163,163,163,163,163, },
-	//};
-	////TileMap
-	//tilemap2 = new TileMap(&graphics, &textureManager, L"tileset.png",
-	//	32, 32, level2, 16);
-	//tilemap2->SetXPos(-50);
-	//tilemap2->SetYPos(50);
-	//tilemap2->SetZPos(110);
+	goTileMap = new GameObject(&graphics);
+	//The level definition
+	vector<vector<int>> level1;
+	level1 =
+	{
+		{ 228,229,230,231 },
+		{ 244,245,246,247 }
+	};
+	//TileMap
+	tilemap = new TileMap(&graphics, &textureManager, L"tileset.png",
+		32, 32, level1, 16);
+	goTileMap->AddComponent(tilemap);
+	goTileMap->zPos=100;
+	goTileMap->xScale = 5;
+	goTileMap->yScale = 5;
 
-	////Sprite
-	//sprite = new Sprite(&graphics, &textureManager);
-	//sprite->SetTexture(L"sonic.png");
-	//SpriteAnimation * animacion = new SpriteAnimation(6, 6, 129, 57, 35, 35, 0.1);
-	//sprite->SetAnimation(animacion);
-	//sprite->zPos = 100;
-	////Sprite2
-	//sprite2 = new Sprite(&graphics, &textureManager);
-	//sprite2->SetTexture(L"characters.png");
-	//sprite2->xPos= 50;
-	//sprite2->zPos = 100;
-	//sprite2->SetTextureZone(126, 256, 44, 64);
+	scene->AddChildren(goTileMap);
 
-	//sprite->isKinematic = true;
-	//sprite2->isKinematic = true;
+	goSprite = new GameObject(&graphics);
+	//Sprite
+	sprite = new Sprite(&graphics, &textureManager);
+	goSprite->AddComponent(sprite);
+	sprite->SetTexture(L"sonic.png");
+	SpriteAnimation * animacion = new SpriteAnimation(6, 6, 129, 57, 35, 35, 0.1);
+	sprite->SetAnimation(animacion);
+	sprite->gameObject->zPos = 100;
+	sprite->gameObject->xPos = -30;
+	scene->AddChildren(goSprite);
 
-	//sprite->isTrigger = true;
-	//sprite2->isTrigger = true;
+	goSprite2 = new GameObject(&graphics);
+	//Sprite2
+	sprite2 = new Sprite(&graphics, &textureManager);
+	goSprite2->AddComponent(sprite2);
+	sprite2->SetTexture(L"characters.png");
+	sprite2->gameObject->xPos= 50;
+	sprite2->gameObject->zPos = 100;
+	sprite2->SetTextureZone(126, 256, 44, 64);
+	scene->AddChildren(goSprite2);
 
-	//colManager.AddCollisionable(sprite, 1);
-	//colManager.AddCollisionable(sprite2, 2);
+	sprite->isKinematic = false;
+	sprite2->isKinematic = true;
+	
+	sprite->isTrigger = false;
+	sprite2->isTrigger = false;
+	
+	colManager.AddCollisionable(sprite, 1);
+	colManager.AddCollisionable(sprite2, 2);
+	colManager.AddCollisionable(quad, 2);
 
-	////Quad
-	//quad = new Quad(&graphics);
-	//quad->yPos = 50;
-	//quad->xPos = -200;
-	//quad->zPos = 100;
-	//movingRight = true;
+	goQuad2 = new GameObject(&graphics);
+	//Quad2
+	quad2 = new Quad(&graphics);
+	goQuad2->AddComponent(quad2);
+	quad2->gameObject->yPos = 50;
+	quad2->gameObject->zPos = 100;
+	goQuad->AddChildren(goQuad2);
 	return true;
 }
 bool MiJuego::OnUpdate() {
-
 	if (input.GetKey(KeyCode::ESCAPE)) {
 		return false;
 	}
-	
-	scene->Update();
-	input.GetMouseLocation(mouseX, mouseY);
-
-	float mouseSens = 0.05;
-	//First Person Rotation
-	if (mouseX != lastMouseX) {
-		camera->Yaw((mouseX - lastMouseX)*mouseSens * Time::deltaTime);
-	}
-
-	if (mouseY != lastMouseY) {
-		camera->Pitch((mouseY - lastMouseY) * mouseSens * Time::deltaTime);
-	}
-
-	lastMouseX = mouseX;
-	lastMouseY = mouseY;
-	camera->SetRightVectorYCoord(0);
-	if (input.GetKey(KeyCode::Y)) {
-		camera->Roll(5 * Time::deltaTime);
-	}
-
-	if (input.GetKey(KeyCode::H)) {
-		camera->Roll(-5 * Time::deltaTime);
-	}
-
-
-	//First Person Movement
-	if (input.GetKey(KeyCode::W)) {
-		camera->MoveForward(5 * Time::deltaTime);
-	}
-
-	if (input.GetKey(KeyCode::S)) {
-		camera->MoveForward(-5 * Time::deltaTime);
-	}
-	if (input.GetKey(KeyCode::D)) {
-		camera->MoveRight(5 * Time::deltaTime);
-	}
-
-	if (input.GetKey(KeyCode::A)) {
-		camera->MoveRight(-5 * Time::deltaTime);
-	}
-
-	if (input.GetKey(KeyCode::Q)) {
-		camera->MoveUp(5 * Time::deltaTime);
-	}
-
-	if (input.GetKey(KeyCode::E)) {
-		camera->MoveUp(-5 * Time::deltaTime);
-	}
-
-
-/*
+	//Code to move the quad, it could be putted on a specific script
 	if (input.GetKey(KeyCode::UPARROW)) {
-		sprite->yPos += 50 * Time::deltaTime;
+		sprite->gameObject->yPos += 50 * Time::deltaTime;
 	}
 	if (input.GetKey(KeyCode::DOWNARROW)) {
-		sprite->yPos -= 50 * Time::deltaTime;
+		sprite->gameObject->yPos -= 50 * Time::deltaTime;
 	}
 	if (input.GetKey(KeyCode::RIGHTARROW)) {
-		sprite->xPos += 50 * Time::deltaTime;
+		sprite->gameObject->xPos += 50 * Time::deltaTime;
 	}
 	if (input.GetKey(KeyCode::LEFTARROW)) {
-		sprite->xPos -= 50 * Time::deltaTime;
+		sprite->gameObject->xPos -= 50 * Time::deltaTime;
 	}
+	//end of quad movement
 
-	if (quad->xPos <= 200&&movingRight) {
-		quad->xPos += Time::deltaTime * 50;
-		if (quad->xPos >= 200)
-			movingRight = false;
-	}
-	if(!movingRight) {
-		quad->xPos -= Time::deltaTime * 50;
-		movingRight = false;
-			if (quad->xPos <= -200)
-				movingRight = true;
-	}*/
+	scene->Update();
 	return true;
 }
 void MiJuego::OnDraw() {
 	scene->Draw();
-	//mesh->Draw();
-	//tilemap2->Draw();
-	//tilemap->Draw();
-	//sprite->Draw();
-	//sprite2->Draw();
-	//quad->Draw();
 }
 bool MiJuego::OnShutDown() {
 	return true;

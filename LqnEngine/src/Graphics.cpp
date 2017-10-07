@@ -160,26 +160,31 @@ void Graphics::LoadIdentity() {
 void Graphics::Translate(float xPos, float yPos, float zPos) {
 	D3DXMatrixTranslation(&d3dmat, xPos, yPos, zPos);
 	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
+	pd3dDevice->GetTransform(D3DTS_WORLD, &d3dmat);
 }
 //Rotate the matrix based on X value
 void Graphics::RotateX(float xRot) {
 	D3DXMatrixRotationX(&d3dmat, xRot);
 	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
+	pd3dDevice->GetTransform(D3DTS_WORLD, &d3dmat);
 }
 //Rotate the matrix based on Y value
 void Graphics::RotateY(float yRot) {
 	D3DXMatrixRotationY(&d3dmat, yRot);
 	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
+	pd3dDevice->GetTransform(D3DTS_WORLD, &d3dmat);
 }
 //Rotate the matrix based on Z value
 void Graphics::RotateZ(float zRot) {
 	D3DXMatrixRotationZ(&d3dmat, zRot);
 	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
+	pd3dDevice->GetTransform(D3DTS_WORLD, &d3dmat);
 }
 //Scale the matrix based on XYZ coordinates
 void Graphics::Scale(float xScale, float yScale, float zScale) {
 	D3DXMatrixScaling(&d3dmat, xScale, yScale, zScale);
 	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
+	pd3dDevice->GetTransform(D3DTS_WORLD, &d3dmat);
 }
 //Draw 2D Object
 void Graphics::Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount) {
@@ -246,9 +251,9 @@ void Graphics::SetProjectionMatrix(D3DXMATRIX * projectionMatrix) {
 }
 
 void Graphics::PushCurrentlMatrix() {
-	matrixStack.push_back(&d3dmat);
+	matrixStack.push_back(d3dmat);
 }
 void Graphics::PopLastMatrix() {
-	SetWorldTransform(matrixStack.back());
+	SetWorldTransform(&matrixStack.back());
 	matrixStack.pop_back();
 }

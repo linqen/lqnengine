@@ -32,29 +32,14 @@ public:
 				float actualOffSetY = ((tileNumber / tilesPerWidth) * tileSizeHeight);
 				actualTile->SetTextureZone(actualOffSetX, actualOffSetY, tileSizeWidth, tileSizeHeight);
 				m_tiles.push_back(actualTile);
-				actualTile->gameObject->xScale = 5;
-				actualTile->gameObject->yScale = 5;
 			}
 	}
-	void SetXPos(float x) {
-		for (unsigned int i = 0; i < m_tiles.size(); i++) {
-			m_tiles[i]->gameObject->xPos = x;
-		}
-	}
-	void SetYPos(float y) {
-		for (unsigned int i = 0; i < m_tiles.size(); i++) {
-			m_tiles[i]->gameObject->yPos = y;
-		}
-	}
-	void SetZPos(float z) {
-		for (unsigned int i = 0; i < m_tiles.size(); i++) {
-			m_tiles[i]->gameObject->zPos = z;
-		}
-	}
+
 	void Draw() {
 		for (unsigned int i = 0; i < m_tiles.size(); i++) {
 			m_tiles[i]->Draw();
 		}
+
 	}
 	void Update() {}
 	void OnCollision(Entity2D*collision) {}

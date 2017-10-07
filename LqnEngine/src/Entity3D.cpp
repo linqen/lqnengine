@@ -12,15 +12,10 @@ Entity3D::Entity3D(Graphics * graphics):Entity(graphics){
 }
 
 void Entity3D::Update() {
-
+	Entity::Update();
 }
 
 void Entity3D::Draw() {
-	//graphics->LoadIdentity();
-	//graphics->Translate(xPos, yPos, zPos);
-	//graphics->RotateX(xRot);
-	//graphics->RotateY(yRot);
-	//graphics->RotateZ(zRot);
-	//graphics->Scale(xScale, yScale, zScale);
+	Entity::Draw();
 }
 void Entity3D::OnCollision(Entity3D* collision) {}

@@ -1,26 +1,26 @@
 #include "..\..\LqnEngine\includes\Game.h"
 
 class MiJuego :public Game {
-	//Sprite* sprite;
-	//Sprite* sprite2;
-	//Mesh* mesh;
-	//Quad* quad;
-	//TileMap* tilemap;
-	//TileMap* tilemap2;
-	//Vertex *vertex;
-	//short * index;
+	GameObject * goSprite;
+	Sprite* sprite;
+	GameObject * goSprite2;
+	Sprite* sprite2;
+	GameObject * goQuad2;
+	Quad* quad2;
+	GameObject * goTileMap;
+	TileMap* tilemap;
+	GameObject * goTileMap2;
+	TileMap* tilemap2;
+	Vertex *vertex;
+	short * index;
 	Scene * scene;
 	GameObject * goQuad;
 	Camera* camera;
+	CameraMovement * cameraMov;
 	GameObject * goCamera;
 	Mesh * mesh;
 	GameObject * goMesh;
 
-	bool movingRight;
-	int mouseX;
-	int mouseY;
-	int lastMouseX;
-	int lastMouseY;
 protected:
 	bool OnInit();
 	bool OnUpdate();

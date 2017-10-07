@@ -25,7 +25,7 @@ public:
 	VertexBufferManager<VertexUV, VertexUV::fvf> textureVertexManager;
 	Texture* lastTexture;
 	D3DXMATRIX d3dmat;
-	vector <D3DXMATRIX*> matrixStack;
+	vector <D3DXMATRIX> matrixStack;
 
 	bool Initialize(HWND wndHandle, int screenWidth, int screenHeight);
 	bool SetupScene();

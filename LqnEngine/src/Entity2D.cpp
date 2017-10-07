@@ -13,13 +13,10 @@ Entity2D::Entity2D(Graphics *graphics):Entity(graphics){
 }
 
 void Entity2D::Update() {
-
+	Entity::Update();
 }
 
 void Entity2D::Draw() {
-	//graphics->LoadIdentity();
-	//graphics->Translate(xPos, yPos, zPos);
-	//graphics->RotateZ(zRot);
-	//graphics->Scale(xScale, yScale, zScale);
+	Entity::Draw();
 }
 void Entity2D::OnCollision(Entity2D* collision) {}
