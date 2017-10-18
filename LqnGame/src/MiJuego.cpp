@@ -7,7 +7,7 @@ bool MiJuego::OnInit() {
 	scene->AddChildren(goCamera);
 	camera = new Camera(&graphics, 60, 0.1f, 1000.0f);
 	goCamera->AddComponent(camera);
-	cameraMov = new CameraMovement(&graphics, camera, &input);
+	cameraMov = new CameraMovement(&graphics, camera, &input, 50);
 	goCamera->AddComponent(cameraMov);
 	goCamera->zPos = -300;
 	camera->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -50.0f));
@@ -22,6 +22,7 @@ bool MiJuego::OnInit() {
 	goMesh = new GameObject(&graphics);
 	scene->AddChildren(goMesh);
 	mesh = new Mesh(&graphics, &textureManager, "..\\LqnGame\\Meshes\\lobo.obj");
+	mesh->SetDebugMode(true);
 	goMesh->AddComponent(mesh);
 	
 	mesh->SetTexture(L"13.jpg");

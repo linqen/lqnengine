@@ -3,6 +3,7 @@
 using namespace std;
 
 #include "VertexUV.h"
+#include "Vertex.h"
 #include "Entity3D.h"
 #include "TextureManager.h"
 #include "ObjImporter.h"
@@ -14,9 +15,13 @@ class LQN_API Mesh : public Entity3D {
 	IDirect3DVertexBuffer9* vBuffer;
 	IDirect3DIndexBuffer9* iBuffer;
 	Texture* m_texture;
+	Mesh* boundingBox=NULL;
 	TextureManager* textureManager;
 	VOID* pVoid;
 	VOID* piVoid;
+	D3DXVECTOR3 * minBounds=NULL;
+	D3DXVECTOR3 * maxBounds=NULL;
+	bool debugMode=false;
 public:
 	Mesh(Graphics *graphics, TextureManager* ptextureManager, vector<VertexUV> pvertex, vector<short> pindex) : Entity3D(graphics) {
 		textureManager = ptextureManager;
@@ -94,11 +99,190 @@ public:
 		graphics->pd3dDevice->SetStreamSource(0, vBuffer, 0, sizeof(VertexUV));
 		graphics->pd3dDevice->SetIndices(iBuffer);
 		graphics->pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, vertex->size(), 0, index->size() / 3);
+		//Si se mueve chequeo maximo y minimo denuevo
+		if (debugMode) {
+			if (boundingBox != NULL)
+			{
+				graphics->pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+				graphics->PushCurrentlMatrix();
+				graphics->LoadIdentity();
+				boundingBox->Draw();
+				graphics->PopLastMatrix();
+				graphics->pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+			}
+			else {
+				SetMinBounds();
+				SetMaxBounds();
+				vector<VertexUV> boundingVertex;
+				boundingVertex.push_back(VertexUV(minBounds->x, minBounds->y, minBounds->z, 0, 0));
+				boundingVertex.push_back(VertexUV(maxBounds->x, minBounds->y, minBounds->z, 0, 0));
+				boundingVertex.push_back(VertexUV(maxBounds->x, maxBounds->y, minBounds->z, 0, 0));
+				boundingVertex.push_back(VertexUV(minBounds->x, maxBounds->y, minBounds->z, 0, 0));
+				boundingVertex.push_back(VertexUV(minBounds->x, minBounds->y, maxBounds->z, 0, 0));
+				boundingVertex.push_back(VertexUV(maxBounds->x, minBounds->y, maxBounds->z, 0, 0));
+				boundingVertex.push_back(VertexUV(maxBounds->x, maxBounds->y, maxBounds->z, 0, 0));
+				boundingVertex.push_back(VertexUV(minBounds->x, maxBounds->y, maxBounds->z, 0, 0));
+
+				vector<short> boundingIndeces;
+				//Front
+				boundingIndeces.push_back(0);
+				boundingIndeces.push_back(1);
+				boundingIndeces.push_back(2);
+				boundingIndeces.push_back(0);
+				boundingIndeces.push_back(2);
+				boundingIndeces.push_back(3);
+				//Back
+				boundingIndeces.push_back(4);
+				boundingIndeces.push_back(5);
+				boundingIndeces.push_back(6);
+				boundingIndeces.push_back(4);
+				boundingIndeces.push_back(6);
+				boundingIndeces.push_back(7);
+				//Left
+				boundingIndeces.push_back(0);
+				boundingIndeces.push_back(4);
+				boundingIndeces.push_back(7);
+				boundingIndeces.push_back(0);
+				boundingIndeces.push_back(7);
+				boundingIndeces.push_back(3);
+				//Right
+				boundingIndeces.push_back(1);
+				boundingIndeces.push_back(5);
+				boundingIndeces.push_back(6);
+				boundingIndeces.push_back(1);
+				boundingIndeces.push_back(6);
+				boundingIndeces.push_back(2);
+				//Top
+				boundingIndeces.push_back(3);
+				boundingIndeces.push_back(2);
+				boundingIndeces.push_back(6);
+				boundingIndeces.push_back(3);
+				boundingIndeces.push_back(6);
+				boundingIndeces.push_back(7);
+				//Down
+				boundingIndeces.push_back(0);
+				boundingIndeces.push_back(1);
+				boundingIndeces.push_back(5);
+				boundingIndeces.push_back(0);
+				boundingIndeces.push_back(5);
+				boundingIndeces.push_back(4);
+
+				//Multiplicar vertices por matriz de translacion, rotacion y escala
+
+				boundingBox = new Mesh(graphics, textureManager, boundingVertex, boundingIndeces);
+				//Pushear actual
+				//seteo identidad
+				graphics->pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+				graphics->PushCurrentlMatrix();
+				graphics->LoadIdentity();
+				boundingBox->Draw();
+				graphics->PopLastMatrix();
+				graphics->pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+				//Popear
+			}
+		}
+
 	}
 
 	void SetTexture(LPCWSTR texturePath) {
 		m_texture = textureManager->LoadTexture(texturePath);
 	}
+
+	void SetDebugMode(bool status) {
+		debugMode = status;
+	}
+
+	D3DXVECTOR3 GetMinBounds() {
+		if (minBounds == NULL) {
+			SetMinBounds();
+		}
+		return D3DXVECTOR3(minBounds->x, minBounds->y, minBounds->z);
+	}
+
+	D3DXVECTOR3 GetMaxBounds() {
+		if (maxBounds == NULL) {
+			SetMaxBounds();
+		}
+		return D3DXVECTOR3(maxBounds->x, maxBounds->y, maxBounds->z);
+	}
+
+
+	private:
+	void SetMaxBounds() {
+		if (maxBounds == NULL) {
+			float x, y, z;
+			D3DXVECTOR4 transformedVertex;
+			D3DXVECTOR3 actualVertex;
+			
+			for (size_t i = 0; i < vertex->size(); i++)
+			{
+				actualVertex.x = vertex->at(i).x;
+				actualVertex.y = vertex->at(i).y;
+				actualVertex.z = vertex->at(i).z;
+
+				D3DXVec3Transform(&transformedVertex, &actualVertex, &graphics->d3dmat);
+
+				if (i == 0)
+				{
+					x = transformedVertex.x;
+					y = transformedVertex.y;
+					z = transformedVertex.z;
+				}
+				else
+				{
+					if (x < transformedVertex.x) {
+						x = transformedVertex.x;
+					}
+					if (y < transformedVertex.y) {
+						y = transformedVertex.y;
+					}
+					if (z < transformedVertex.z) {
+						z = transformedVertex.z;
+					}
+				}
+			}
+			maxBounds = new D3DXVECTOR3(x, y, z);
+		}
+	}
+
+	void SetMinBounds() {
+		if (minBounds == NULL) {
+			float x, y, z;
+
+			D3DXVECTOR4 transformedVertex;
+			D3DXVECTOR3 actualVertex;
+
+			for (size_t i = 0; i < vertex->size(); i++)
+			{
+				actualVertex.x = vertex->at(i).x;
+				actualVertex.y = vertex->at(i).y;
+				actualVertex.z = vertex->at(i).z;
+
+				D3DXVec3Transform(&transformedVertex, &actualVertex, &graphics->d3dmat);
+
+				if (i == 0)
+				{
+					x = transformedVertex.x;
+					y = transformedVertex.y;
+					z = transformedVertex.z;
+				}
+				else
+				{
+					if (x > transformedVertex.x) {
+						x = transformedVertex.x;
+					}
+					if (y > transformedVertex.y) {
+						y = transformedVertex.y;
+					}
+					if (z > transformedVertex.z) {
+						z = transformedVertex.z;
+					}
+				}
+			}
+			minBounds = new D3DXVECTOR3(x, y, z);
+		}
+	}
+
 };
 
 

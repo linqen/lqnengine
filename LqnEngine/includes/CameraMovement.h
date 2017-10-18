@@ -9,9 +9,10 @@
 
 class LQN_API CameraMovement : public Component {
 public:
-	CameraMovement(Graphics* graphics,Camera* rcamera, Input* rinput) : Component(graphics) {
+	CameraMovement(Graphics* graphics,Camera* rcamera, Input* rinput, float rkeyMovementSpeed) : Component(graphics) {
 		camera = rcamera;
 		input = rinput;
+		keyMovementSpeed = rkeyMovementSpeed;
 	}
 
 	void Update() {
@@ -32,36 +33,36 @@ public:
 		lastMouseY = mouseY;
 		camera->SetRightVectorYCoord(0);
 		if (input->GetKey(KeyCode::Y)) {
-			camera->Roll(5 * Time::deltaTime);
+			camera->Roll(keyMovementSpeed * Time::deltaTime);
 		}
 
 		if (input->GetKey(KeyCode::H)) {
-			camera->Roll(-5 * Time::deltaTime);
+			camera->Roll(-keyMovementSpeed * Time::deltaTime);
 		}
 
 
 		//First Person Movement
 		if (input->GetKey(KeyCode::W)) {
-			camera->MoveForward(5 * Time::deltaTime);
+			camera->MoveForward(keyMovementSpeed * Time::deltaTime);
 		}
 
 		if (input->GetKey(KeyCode::S)) {
-			camera->MoveForward(-5 * Time::deltaTime);
+			camera->MoveForward(-keyMovementSpeed * Time::deltaTime);
 		}
 		if (input->GetKey(KeyCode::D)) {
-			camera->MoveRight(5 * Time::deltaTime);
+			camera->MoveRight(keyMovementSpeed * Time::deltaTime);
 		}
 
 		if (input->GetKey(KeyCode::A)) {
-			camera->MoveRight(-5 * Time::deltaTime);
+			camera->MoveRight(-keyMovementSpeed * Time::deltaTime);
 		}
 
 		if (input->GetKey(KeyCode::Q)) {
-			camera->MoveUp(5 * Time::deltaTime);
+			camera->MoveUp(keyMovementSpeed * Time::deltaTime);
 		}
 
 		if (input->GetKey(KeyCode::E)) {
-			camera->MoveUp(-5 * Time::deltaTime);
+			camera->MoveUp(-keyMovementSpeed * Time::deltaTime);
 		}
 
 		Component::Update();
@@ -74,6 +75,7 @@ private:
 	int mouseY;
 	int lastMouseX;
 	int lastMouseY;
+	float keyMovementSpeed;
 };
 
 
