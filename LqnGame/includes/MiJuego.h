@@ -28,6 +28,11 @@ class MiJuego :public Game {
 	Mesh * mesh2;
 	GameObject * goMesh2;
 
+	Mesh * mesh3;
+	GameObject * goMesh3;
+	Mesh * mesh4;
+	GameObject * goMesh4;
+
 protected:
 	bool OnInit();
 	bool OnUpdate();

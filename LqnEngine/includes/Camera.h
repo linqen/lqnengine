@@ -182,9 +182,6 @@ public:
 
 	}
 
-	//D3DXVECTOR3 frustumBoxMinBounds;
-	//D3DXVECTOR3 frustumBoxMaxBounds;
-
 	D3DXVECTOR3* GetFrustMaxBound() {
 		return &frustumBoxMaxBounds;
 	}
@@ -219,28 +216,17 @@ private:
 	float m_RotateAroundRight;
 	float m_RotateAroundLookAt;
 	//frustumCulling
-	float arcTangFOV = 0;
 	D3DXVECTOR3 frustumBoxMinBounds;
 	D3DXVECTOR3 frustumBoxMaxBounds;
 	D3DXPLANE m_planes[6];
 	D3DXVECTOR3 * frustumVertices[5];
 
 	void ConstructFrustumBox() {
-		if (arcTangFOV == 0) {
-			arcTangFOV = atan(D3DXToRadian(angleOnDegrees));
-		}
-		frustumBoxMaxBounds = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
-		//Roto el vector
-		//D3DXVEC
-		D3DXMATRIX rotationMatrix;
-		D3DXMatrixRotationY(&rotationMatrix, D3DXToRadian(angleOnDegrees));
 		D3DXVECTOR4 temporalMaxBounds;
-		D3DXVec3Transform(&temporalMaxBounds, &frustumBoxMaxBounds, &rotationMatrix);
 
-		//frustumBoxMaxBounds
-		temporalMaxBounds *= arcTangFOV*farPlane;
-		temporalMaxBounds.y = temporalMaxBounds.x*((float)graphics->viewport.Height / graphics->viewport.Width);
-		temporalMaxBounds.z = sqrt(pow(temporalMaxBounds.x, 2) + pow(farPlane, 2));
+		temporalMaxBounds.y = 2*farPlane*tan(D3DXToRadian(angleOnDegrees * 0.5f));
+		temporalMaxBounds.x = temporalMaxBounds.y*((float)graphics->viewport.Width / graphics->viewport.Height);
+		temporalMaxBounds.z = farPlane;
 
 		frustumVertices[0] = new D3DXVECTOR3(temporalMaxBounds.x, temporalMaxBounds.y, temporalMaxBounds.z);
 		frustumVertices[1] = new D3DXVECTOR3(temporalMaxBounds.x, -temporalMaxBounds.y, temporalMaxBounds.z);

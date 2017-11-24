@@ -8,6 +8,9 @@ public:
 	GameObject(Graphics * graphics) :NodeWithChildren(graphics) {
 		SetGameObjectMinBounds(new D3DXVECTOR3(this->xPos, this->yPos, this->zPos));
 		SetGameObjectMaxBounds(new D3DXVECTOR3(this->xPos, this->yPos, this->zPos));
+		globalMaxBounds = GetGlobalMaxBounds();
+		globalMinBounds = GetGlobalMinBounds();
+		SetGlobalVerticesWithBounds();
 	};
 
 	virtual void Update() {
@@ -24,7 +27,7 @@ public:
 		{
 			components[i]->Update();
 		}
-
+		//Check again because components maybe change something
 		if (xPos != lastXPos ||	yPos != lastYPos ||	zPos != lastZPos ||
 			xRot != lastXRot ||	yRot != lastYRot ||	zRot != lastZRot ||
 			xScale != lastXScale ||	yScale != lastYScale ||	zScale != lastZScale)
@@ -42,6 +45,9 @@ public:
 		}
 		if (hasSettedBounds) {
 			SetVerticesWithBounds();
+			globalMaxBounds = GetGlobalMaxBounds();
+			globalMinBounds = GetGlobalMinBounds();
+			SetGlobalVerticesWithBounds();
 		}
 		lastXPos = xPos;
 		lastYPos = yPos;
@@ -57,8 +63,19 @@ public:
 	}
 
 	virtual void Draw(D3DXPLANE* frustumPlane, D3DXVECTOR3* minFrustumBoxBounds, D3DXVECTOR3* maxFrustumBoxBounds) {
-		if (CheckIsInFrustumBox(minFrustumBoxBounds, maxFrustumBoxBounds,GetGlobalMinBounds(),GetGlobalMaxBounds())
-			& CheckIsInFrustum(frustumPlane)) {
+
+		for (size_t i = 0; i < childrens.size(); i++)
+		{
+			//Check if !hasChange because if hasChange i already calculate Global on Update
+			if(((GameObject*)childrens[i])->GetHasChange() && !hasChange){
+				globalMaxBounds = GetGlobalMaxBounds();
+				globalMinBounds = GetGlobalMinBounds();
+				SetGlobalVerticesWithBounds();
+			}
+		}
+
+		if (CheckIsInFrustumBox(minFrustumBoxBounds, maxFrustumBoxBounds, globalMinBounds, globalMaxBounds)
+			& CheckIsInFrustum(frustumPlane,globalVertices,1)) {
 			graphics->PushCurrentlMatrix();
 			graphics->Translate(xPos, yPos, zPos);
 			graphics->RotateX(xRot);
@@ -67,7 +84,7 @@ public:
 			graphics->Scale(xScale, yScale, zScale);
 			if (GetGameObjectMinBounds()!=NULL && GetGameObjectMaxBounds() !=NULL &&
 				CheckIsInFrustumBox(minFrustumBoxBounds, maxFrustumBoxBounds, GetGameObjectMinBounds(), GetGameObjectMaxBounds())
-				& CheckIsInFrustum(frustumPlane)) {
+				& CheckIsInFrustum(frustumPlane,vertices,2)) {
 				for (size_t i = 0; i < components.size(); i++)
 				{
 					components[i]->Draw();
@@ -119,18 +136,18 @@ public:
 		return false;
 	}
 
-	bool CheckIsInFrustum(D3DXPLANE* frustumPlane) {
+	bool CheckIsInFrustum(D3DXPLANE* frustumPlane, vector<D3DXVECTOR3*> m_vertices,int debugValue) {
 		for (size_t i = 0; i < 6; i++)
 		{
 			int vertexOut = 0;
-			for (size_t j = 0; j < vertices.size(); j++)
+			for (size_t j = 0; j < m_vertices.size(); j++)
 			{
-				if (D3DXPlaneDotCoord(&frustumPlane[i], vertices[j]) < 0.0f) {
+				if (D3DXPlaneDotCoord(&frustumPlane[i], m_vertices[j]) < 0.0f) {
 					vertexOut++;
 				}
 			}
-			if (vertexOut == vertices.size()) {
-				wstring fileName(L"Ocultando en Frustum\n");
+			if (vertexOut == m_vertices.size()) {
+				wstring fileName(L"Ocultando en Frustum\n"+to_wstring(debugValue));
 				LPCWSTR fullPath = fileName.c_str();
 				OutputDebugString(fullPath);
 				return false;
@@ -275,6 +292,7 @@ protected:
 private:
 	vector<Node*> components;
 	vector<D3DXVECTOR3*> vertices;
+	vector<D3DXVECTOR3*> globalVertices;
 	D3DXVECTOR3 * personalMinBounds = NULL;
 	D3DXVECTOR3 * personalMaxBounds = NULL;
 	D3DXVECTOR3 * globalMinBounds = NULL;
@@ -296,6 +314,21 @@ private:
 		vertices.push_back(new D3DXVECTOR3(personalMaxBounds->x, personalMinBounds->y, personalMaxBounds->z));
 		vertices.push_back(new D3DXVECTOR3(personalMaxBounds->x, personalMaxBounds->y, personalMaxBounds->z));
 		vertices.push_back(new D3DXVECTOR3(personalMinBounds->x, personalMaxBounds->y, personalMaxBounds->z));
+	}
+	void SetGlobalVerticesWithBounds() {
+		for (int i = 0; i< globalVertices.size(); i++)
+		{
+			delete (globalVertices[i]);
+		}
+		globalVertices.clear();
+		globalVertices.push_back(new D3DXVECTOR3(globalMinBounds->x, globalMinBounds->y, globalMinBounds->z));
+		globalVertices.push_back(new D3DXVECTOR3(globalMaxBounds->x, globalMinBounds->y, globalMinBounds->z));
+		globalVertices.push_back(new D3DXVECTOR3(globalMaxBounds->x, globalMaxBounds->y, globalMinBounds->z));
+		globalVertices.push_back(new D3DXVECTOR3(globalMinBounds->x, globalMaxBounds->y, globalMinBounds->z));
+		globalVertices.push_back(new D3DXVECTOR3(globalMinBounds->x, globalMinBounds->y, globalMaxBounds->z));
+		globalVertices.push_back(new D3DXVECTOR3(globalMaxBounds->x, globalMinBounds->y, globalMaxBounds->z));
+		globalVertices.push_back(new D3DXVECTOR3(globalMaxBounds->x, globalMaxBounds->y, globalMaxBounds->z));
+		globalVertices.push_back(new D3DXVECTOR3(globalMinBounds->x, globalMaxBounds->y, globalMaxBounds->z));
 	}
 };
 
