@@ -9,15 +9,15 @@ class LQN_API NodeWithChildren : public Node {
 public:
 	float xPos, yPos, zPos, xRot, yRot, zRot, xScale, yScale, zScale;
 	NodeWithChildren(Graphics *graphics) : Node (graphics) {
-		this->xPos = 0;
-		this->yPos = 0;
-		this->zPos = 0;
-		this->xRot = 0;
-		this->yRot = 0;
-		this->zRot = 0;
-		this->xScale = 1;
-		this->yScale = 1;
-		this->zScale = 1;
+		lastXPos = xPos = 0;
+		lastYPos = yPos = 0;
+		lastZPos = zPos = 0;
+		lastXRot = xRot = 0;
+		lastYRot = yRot = 0;
+		lastZRot = zRot = 0;
+		lastXScale = xScale = 1;
+		lastYScale = yScale = 1;
+		lastZScale = zScale = 1;
 	}
 	~NodeWithChildren() {}
 
@@ -28,10 +28,10 @@ public:
 		}
 		Node::Update();
 	}
-	virtual void Draw() {
+	virtual void Draw(D3DXPLANE* frustumPlane, D3DXVECTOR3* minFrustumBoxBounds, D3DXVECTOR3* maxFrustumBoxBounds) {
 		for (size_t i = 0; i < childrens.size(); i++)
 		{
-			childrens[i]->Draw();
+			childrens[i]->Draw(frustumPlane, minFrustumBoxBounds, maxFrustumBoxBounds);
 
 		}
 		Node::Draw();
@@ -39,16 +39,16 @@ public:
 	}
 
 	void AddChildren(NodeWithChildren* newNode) {
-		newNode->parent = this;
+		newNode->SetParent(this);
 		childrens.push_back(newNode);
 	}
 
 	bool RemoveChildren(NodeWithChildren* nodeToRemove) { return true; }
 
 protected:
+	float lastXPos, lastYPos, lastZPos, lastXRot, lastYRot, lastZRot, lastXScale, lastYScale, lastZScale;
 	Transform * transform;
-private:
-	vector<Node*> childrens;
+	vector<NodeWithChildren*> childrens;
 };
 
 

@@ -131,9 +131,6 @@
     <ClInclude Include="includes\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="includes\Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>

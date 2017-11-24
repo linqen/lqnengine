@@ -13,13 +13,20 @@ class MiJuego :public Game {
 	TileMap* tilemap2;
 	Vertex *vertex;
 	short * index;
-	Scene * scene;
+	//Scene * scene;
+	GameObject * testCameraBox;
+	Mesh * testCameraBoxMesh;
+	D3DXVECTOR3 * minBounds;
+	D3DXVECTOR3 * maxBounds;
+
 	GameObject * goQuad;
 	Camera* camera;
 	CameraMovement * cameraMov;
-	GameObject * goCamera;
+	//GameObject * goCamera;
 	Mesh * mesh;
 	GameObject * goMesh;
+	Mesh * mesh2;
+	GameObject * goMesh2;
 
 protected:
 	bool OnInit();

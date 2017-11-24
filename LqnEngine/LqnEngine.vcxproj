@@ -50,7 +50,6 @@
     <ClInclude Include="includes\NodeWithChildren.h" />
     <ClInclude Include="includes\ObjImporter.h" />
     <ClInclude Include="includes\Quad.h" />
-    <ClInclude Include="includes\Scene.h" />
     <ClInclude Include="includes\Sprite.h" />
     <ClInclude Include="includes\SpriteAnimation.h" />
     <ClInclude Include="includes\Texture.h" />

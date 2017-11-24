@@ -15,13 +15,13 @@ class LQN_API Mesh : public Entity3D {
 	IDirect3DVertexBuffer9* vBuffer;
 	IDirect3DIndexBuffer9* iBuffer;
 	Texture* m_texture;
-	Mesh* boundingBox=NULL;
+	Mesh* boundingBox = NULL;
 	TextureManager* textureManager;
 	VOID* pVoid;
 	VOID* piVoid;
-	D3DXVECTOR3 * minBounds=NULL;
-	D3DXVECTOR3 * maxBounds=NULL;
-	bool debugMode=false;
+	D3DXVECTOR3 * minBounds = NULL;
+	D3DXVECTOR3 * maxBounds = NULL;
+	bool debugMode = false;
 public:
 	Mesh(Graphics *graphics, TextureManager* ptextureManager, vector<VertexUV> pvertex, vector<short> pindex) : Entity3D(graphics) {
 		textureManager = ptextureManager;
@@ -29,10 +29,14 @@ public:
 		vertex = new vector<VertexUV>();
 		index = new vector<short>();
 		for (size_t i = 0; i < pvertex.size(); i++)
-		{vertex->push_back(pvertex[i]);}
+		{
+			vertex->push_back(pvertex[i]);
+		}
 
 		for (size_t i = 0; i < pindex.size(); i++)
-		{index->push_back(pindex[i]);}
+		{
+			index->push_back(pindex[i]);
+		}
 
 		//VertexBuffer
 		graphics->pd3dDevice->CreateVertexBuffer(vertex->size() * sizeof(VertexUV),
@@ -77,6 +81,16 @@ public:
 
 	}
 
+	void Update() {
+		if (gameObject->GetHasChange()) {
+			SetMaxBounds();
+			SetMinBounds();
+			gameObject->SetGameObjectMinBounds(minBounds);
+			gameObject->SetGameObjectMaxBounds(maxBounds);
+		}
+		Entity3D::Update();
+	}
+
 	void Draw() {
 		Entity3D::graphics->BindTexture(m_texture);
 		Entity3D::Draw();
@@ -92,7 +106,7 @@ public:
 			0);
 		memcpy(pVoid, index->data(), sizeof(short)*index->size());
 		iBuffer->Unlock();
-		
+
 		//Device Setting
 		graphics->pd3dDevice->SetFVF(VertexUV::fvf);
 		graphics->pd3dDevice->SetVertexShader(NULL);
@@ -111,8 +125,6 @@ public:
 				graphics->pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 			}
 			else {
-				SetMinBounds();
-				SetMaxBounds();
 				vector<VertexUV> boundingVertex;
 				boundingVertex.push_back(VertexUV(minBounds->x, minBounds->y, minBounds->z, 0, 0));
 				boundingVertex.push_back(VertexUV(maxBounds->x, minBounds->y, minBounds->z, 0, 0));
@@ -167,18 +179,13 @@ public:
 				boundingIndeces.push_back(5);
 				boundingIndeces.push_back(4);
 
-				//Multiplicar vertices por matriz de translacion, rotacion y escala
-
 				boundingBox = new Mesh(graphics, textureManager, boundingVertex, boundingIndeces);
-				//Pushear actual
-				//seteo identidad
 				graphics->pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 				graphics->PushCurrentlMatrix();
 				graphics->LoadIdentity();
 				boundingBox->Draw();
 				graphics->PopLastMatrix();
 				graphics->pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-				//Popear
 			}
 		}
 
@@ -206,81 +213,99 @@ public:
 		return D3DXVECTOR3(maxBounds->x, maxBounds->y, maxBounds->z);
 	}
 
+	virtual void SetParent(Node * rparent) {
+		Entity3D::SetParent(rparent);
+		SetMaxBounds();
+		SetMinBounds();
+		gameObject->SetGameObjectMinBounds(minBounds);
+		gameObject->SetGameObjectMaxBounds(maxBounds);
+	}
 
-	private:
+
+private:
 	void SetMaxBounds() {
-		if (maxBounds == NULL) {
-			float x, y, z;
-			D3DXVECTOR4 transformedVertex;
-			D3DXVECTOR3 actualVertex;
-			
-			for (size_t i = 0; i < vertex->size(); i++)
+		float x, y, z;
+		D3DXVECTOR4 transformedVertex;
+		D3DXVECTOR3 actualVertex;
+
+		graphics->PushCurrentlMatrix();
+		graphics->Translate(gameObject->xPos, gameObject->yPos, gameObject->zPos);
+		graphics->RotateX(gameObject->xRot);
+		graphics->RotateY(gameObject->yRot);
+		graphics->RotateZ(gameObject->zRot);
+		graphics->Scale(gameObject->xScale, gameObject->yScale, gameObject->zScale);
+		for (size_t i = 0; i < vertex->size(); i++)
+		{
+			actualVertex.x = vertex->at(i).x;
+			actualVertex.y = vertex->at(i).y;
+			actualVertex.z = vertex->at(i).z;
+
+			D3DXVec3Transform(&transformedVertex, &actualVertex, &graphics->d3dmat);
+
+			if (i == 0)
 			{
-				actualVertex.x = vertex->at(i).x;
-				actualVertex.y = vertex->at(i).y;
-				actualVertex.z = vertex->at(i).z;
-
-				D3DXVec3Transform(&transformedVertex, &actualVertex, &graphics->d3dmat);
-
-				if (i == 0)
-				{
+				x = transformedVertex.x;
+				y = transformedVertex.y;
+				z = transformedVertex.z;
+			}
+			else
+			{
+				if (x < transformedVertex.x) {
 					x = transformedVertex.x;
+				}
+				if (y < transformedVertex.y) {
 					y = transformedVertex.y;
+				}
+				if (z < transformedVertex.z) {
 					z = transformedVertex.z;
 				}
-				else
-				{
-					if (x < transformedVertex.x) {
-						x = transformedVertex.x;
-					}
-					if (y < transformedVertex.y) {
-						y = transformedVertex.y;
-					}
-					if (z < transformedVertex.z) {
-						z = transformedVertex.z;
-					}
-				}
 			}
-			maxBounds = new D3DXVECTOR3(x, y, z);
 		}
+		maxBounds = new D3DXVECTOR3(x, y, z);
+		graphics->PopLastMatrix();
 	}
 
 	void SetMinBounds() {
-		if (minBounds == NULL) {
-			float x, y, z;
+		float x, y, z;
 
-			D3DXVECTOR4 transformedVertex;
-			D3DXVECTOR3 actualVertex;
+		D3DXVECTOR4 transformedVertex;
+		D3DXVECTOR3 actualVertex;
 
-			for (size_t i = 0; i < vertex->size(); i++)
+		graphics->PushCurrentlMatrix();
+		graphics->Translate(gameObject->xPos, gameObject->yPos, gameObject->zPos);
+		graphics->RotateX(gameObject->xRot);
+		graphics->RotateY(gameObject->yRot);
+		graphics->RotateZ(gameObject->zRot);
+		graphics->Scale(gameObject->xScale, gameObject->yScale, gameObject->zScale);
+		for (size_t i = 0; i < vertex->size(); i++)
+		{
+			actualVertex.x = vertex->at(i).x;
+			actualVertex.y = vertex->at(i).y;
+			actualVertex.z = vertex->at(i).z;
+
+			D3DXVec3Transform(&transformedVertex, &actualVertex, &graphics->d3dmat);
+
+			if (i == 0)
 			{
-				actualVertex.x = vertex->at(i).x;
-				actualVertex.y = vertex->at(i).y;
-				actualVertex.z = vertex->at(i).z;
-
-				D3DXVec3Transform(&transformedVertex, &actualVertex, &graphics->d3dmat);
-
-				if (i == 0)
-				{
+				x = transformedVertex.x;
+				y = transformedVertex.y;
+				z = transformedVertex.z;
+			}
+			else
+			{
+				if (x > transformedVertex.x) {
 					x = transformedVertex.x;
+				}
+				if (y > transformedVertex.y) {
 					y = transformedVertex.y;
+				}
+				if (z > transformedVertex.z) {
 					z = transformedVertex.z;
 				}
-				else
-				{
-					if (x > transformedVertex.x) {
-						x = transformedVertex.x;
-					}
-					if (y > transformedVertex.y) {
-						y = transformedVertex.y;
-					}
-					if (z > transformedVertex.z) {
-						z = transformedVertex.z;
-					}
-				}
 			}
-			minBounds = new D3DXVECTOR3(x, y, z);
 		}
+		minBounds = new D3DXVECTOR3(x, y, z);
+		graphics->PopLastMatrix();
 	}
 
 };
