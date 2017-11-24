@@ -1,7 +1,7 @@
 #include "..\includes\MiJuego.h"
 bool MiJuego::OnInit() {
 
-	camera = new Camera(&graphics, 60, 0.1f, 10000.0f);
+	camera = new Camera(&graphics, 60, 0.1f, 1000.0f);
 	cameraMov = new CameraMovement(&graphics, camera, &input, 1000);
 	camera->AddComponent(cameraMov);
 	camera->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -50.0f));

@@ -38,6 +38,7 @@ public:
 			personalMaxBounds->x = xPos;
 			personalMaxBounds->y = yPos;
 			personalMaxBounds->z = zPos;
+			hasSettedBounds = true;
 		}
 		if (hasSettedBounds) {
 			SetVerticesWithBounds();
@@ -56,9 +57,8 @@ public:
 	}
 
 	virtual void Draw(D3DXPLANE* frustumPlane, D3DXVECTOR3* minFrustumBoxBounds, D3DXVECTOR3* maxFrustumBoxBounds) {
-		//CheckIsInFrust
 		if (CheckIsInFrustumBox(minFrustumBoxBounds, maxFrustumBoxBounds,GetGlobalMinBounds(),GetGlobalMaxBounds())
-			&& CheckIsInFrustum(frustumPlane)) {
+			& CheckIsInFrustum(frustumPlane)) {
 			graphics->PushCurrentlMatrix();
 			graphics->Translate(xPos, yPos, zPos);
 			graphics->RotateX(xRot);
@@ -67,7 +67,7 @@ public:
 			graphics->Scale(xScale, yScale, zScale);
 			if (GetGameObjectMinBounds()!=NULL && GetGameObjectMaxBounds() !=NULL &&
 				CheckIsInFrustumBox(minFrustumBoxBounds, maxFrustumBoxBounds, GetGameObjectMinBounds(), GetGameObjectMaxBounds())
-				&& CheckIsInFrustum(frustumPlane)) {
+				& CheckIsInFrustum(frustumPlane)) {
 				for (size_t i = 0; i < components.size(); i++)
 				{
 					components[i]->Draw();
@@ -97,7 +97,6 @@ public:
 		//dZ = abs((frustumBoxMaxBounds->z + frustumBoxMinBounds->z) / 2 - (maxBounds->z + minBounds->z) / 2);
 		//
 		//float frustumWidth, objectWidth, frustumHeight, objectHeight, frustumDepth, objectDepth;
-
 		//frustumWidth = abs(frustumBoxMaxBounds->x - frustumBoxMinBounds->x);
 		//objectWidth = abs(maxBounds->x - minBounds->x);
 		//frustumHeight = abs(frustumBoxMaxBounds->y - frustumBoxMinBounds->y);
@@ -114,24 +113,27 @@ public:
 		//	//OutputDebugString(fullPath);
 		//	return true;
 		//}			
-		wstring fileName(L"Ocultando\n");
+		wstring fileName(L"Ocultando en Box\n");
 		LPCWSTR fullPath = fileName.c_str();
 		OutputDebugString(fullPath);
 		return false;
 	}
 
 	bool CheckIsInFrustum(D3DXPLANE* frustumPlane) {
-		if (hasChange) {
-			SetVerticesWithBounds();
-		}
-
 		for (size_t i = 0; i < 6; i++)
 		{
+			int vertexOut = 0;
 			for (size_t j = 0; j < vertices.size(); j++)
 			{
 				if (D3DXPlaneDotCoord(&frustumPlane[i], vertices[j]) < 0.0f) {
-					return false;
+					vertexOut++;
 				}
+			}
+			if (vertexOut == vertices.size()) {
+				wstring fileName(L"Ocultando en Frustum\n");
+				LPCWSTR fullPath = fileName.c_str();
+				OutputDebugString(fullPath);
+				return false;
 			}
 		}
 		return true;
