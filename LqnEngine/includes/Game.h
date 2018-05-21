@@ -17,6 +17,7 @@ using namespace std;
 #include "GameObject.h"
 #include "Component.h"
 #include "CameraMovement.h"
+#include "ModelImporter.h"
 class LQN_API Game {
 public:
 	Game();
@@ -33,5 +34,6 @@ protected:
 	Window window;
 	Input input;
 	CollisionManager colManager;
+	ModelImporter modelImporter;
 };
 #endif

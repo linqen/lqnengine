@@ -20,10 +20,10 @@ public:
 		vertex = new (nothrow) VertexUV[4];
 		width = tileWidth/ TILEREDUCTION;
 		height = tileHeight/ TILEREDUCTION;
-		vertex[0] = { (positionX*width), (positionY+1)*height, 0.5f, 0.0f, 0.0f };
-		vertex[1] = { (positionX*width), (positionY*height), 0.5f, 0.0f, 1.0f };
-		vertex[2] = { (positionX+1)*width, (positionY + 1)*height, 0.5f, 1.0f, 0.0f };
-		vertex[3] = { (positionX + 1)*width, (positionY*height), 0.5f, 1.0f, 1.0f };
+		vertex[0] = { (positionX*width), (positionY+1)*height, 0.5f, 0.0f, 0.0f     ,0.0f,0.0f,-1.0f };
+		vertex[1] = { (positionX*width), (positionY*height), 0.5f, 0.0f, 1.0f       ,0.0f,0.0f,-1.0f };
+		vertex[2] = { (positionX + 1)*width, (positionY + 1)*height, 0.5f, 1.0f, 0.0f ,0.0f,0.0f,-1.0f };
+		vertex[3] = { (positionX + 1)*width, (positionY*height), 0.5f, 1.0f, 1.0f   ,0.0f,0.0f,-1.0f };
 	}
 	void Draw() {
 		Entity2D::graphics->BindTexture(m_texture);

@@ -1,57 +1,27 @@
 #include "..\includes\MiJuego.h"
 bool MiJuego::OnInit() {
 
-	camera = new Camera(&graphics, 60, 0.1f, 1000.0f);
-	cameraMov = new CameraMovement(&graphics, camera, &input, 300);
+	camera = new Camera(&graphics, 60, 0.1f, 10000.0f);
+	cameraMov = new CameraMovement(&graphics, camera, &input, 500);
 	camera->AddComponent(cameraMov);
-	camera->SetPosition(D3DXVECTOR3(0.0f, 50.0f, -250.0f));
+	camera->SetPosition(D3DXVECTOR3(0.0f, 50.0f, -500.0f));
 
-	goMesh = new GameObject(&graphics);
-	camera->AddChildren(goMesh);
-	mesh = new Mesh(&graphics, &textureManager, "..\\LqnGame\\Meshes\\lobo.obj");
-	mesh->SetDebugMode(true);
-	mesh->SetTexture(L"13.jpg");
-	goMesh->AddComponent(mesh);
-
-
+	//goMesh = new GameObject(&graphics);
+	//camera->AddChildren(goMesh);
+	//modelImporter.importScene("..\\LqnGame\\Meshes\\lobo.obj", *goMesh);
 
 	goMesh2 = new GameObject(&graphics);
-	goMesh->AddChildren(goMesh2);
-	mesh2 = new Mesh(&graphics, &textureManager, "..\\LqnGame\\Meshes\\lobo.obj");
-	//mesh2->SetDebugMode(true);
-	mesh2->SetTexture(L"13.jpg");
-	goMesh2->zPos = -40;
-	goMesh2->yPos = 40;
-	goMesh2->xPos = -50;
-	goMesh2->yRot = 3.14;
-	goMesh2->AddComponent(mesh2);
-
+	camera->AddChildren(goMesh2);
+	modelImporter.importScene("..\\LqnGame\\Meshes\\seademon.obj", *goMesh2);
+	//goMesh2->SetPosition(200,0,0);
+	//goMesh2->SetScale(10, 10, 10);
 
 
 	goMesh3 = new GameObject(&graphics);
 	camera->AddChildren(goMesh3);
-	mesh3 = new Mesh(&graphics, &textureManager, "..\\LqnGame\\Meshes\\lobo.obj");
-	mesh3->SetDebugMode(true);
-	mesh3->SetTexture(L"13.jpg");
-	goMesh3->zPos = 40;
-	goMesh3->yPos = 40;
-	goMesh3->xPos = 150;
-	goMesh3->yRot = 3.14;
-	goMesh3->AddComponent(mesh3);
-
-	goMesh4 = new GameObject(&graphics);
-	camera->AddChildren(goMesh4);
-	mesh4 = new Mesh(&graphics, &textureManager, "..\\LqnGame\\Meshes\\lobo.obj");
-	mesh4->SetDebugMode(true);
-	mesh4->SetTexture(L"13.jpg");
-	goMesh4->zPos = 40;
-	goMesh4->yPos = 40;
-	goMesh4->xPos = 250;
-	goMesh4->yRot = 3.14;
-	goMesh4->AddComponent(mesh4);
-
-
-
+	modelImporter.importScene("..\\LqnGame\\Meshes\\Cartoon_Town.obj", *goMesh3);
+	goMesh3->SetPosition(0, -200, 0);
+	goMesh3->SetScale(10, 10, 10);
 
 
 	//2D game will be out until culling support it
@@ -171,7 +141,7 @@ bool MiJuego::OnUpdate() {
 	//end of quad movement
 
 	if (input.GetKey(KeyCode::SPACE)) {
-		goMesh->xPos -= 50 * Time::deltaTime;
+		goMesh3->Translate(500 * Time::deltaTime,0,0);
 	}
 	camera->Update();
 	return true;

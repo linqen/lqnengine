@@ -48,6 +48,10 @@ bool Game::Initialize(HINSTANCE hInstance) {
 		LogFile::Write("Can't initialize collision manager");
 		return false;
 	}
+	if (!modelImporter.Initialize(&graphics, &textureManager)) {
+		LogFile::Write("Can't initialize model Importer");
+		return false;
+	}
 
 	OnInit();
 	return true;

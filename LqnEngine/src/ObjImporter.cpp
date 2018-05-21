@@ -80,13 +80,15 @@ bool ObjImporter::LoadOBJ(
 		//id will be used as a flag in case that the vertex isn't inserted, if the vertex 
 		//was inserted before, id will have the value of that 
 		int id = -1;
-		int vertexIndex, uvIndex;
+		int vertexIndex, uvIndex, normalIndex;
 		vertexIndex = vertexIndices[i];
 		uvIndex = uvIndices[i];
+		normalIndex = normalIndices[i];
 		for (size_t j = 0; j < vertexIds.size(); j++)
 		{
 			if (vertexIds[j].vId == vertexIndex&&
-				vertexIds[j].uvId == uvIndex) {
+				vertexIds[j].uvId == uvIndex&&
+				vertexIds[j].normalId == normalIndex) {
 				id = j;
 				break;
 			}
@@ -95,6 +97,7 @@ bool ObjImporter::LoadOBJ(
 			VertexId vertexToInsert;
 			vertexToInsert.vId = vertexIndex;
 			vertexToInsert.uvId = uvIndex;
+			vertexToInsert.normalId = normalIndex;
 
 			vertexIds.push_back(vertexToInsert);
 			id = vertexIds.size() - 1;
@@ -106,14 +109,18 @@ bool ObjImporter::LoadOBJ(
 
 	for (size_t i = 0; i < vertexIds.size(); i++)
 	{
-		int vertexIndex, uvIndex;
+		int vertexIndex, uvIndex, normalIndex;
 		vertexIndex = vertexIds[i].vId;
 		uvIndex = vertexIds[i].uvId;
+		normalIndex = vertexIds[i].normalId;
 		VertexUV vertexUV(temp_vertices[vertexIndex - 1].x,
 			temp_vertices[vertexIndex - 1].y,
 			temp_vertices[vertexIndex - 1].z,
 			temp_uvs[uvIndex - 1].x,
-			temp_uvs[uvIndex - 1].y);
+			temp_uvs[uvIndex - 1].y,
+			temp_normals[normalIndex - 1].x,
+			temp_normals[normalIndex - 1].y,
+			temp_normals[normalIndex - 1].z);
 		(*out_vertices)->push_back(vertexUV);
 	}
 	return true;

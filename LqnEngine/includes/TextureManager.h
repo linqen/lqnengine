@@ -36,7 +36,7 @@ public:
 		}
 		for (size_t i = 0; i < textures.size(); i++)
 		{
-			
+
 			if (textures[i]->GetTextureFileName() == textureFileName) {
 				textures[i]->refCount++;
 				return textures[i];
@@ -49,6 +49,32 @@ public:
 			}
 		}
 	}
+
+	Texture* LoadTexture(string stextureFileName) {
+		wstring textureFileName = s2ws(stextureFileName);
+		wstring fileName = TEXTURESFOLDER;
+		fileName.append(textureFileName.c_str());
+		LPCWSTR fullPath = fileName.c_str();
+		if (textures.empty()) {
+			Texture* texture = new Texture(textureFileName, graphics->LoadTexture(fullPath));
+			texture->refCount++;
+			textures.push_back(texture);
+			return texture;
+		}
+		for (size_t i = 0; i < textures.size(); i++)
+		{
+
+			if (textures[i]->GetTextureFileName() == textureFileName) {
+				textures[i]->refCount++;
+				return textures[i];
+			}
+		}
+		Texture* texture = new Texture(textureFileName, graphics->LoadTexture(fullPath));
+		texture->refCount++;
+		textures.push_back(texture);
+		return texture;
+	}
+
 	//Remove the texture from the VGA
 	void Unload(Texture* textureToUnload) {
 		if (textureToUnload == NULL) {
@@ -65,6 +91,19 @@ public:
 			}
 			delete textureToUnload;
 		}
+	}
+
+private:
+	std::wstring s2ws(const std::string& s)
+	{
+		int len;
+		int slength = (int)s.length() + 1;
+		len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
+		wchar_t* buf = new wchar_t[len];
+		MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
+		std::wstring r(buf);
+		delete[] buf;
+		return r;
 	}
 };
 

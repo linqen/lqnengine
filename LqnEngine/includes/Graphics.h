@@ -4,6 +4,7 @@ using namespace std;
 
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <D3D9Types.h>
 #include <Windows.h>
 #include "ImportExport.h"
 #include "Vertex.h"
@@ -25,7 +26,7 @@ public:
 	VertexBufferManager<VertexUV, VertexUV::fvf> textureVertexManager;
 	Texture* lastTexture;
 	D3DXMATRIX d3dmat;
-	vector <D3DXMATRIX> matrixStack;
+	D3DLIGHT9 d3dLight;
 
 	bool Initialize(HWND wndHandle, int screenWidth, int screenHeight);
 	bool SetupScene();
@@ -34,23 +35,14 @@ public:
 	void Begin();
 	void End();
 	void Present();
-	void LoadIdentity();
-	void Translate(float xPos,float yPos,float zPos);
-	void RotateX(float xRot);
-	void RotateY(float yRot);
-	void RotateZ(float zRot);
-	void Scale(float xScale, float yScale, float zScale);
 	void Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount);
 	void Draw3D(VertexUV* vertex, int* index, int vertexCount, int indexCount, _D3DPRIMITIVETYPE primitive);
 	void DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount);
 	IDirect3DTexture9* LoadTexture(LPCWSTR texturePath);
 	void BindTexture(Texture* textureToBind);
 	void ReleaseTexture(Texture* textureToUnload);
-	void SetWorldTransform(D3DXMATRIX * worldTransform);
 	void SetViewTransform(D3DXMATRIX * viewTransform);
 	void SetProjectionMatrix(D3DXMATRIX * projectionMatrix);
-	void PushCurrentlMatrix();
-	void PopLastMatrix();
 };
 
 #endif

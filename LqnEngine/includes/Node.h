@@ -10,10 +10,8 @@ public:
 	}
 	virtual void Update() {}
 	virtual void Draw() {}
-	virtual void SetParent(Node* node) {}
 protected:
 	Graphics * graphics;
-	Node* parent;
 };
 
 #endif

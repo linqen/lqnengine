@@ -30,6 +30,10 @@ bool Graphics::Initialize(HWND wndHandle, int screenWidth, int screenHeight) {
 		return false;
 	}
 
+	//D3DCAPS9 caps;
+	//pd3dDevice->GetDeviceCaps(&caps);
+	//DWORD maxLights = caps.MaxActiveLights;
+
 	if (!vertexManager.Create(pd3dDevice, true)) {
 		return false;
 	}
@@ -50,7 +54,7 @@ void Graphics::Clear() {
 		return;
 	// Clear the back buffer to a black color
 	pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-		D3DCOLOR_XRGB(65, 65, 120), 1.0f, 0);
+		D3DCOLOR_XRGB(81, 81, 81), 1.0f, 0);
 }
 
 bool Graphics::SetupScene()
@@ -107,19 +111,70 @@ bool Graphics::SetupScene()
 	D3DXMatrixIdentity(&mProjectionMatrix);
 	float fAspectRatio = (float)viewport.Width / viewport.Height;
 	D3DXMatrixPerspectiveFovLH(&mProjectionMatrix, D3DXToRadian(60), fAspectRatio, 0.1f, 1000.0f);
-	//hRes = pd3dDevice->SetTransform(D3DTS_PROJECTION, &mProjectionMatrix);
 
-	pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	pd3dDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 	pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+	//pd3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESS);
 	// Fijo valores por defecto para operaciones con el canal alpha
 	pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	pd3dDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 	pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
+
+
+
+	//pd3dDevice->SetLight(D3DLIGHT_POINT,0)
+	// Assume d3dDevice is a valid pointer to an IDirect3DDevice9 interface.
+	//D3DLIGHT9 d3dLight;
+	HRESULT   hr;
+
+	// Initialize the structure.
+	ZeroMemory(&d3dLight, sizeof(d3dLight));
+	
+	// Set up a white point light.
+	d3dLight.Type = D3DLIGHT_DIRECTIONAL;
+	d3dLight.Diffuse = D3DXCOLOR(1.0, 1.0, 1.0, 0.0);
+	D3DVECTOR direction=D3DVECTOR();
+	direction.x = -1;
+	direction.y = -1;
+	direction.z = -1;
+	d3dLight.Direction = direction;
+	
+	d3dLight.Position.x = 0.0f;
+	d3dLight.Position.y = 500.0f;
+	d3dLight.Position.z = 0.0f;
+	
+	// Don't attenuate.
+	d3dLight.Attenuation0 = 1.0f;
+	d3dLight.Attenuation1 = 0.1f;
+	d3dLight.Attenuation2 = 0.0f;
+	
+	//d3dLight.Theta = 0.4;
+	//d3dLight.Phi = 0.6;
+	//d3dLight.Falloff = 1.0;
+	
+	d3dLight.Range = 6000.0f;
+
+	// Set the property information for the first light.
+	hr = pd3dDevice->SetLight(0, &d3dLight);
+	//if (SUCCEEDED(hr)) {
+	//	int j = 2;
+	//}
+	//else {
+	//	int i = 2;
+	//}
+
+	pd3dDevice->LightEnable(0, true);
+	pd3dDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
+
+	//pd3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+	//pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+	//pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+
 	//D3DXMatrixPerspectiveFovLH(&mProjectionMatrix, D3DXToRadian(45), fAspectRatio, -51.0f, 100.0f);
-	//_pDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(80, 80, 80));			//ambient light
+	//pd3dDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(80, 80, 80));			//ambient light
 	//_pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_FLAT);
 	//pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	//pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE); // D3DCULL_CCW
@@ -151,41 +206,6 @@ void Graphics::Shutdown() {
 	if (pD3D != NULL)
 		pD3D->Release();
 }
-//Load Identity Matrix
-void Graphics::LoadIdentity() {
-	D3DXMatrixIdentity(&d3dmat);
-	pd3dDevice->SetTransform(D3DTS_WORLD, &d3dmat);
-}
-//Translate the matrix based on the coordinates
-void Graphics::Translate(float xPos, float yPos, float zPos) {
-	D3DXMatrixTranslation(&d3dmat, xPos, yPos, zPos);
-	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
-	pd3dDevice->GetTransform(D3DTS_WORLD, &d3dmat);
-}
-//Rotate the matrix based on X value
-void Graphics::RotateX(float xRot) {
-	D3DXMatrixRotationX(&d3dmat, xRot);
-	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
-	pd3dDevice->GetTransform(D3DTS_WORLD, &d3dmat);
-}
-//Rotate the matrix based on Y value
-void Graphics::RotateY(float yRot) {
-	D3DXMatrixRotationY(&d3dmat, yRot);
-	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
-	pd3dDevice->GetTransform(D3DTS_WORLD, &d3dmat);
-}
-//Rotate the matrix based on Z value
-void Graphics::RotateZ(float zRot) {
-	D3DXMatrixRotationZ(&d3dmat, zRot);
-	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
-	pd3dDevice->GetTransform(D3DTS_WORLD, &d3dmat);
-}
-//Scale the matrix based on XYZ coordinates
-void Graphics::Scale(float xScale, float yScale, float zScale) {
-	D3DXMatrixScaling(&d3dmat, xScale, yScale, zScale);
-	pd3dDevice->MultiplyTransform(D3DTS_WORLD, &d3dmat);
-	pd3dDevice->GetTransform(D3DTS_WORLD, &d3dmat);
-}
 //Draw 2D Object
 void Graphics::Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount) {
 	vertexManager.Bind();
@@ -211,6 +231,7 @@ IDirect3DTexture9* Graphics::LoadTexture(LPCWSTR texturePath) {
 		pd3dDevice, texturePath, D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT, 0,
 		D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL,
 		&temporalTexture);
+	//HRESULT result = D3DXCreateTextureFromFile(pd3dDevice, texturePath, &temporalTexture);
 	if (FAILED(result)) {
 		wstring tempWstring(texturePath);
 		string tempString(tempWstring.begin(), tempWstring.end());
@@ -236,24 +257,10 @@ void Graphics::ReleaseTexture(Texture* textureToUnload) {
 	textureToUnload->GetD3DTexture()->Release();
 }
 
-void Graphics::SetWorldTransform(D3DXMATRIX * worldTransform) {
-	d3dmat = *worldTransform;
-	pd3dDevice->SetTransform(D3DTS_WORLD, &d3dmat);
-}
-
 void Graphics::SetViewTransform(D3DXMATRIX * viewTransform) {
-
 	pd3dDevice->SetTransform(D3DTS_VIEW, viewTransform);
 }
 
 void Graphics::SetProjectionMatrix(D3DXMATRIX * projectionMatrix) {
 	pd3dDevice->SetTransform(D3DTS_PROJECTION, projectionMatrix);
-}
-
-void Graphics::PushCurrentlMatrix() {
-	matrixStack.push_back(d3dmat);
-}
-void Graphics::PopLastMatrix() {
-	SetWorldTransform(&matrixStack.back());
-	matrixStack.pop_back();
 }

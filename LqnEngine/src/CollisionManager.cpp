@@ -28,13 +28,15 @@ void CollisionManager::CheckCollision() {
 	for (size_t i = 0; i < layer1.size(); i++)
 	{
 		ent1 = layer1[i];
-		x1 = ent1->gameObject->xPos;
-		y1 = ent1->gameObject->yPos;
+		D3DXVECTOR3 go1Position = ent1->gameObject->GetPosition();
+		x1 = go1Position.x;
+		y1 = go1Position.y;
 		for (size_t j = 0; j < layer2.size(); j++)
 		{
 			ent2 = layer2[j];
-			x2 = ent2->gameObject->xPos;
-			y2 = ent2->gameObject->yPos;
+			D3DXVECTOR3 go2Position = ent2->gameObject->GetPosition();
+			x2 = go2Position.x;
+			y2 = go2Position.y;
 			//use abs for absolute values (Not negatives)
 			dx = abs(x2 - x1);
 			dy = abs(y2 - y1);
@@ -60,10 +62,11 @@ void CollisionManager::MoveOnCollision(Entity2D* ent1, Entity2D* ent2,float px, 
 	totalMass = ent1->mass + ent2->mass;
 	mass1 = ent1->mass / totalMass;
 	mass2 = ent2->mass / totalMass;
-
+	D3DXVECTOR3 go1Position = ent1->gameObject->GetPosition();
+	D3DXVECTOR3 go2Position = ent2->gameObject->GetPosition();
 	if (px < py) {
 		//horizontal
-		if (ent1->gameObject->xPos < ent2->gameObject->xPos) {
+		if (go1Position.x < go2Position.x) {
 			MoveOnCollisionX(ent1, -px*mass1);
 			MoveOnCollisionX(ent2, px*mass2);
 		}
@@ -74,7 +77,7 @@ void CollisionManager::MoveOnCollision(Entity2D* ent1, Entity2D* ent2,float px, 
 	}
 	else {
 		//vertical
-		if (ent1->gameObject->yPos < ent2->gameObject->yPos) {
+		if (go1Position.y < go2Position.y) {
 			MoveOnCollisionY(ent1, -py*mass1);
 			MoveOnCollisionY(ent2, py*mass2);
 		}
@@ -86,12 +89,12 @@ void CollisionManager::MoveOnCollision(Entity2D* ent1, Entity2D* ent2,float px, 
 }
 void CollisionManager::MoveOnCollisionX(Entity2D* entity, float movement) {
 	if (!entity->isKinematic) {
-		entity->gameObject->xPos += movement;
+		entity->gameObject->Translate(movement, 0, 0);
 	}
 }
 void CollisionManager::MoveOnCollisionY(Entity2D* entity, float movement) {
 	if (!entity->isKinematic) {
-		entity->gameObject->yPos += movement;
+		entity->gameObject->Translate(0, movement, 0);
 	}
 }
 
