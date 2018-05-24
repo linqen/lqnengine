@@ -21,9 +21,13 @@ public:
 		localRotationQuaternion = new D3DXQUATERNION();
 	}
 	~NodeWithChildren() {}
-	
+
 	void SetName(const string& n) {
 		name = n;
+	}
+
+	string& GetName() {
+		return name;
 	}
 
 	virtual void Update() {

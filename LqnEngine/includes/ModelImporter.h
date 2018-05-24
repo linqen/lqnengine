@@ -17,10 +17,10 @@ public:
 	//ModelImporter();
 	bool Initialize(Graphics* graphics, TextureManager* textureManager);
 	//~ModelImporter();
-	bool importScene(const std::string& rkFilename, GameObject& orkSceneRoot);
+	bool importScene(const std::string& rkFilename, GameObject& orkSceneRoot, vector<D3DXPLANE*>* out_BSP_Plane);
 
 private:
-	void importNode(aiNode* child, GameObject& parent, const aiScene* scene);
+	void importNode(aiNode* child, GameObject& parent, const aiScene* scene, vector<D3DXPLANE*>* out_BSP_Plane);
 
 	//vector <Texture*> m_Textures;
 	Graphics* importGraphics;

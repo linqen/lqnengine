@@ -10,16 +10,16 @@ bool MiJuego::OnInit() {
 	//camera->AddChildren(goMesh);
 	//modelImporter.importScene("..\\LqnGame\\Meshes\\lobo.obj", *goMesh);
 
-	goMesh2 = new GameObject(&graphics);
-	camera->AddChildren(goMesh2);
-	modelImporter.importScene("..\\LqnGame\\Meshes\\seademon.obj", *goMesh2);
+	//goMesh2 = new GameObject(&graphics);
+	//camera->AddChildren(goMesh2);
+	//modelImporter.importScene("..\\LqnGame\\Meshes\\seademon.obj", *goMesh2);
 	//goMesh2->SetPosition(200,0,0);
 	//goMesh2->SetScale(10, 10, 10);
 
-
+	vector<D3DXPLANE*>* BSP_planes = new vector<D3DXPLANE*>();
 	goMesh3 = new GameObject(&graphics);
 	camera->AddChildren(goMesh3);
-	modelImporter.importScene("..\\LqnGame\\Meshes\\Cartoon_Town.obj", *goMesh3);
+	modelImporter.importScene("..\\LqnGame\\Meshes\\BSP Scene.obj", *goMesh3, BSP_planes);
 	goMesh3->SetPosition(0, -200, 0);
 	goMesh3->SetScale(10, 10, 10);
 
