@@ -25,6 +25,22 @@ void GameObject::Update() {
 	worldMatrix = CalculateWorldMatrixBasedOnParent();
 	D3DXMatrixDecompose(scale, rotationQuaternion, position, worldMatrix);
 
+	if (hasBSPPlanes) {
+		for (size_t i = 0; i < BSPPlanes.size(); i++)
+		{
+			D3DXPLANE tmpPlane = D3DXPLANE();
+			D3DXVECTOR3 tmpVector;
+			D3DXVECTOR3* startOfVertices = BSPPlanes[i]->GetVertices();
+			D3DXVECTOR3 planeVertices[BSPPlane::AmountOfVertices];
+			for (size_t i = 0; i < BSPPlane::AmountOfVertices; i++)
+			{
+				D3DXVec3TransformCoord(&planeVertices[i], &startOfVertices[i], worldMatrix);
+			}
+			D3DXPlaneFromPoints(&tmpPlane, &planeVertices[0], &planeVertices[1], &planeVertices[2]);
+			BSPPlanes[i]->SetPlane(tmpPlane);
+		}
+
+	}
 	//THIS WORKS?
 	//D3DXQuaternionToAxisAngle(rotationQuaternion, rotation, NULL);
 	//Just in case that the GameObject dont have mesh
@@ -40,18 +56,18 @@ void GameObject::Update() {
 	globalMinBounds = CalculateGlobalMinBounds();
 }
 
-void GameObject::Draw(D3DXPLANE* frustumPlane) {
+void GameObject::Draw(D3DXPLANE* frustumPlane, vector<BSPPlane*> BSPPlanes, vector<int> cameraBSPRelationWithPlane) {
 	SetGlobalVerticesWithBounds();
-	if (CheckIsInFrustum(frustumPlane, globalVertices, 1)) {
+	if (CheckIsInFrustum(frustumPlane, globalVertices, 1) && CheckBSP(BSPPlanes, cameraBSPRelationWithPlane, globalVertices)) {
 		SetVerticesWithBounds();
 		if (GetGameObjectMinBounds() != NULL && GetGameObjectMaxBounds() != NULL &&
-			CheckIsInFrustum(frustumPlane, vertices, 2)) {
+			CheckIsInFrustum(frustumPlane, vertices, 2) && CheckBSP(BSPPlanes, cameraBSPRelationWithPlane,vertices)) {
 			for (size_t i = 0; i < components.size(); i++)
 			{
 				components[i]->Draw();
 			}
 		}
-		NodeWithChildren::Draw(frustumPlane);
+		NodeWithChildren::Draw(frustumPlane, BSPPlanes, cameraBSPRelationWithPlane);
 	}
 	hasChange = false;
 	hasChangeLocally = false;
@@ -70,6 +86,28 @@ bool GameObject::CheckIsInFrustum(D3DXPLANE* frustumPlane, vector<D3DXVECTOR3*> 
 		}
 		if (vertexOut == m_vertices.size()) {
 			wstring fileName(L"Ocultando en Frustum\n" + to_wstring(debugValue) + wstring(name.begin(), name.end()));
+			LPCWSTR fullPath = fileName.c_str();
+			OutputDebugString(fullPath);
+			return false;
+		}
+	}
+	return true;
+}
+
+bool GameObject::CheckBSP(vector<BSPPlane*> BSPPlanes, vector<int> cameraBSPRelationWithPlane, vector<D3DXVECTOR3*> m_vertices) {
+	float const drawTolerability = 1.0f;
+	for (size_t i = 0; i < BSPPlanes.size(); i++)
+	{
+		int vertexOut = 0;
+		for (size_t j = 0; j < m_vertices.size(); j++)
+		{
+			if ((cameraBSPRelationWithPlane[i] > 0 && D3DXPlaneDotCoord(&BSPPlanes[i]->GetPlane(), m_vertices[j]) < -drawTolerability) ||
+				(cameraBSPRelationWithPlane[i] < 0 && D3DXPlaneDotCoord(&BSPPlanes[i]->GetPlane(), m_vertices[j]) > drawTolerability)) {
+				vertexOut++;
+			}
+		}
+		if (vertexOut == m_vertices.size()) {
+			wstring fileName(L"Fuera de escena BSP\n" + wstring(name.begin(), name.end()));
 			LPCWSTR fullPath = fileName.c_str();
 			OutputDebugString(fullPath);
 			return false;
@@ -98,6 +136,11 @@ Component* GameObject::GetComponent()
 }
 
 bool GameObject::RemoveComponent(Node* componentToRemove) { return true; }
+
+void GameObject::SetBSPPlanes(vector<BSPPlane*> BSP_Planes) {
+	BSPPlanes = BSP_Planes;
+	hasBSPPlanes = true;
+}
 
 void GameObject::SetGameObjectMinBounds(D3DXVECTOR3* gameObjectMinBounds) {
 	if (personalMinBounds == NULL) {

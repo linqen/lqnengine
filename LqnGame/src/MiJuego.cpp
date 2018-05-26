@@ -2,9 +2,9 @@
 bool MiJuego::OnInit() {
 
 	camera = new Camera(&graphics, 60, 0.1f, 10000.0f);
-	cameraMov = new CameraMovement(&graphics, camera, &input, 500);
+	cameraMov = new CameraMovement(&graphics, camera, &input, 50);
 	camera->AddComponent(cameraMov);
-	camera->SetPosition(D3DXVECTOR3(0.0f, 50.0f, -500.0f));
+	//camera->SetPosition(D3DXVECTOR3(0.0f, 50.0f, -500.0f));
 
 	//goMesh = new GameObject(&graphics);
 	//camera->AddChildren(goMesh);
@@ -16,13 +16,16 @@ bool MiJuego::OnInit() {
 	//goMesh2->SetPosition(200,0,0);
 	//goMesh2->SetScale(10, 10, 10);
 
-	vector<D3DXPLANE*>* BSP_planes = new vector<D3DXPLANE*>();
+	vector<BSPPlane*>* BSP_planes = new vector<BSPPlane*>();
 	goMesh3 = new GameObject(&graphics);
 	camera->AddChildren(goMesh3);
 	modelImporter.importScene("..\\LqnGame\\Meshes\\BSP Scene.obj", *goMesh3, BSP_planes);
-	goMesh3->SetPosition(0, -200, 0);
-	goMesh3->SetScale(10, 10, 10);
+	//goMesh3->SetPosition(0, -200, 0);
+	//goMesh3->SetScale(10, 10, 10);
+	//goMesh3->SetRotation(0, 180, 0);
+	camera->SetBSPPlanes(*BSP_planes);
 
+	
 
 	//2D game will be out until culling support it
 	/*

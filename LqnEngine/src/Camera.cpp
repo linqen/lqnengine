@@ -114,7 +114,28 @@ void Camera::Draw() {
 
 	D3DXMatrixIdentity(&transform);
 	CameraDraw();
-	NodeWithChildren::Draw(m_planes);
+	CalculateBSPRelation();
+	NodeWithChildren::Draw(m_planes,BSP_planes, relationWithPlane);
+}
+
+
+void Camera::SetBSPPlanes(vector<BSPPlane*> BSPPlanes) {
+	BSP_planes = BSPPlanes;
+	//BSPPlanes[1]->
+}
+
+void Camera::CalculateBSPRelation() {
+	relationWithPlane.clear();
+	for (size_t i = 0; i < BSP_planes.size(); i++)
+	{
+		float cameraPosWithPlane = D3DXPlaneDotCoord(&BSP_planes[i]->GetPlane(), &m_Position);
+		if (cameraPosWithPlane < 0) {
+			relationWithPlane.push_back(-1);
+		}
+		else {
+			relationWithPlane.push_back(1);
+		}
+	}
 }
 
 void Camera::AddComponent(Component* newComponent) {

@@ -4,6 +4,8 @@
 #include "Mesh.h"
 #include "Graphics.h"
 #include "TextureManager.h"
+#include "BSPPlane.h"
+
 struct aiNode;
 struct aiScene;
 
@@ -17,10 +19,10 @@ public:
 	//ModelImporter();
 	bool Initialize(Graphics* graphics, TextureManager* textureManager);
 	//~ModelImporter();
-	bool importScene(const std::string& rkFilename, GameObject& orkSceneRoot, vector<D3DXPLANE*>* out_BSP_Plane);
+	bool importScene(const std::string& rkFilename, GameObject& orkSceneRoot, vector<BSPPlane*>* out_BSP_Plane);
 
 private:
-	void importNode(aiNode* child, GameObject& parent, const aiScene* scene, vector<D3DXPLANE*>* out_BSP_Plane);
+	void importNode(aiNode* child, GameObject& parent, const aiScene* scene, vector<BSPPlane*>* out_BSP_Plane);
 
 	//vector <Texture*> m_Textures;
 	Graphics* importGraphics;

@@ -1,9 +1,10 @@
 #ifndef NODEWITHCHILDREN_H
 #define NODEWITHCHILDREN_H
-
+#define PI 3.14159265358979323846
 #include "ImportExport.h"
 #include <vector>
 #include "Node.h"
+#include "BSPPlane.h"
 class Component;
 
 typedef D3DXMATRIX Transform;
@@ -37,10 +38,10 @@ public:
 		}
 		Node::Update();
 	}
-	virtual void Draw(D3DXPLANE* frustumPlane) {
+	virtual void Draw(D3DXPLANE* frustumPlane, vector<BSPPlane*> BSPPlanes, vector<int> cameraBSPRelationWithPlane) {
 		for (size_t i = 0; i < childrens.size(); i++)
 		{
-			childrens[i]->Draw(frustumPlane);
+			childrens[i]->Draw(frustumPlane, BSPPlanes, cameraBSPRelationWithPlane);
 
 		}
 		Node::Draw();
@@ -161,6 +162,8 @@ public:
 		D3DXMatrixTransformation(worldMatrix, NULL, NULL, scale, NULL, D3DXQuaternionRotationYawPitchRoll(rotationQuaternion, rotation->y, rotation->x, rotation->z), position);
 		localMatrix = CalculateLocalMatrixBasedOnParent();
 		D3DXMatrixDecompose(localScale, localRotationQuaternion, localPosition, localMatrix);
+
+		QuaterniontoEulerAngle(*localRotationQuaternion, localRotation);
 	}
 protected:
 	NodeWithChildren* parent = NULL;
@@ -202,6 +205,25 @@ protected:
 		}
 	}
 private:
+	void QuaterniontoEulerAngle(const D3DXQUATERNION& q, D3DXVECTOR3* rotation)
+	{
+		// roll (x-axis rotation)
+		double sinr = +2.0 * (q.w * q.x + q.y * q.z);
+		double cosr = +1.0 - 2.0 * (q.x * q.x + q.y * q.y);
+		rotation->z = atan2(sinr, cosr);
+
+		// pitch (y-axis rotation)
+		double sinp = +2.0 * (q.w * q.y - q.z * q.x);
+		if (fabs(sinp) >= 1)
+			rotation->x = copysign(PI / 2, sinp); // use 90 degrees if out of range
+		else
+			rotation->x = asin(sinp);
+
+		// yaw (z-axis rotation)
+		double siny = +2.0 * (q.w * q.z + q.x * q.y);
+		double cosy = +1.0 - 2.0 * (q.y * q.y + q.z * q.z);
+		rotation->y = atan2(siny, cosy);
+	}
 };
 
 

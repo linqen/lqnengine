@@ -3,13 +3,15 @@
 
 #include "ImportExport.h"
 #include "NodeWithChildren.h"
+
 class LQN_API GameObject : public NodeWithChildren {
 public:
 	GameObject(Graphics * graphics);
 
 	virtual void Update();
-	virtual void Draw(D3DXPLANE* frustumPlane);
+	virtual void Draw(D3DXPLANE* frustumPlane, vector<BSPPlane*> BSPPlanes, vector<int> cameraBSPRelationWithPlane);
 	bool CheckIsInFrustum(D3DXPLANE* frustumPlane, vector<D3DXVECTOR3*> m_vertices, int debugValue);
+	bool CheckBSP(vector<BSPPlane*> BSPPlanes, vector<int> cameraBSPRelationWithPlane, vector<D3DXVECTOR3*> m_vertices);
 	void AddComponent(Component* newComponent);
 
 	template <class Component>
@@ -24,10 +26,13 @@ public:
 	D3DXVECTOR3* GetGameObjectMaxBounds();
 	D3DXVECTOR3* GetGameObjectMinBounds();
 	D3DXMATRIX* GetWorldMatrix();
+	void SetBSPPlanes(vector<BSPPlane*> BSP_Planes);
 
 protected:
 	Transform transform;
 private:
+	bool hasBSPPlanes = false;
+	vector<BSPPlane*> BSPPlanes;
 	vector<Component*> components;
 	vector<D3DXVECTOR3*> vertices;
 	vector<D3DXVECTOR3*> globalVertices;

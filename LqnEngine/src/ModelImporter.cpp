@@ -12,7 +12,7 @@ bool ModelImporter::Initialize(Graphics* graphics, TextureManager* r_textureMana
 	return true;
 }
 
-bool ModelImporter::importScene(const std::string& rkFilename, GameObject& orkSceneRoot,vector<D3DXPLANE*>* out_BSP_Plane) {
+bool ModelImporter::importScene(const std::string& rkFilename, GameObject& orkSceneRoot,vector<BSPPlane*>* out_BSP_Plane) {
 
 	Assimp::Importer importer;
 
@@ -48,11 +48,13 @@ bool ModelImporter::importScene(const std::string& rkFilename, GameObject& orkSc
 	for (unsigned int i = 0; i < iRoot->mNumChildren; i++) {
 		importNode(iRoot->mChildren[i], orkSceneRoot, scene, out_BSP_Plane);
 	}
-
+	if (out_BSP_Plane != NULL && !out_BSP_Plane->empty()) {
+		orkSceneRoot.SetBSPPlanes(*out_BSP_Plane);
+	}
 	return true;
 }
 
-void ModelImporter::importNode(aiNode* child, GameObject& parent, const aiScene* scene, vector<D3DXPLANE*>* out_BSP_Plane) {
+void ModelImporter::importNode(aiNode* child, GameObject& parent, const aiScene* scene, vector<BSPPlane*>* out_BSP_Plane) {
 
 	aiVector3t<float> position;
 	aiQuaterniont<float> rotation;
@@ -120,14 +122,21 @@ void ModelImporter::importNode(aiNode* child, GameObject& parent, const aiScene*
 			newMesh->SetTexture(texture);
 		}
 
-	if (newNode->GetName().length()>2 && newNode->GetName().find("BSP")!=string::npos) {
+	if (out_BSP_Plane!=NULL && newNode->GetName().length()>2 && newNode->GetName().find("BSP")!=string::npos) {
 		int i = 0;
-		out_BSP_Plane->push_back(new D3DXPLANE());
-		D3DXVECTOR3* planePos = new D3DXVECTOR3[3];
-		for (unsigned int i = 0; i < 3; i++) {
+		out_BSP_Plane->push_back(new BSPPlane());
+		D3DXVECTOR3 planePos[BSPPlane::AmountOfVertices];
+
+		//D3DXMATRIX matrizPrueba = D3DXMATRIX(10, -8.74e-07f, -8.74e-07f, 0, -8.74e-07f, -10, -8.74e-07f, 0, -8.74e-07f, 8.74e-07f, -10, 0, 0, 0, 0, 1);
+
+		for (unsigned int i = 0; i < BSPPlane::AmountOfVertices; i++) {
 			planePos[i] = D3DXVECTOR3(rootMesh->mVertices[i].x, rootMesh->mVertices[i].y, rootMesh->mVertices[i].z);
+			//D3DXVec3TransformCoord(&planePos[i], &planePos[i], &matrizPrueba);
 		}
-		D3DXPlaneFromPoints(out_BSP_Plane->back(), &planePos[0], &planePos[1], &planePos[2]);
+		D3DXPLANE plane;
+		D3DXPlaneFromPoints(&plane, &planePos[0], &planePos[1], &planePos[2]);
+		out_BSP_Plane->back()->SetPlane(plane);
+		out_BSP_Plane->back()->SetVertices(planePos);
 	}
 
 		//GameObject* newMeshGo = new GameObject(importGraphics);

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\BSPPlane.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\CollisionManager.cpp" />
     <ClCompile Include="src\Entity2D.cpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\BSPPlane.h" />
     <ClInclude Include="includes\Camera.h" />
     <ClInclude Include="includes\CameraMovement.h" />
     <ClInclude Include="includes\CollisionManager.h" />

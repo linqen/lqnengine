@@ -4,6 +4,7 @@
 #include "Graphics.h"
 #include "NodeWithChildren.h"
 #include <d3dx9.h>
+
 class LQN_API Camera : public NodeWithChildren {
 public:
 	//Create a camera with default values
@@ -22,6 +23,8 @@ public:
 	void Yaw(float Angle);
 	void Roll(float Angle);
 	void Rotate(float x, float y, float z);
+	void SetBSPPlanes(vector<BSPPlane*> BSPPlanes);
+	void CalculateBSPRelation();
 
 	virtual void Update();
 
@@ -40,6 +43,8 @@ public:
 
 	Transform transform;
 private:
+	vector<BSPPlane*> BSP_planes;
+	vector<int> relationWithPlane;
 	vector<Component*> components;
 	Graphics * graphics;
 	//Proyection related variables
