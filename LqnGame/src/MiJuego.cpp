@@ -1,20 +1,22 @@
 #include "..\includes\MiJuego.h"
 bool MiJuego::OnInit() {
 
-	camera = new Camera(&graphics, 60, 0.1f, 10000.0f);
-	cameraMov = new CameraMovement(&graphics, camera, &input, 50);
+	camera = new Camera(&graphics, 60, 0.1f, 100.0f);
+	cameraMov = new CameraMovement(&graphics, camera, &input, 25);
 	camera->AddComponent(cameraMov);
-	//camera->SetPosition(D3DXVECTOR3(0.0f, 50.0f, -500.0f));
+	camera->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -25.0f));
 
-	//goMesh = new GameObject(&graphics);
-	//camera->AddChildren(goMesh);
-	//modelImporter.importScene("..\\LqnGame\\Meshes\\lobo.obj", *goMesh);
+	goMesh = new GameObject(&graphics);
+	camera->AddChildren(goMesh);
+	modelImporter.importScene("..\\LqnGame\\Meshes\\lobo.obj", *goMesh, NULL);
+	goMesh->SetScale(0.1, 0.1, 0.1);
+	goMesh->SetPosition(0, -1, -1);
 
-	//goMesh2 = new GameObject(&graphics);
-	//camera->AddChildren(goMesh2);
-	//modelImporter.importScene("..\\LqnGame\\Meshes\\seademon.obj", *goMesh2);
-	//goMesh2->SetPosition(200,0,0);
-	//goMesh2->SetScale(10, 10, 10);
+	goMesh2 = new GameObject(&graphics);
+	camera->AddChildren(goMesh2);
+	modelImporter.importScene("..\\LqnGame\\Meshes\\Cartoon_town.obj", *goMesh2, NULL);
+	goMesh2->SetPosition(0,-2,0);
+	//goMesh2->SetScale(1, 1, 1);
 
 	vector<BSPPlane*>* BSP_planes = new vector<BSPPlane*>();
 	goMesh3 = new GameObject(&graphics);
@@ -22,10 +24,10 @@ bool MiJuego::OnInit() {
 	modelImporter.importScene("..\\LqnGame\\Meshes\\BSP Scene.obj", *goMesh3, BSP_planes);
 	//goMesh3->SetPosition(0, -200, 0);
 	//goMesh3->SetScale(10, 10, 10);
-	//goMesh3->SetRotation(0, 180, 0);
+	goMesh3->SetRotation(0, 180, 0);
 	camera->SetBSPPlanes(*BSP_planes);
-
 	
+	goMesh4 = goMesh3->GetChildByName("CuboMovible_Cube");
 
 	//2D game will be out until culling support it
 	/*
@@ -143,8 +145,30 @@ bool MiJuego::OnUpdate() {
 	//}
 	//end of quad movement
 
-	if (input.GetKey(KeyCode::SPACE)) {
-		goMesh3->Translate(500 * Time::deltaTime,0,0);
+	if (input.GetKey(KeyCode::LEFTARROW)&&goMesh!=NULL) {
+		goMesh->Translate(-10 * Time::deltaTime,0,0);
+	}
+	else if (input.GetKey(KeyCode::RIGHTARROW) && goMesh != NULL) {
+		goMesh->Translate(10 * Time::deltaTime, 0, 0);
+	}
+	else if (input.GetKey(KeyCode::UPARROW) && goMesh != NULL) {
+		goMesh->Translate(0, 0, 10 * Time::deltaTime);
+	}
+	else if (input.GetKey(KeyCode::DOWNARROW) && goMesh != NULL) {
+		goMesh->Translate(0, 0, -10 * Time::deltaTime);
+	}
+	if (input.GetKey(KeyCode::K) && goMesh != NULL) {
+		goMesh->Rotate(0, 100 * Time::deltaTime, 0);
+	}
+	else if (input.GetKey(KeyCode::L) && goMesh != NULL) {
+		goMesh->Rotate(0, -100 * Time::deltaTime, 0);
+	}
+	//TownMovement
+	if (input.GetKey(KeyCode::I) && goMesh2 != NULL) {
+		goMesh2->Rotate(0, 25 * Time::deltaTime, 0);
+	}
+	else if (input.GetKey(KeyCode::O) && goMesh2 != NULL) {
+		goMesh2->Rotate(0, -25 * Time::deltaTime, 0);
 	}
 	camera->Update();
 	return true;

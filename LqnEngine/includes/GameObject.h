@@ -27,6 +27,8 @@ public:
 	D3DXVECTOR3* GetGameObjectMinBounds();
 	D3DXMATRIX* GetWorldMatrix();
 	void SetBSPPlanes(vector<BSPPlane*> BSP_Planes);
+	vector<NodeWithChildren*> GetChilds();
+	GameObject* GetChildByName(string name);
 
 protected:
 	Transform transform;

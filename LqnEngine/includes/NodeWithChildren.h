@@ -154,12 +154,12 @@ public:
 	}
 
 	void ApplyChangesToWorldMatrix() {
-		D3DXMatrixTransformation(localMatrix, NULL, NULL, localScale, NULL, D3DXQuaternionRotationYawPitchRoll(localRotationQuaternion, localRotation->y, localRotation->x, localRotation->z), localPosition);
+		D3DXMatrixTransformation(localMatrix, NULL, NULL, localScale, NULL, D3DXQuaternionRotationYawPitchRoll(localRotationQuaternion, localRotation->z, localRotation->y, localRotation->x), localPosition);
 		worldMatrix = CalculateWorldMatrixBasedOnParent();
 		D3DXMatrixDecompose(scale, rotationQuaternion, position, worldMatrix);
 	}
 	void ApplyChangesToLocalMatrix() {
-		D3DXMatrixTransformation(worldMatrix, NULL, NULL, scale, NULL, D3DXQuaternionRotationYawPitchRoll(rotationQuaternion, rotation->y, rotation->x, rotation->z), position);
+		D3DXMatrixTransformation(worldMatrix, NULL, NULL, scale, NULL, D3DXQuaternionRotationYawPitchRoll(rotationQuaternion, rotation->z, rotation->y, rotation->x), position);
 		localMatrix = CalculateLocalMatrixBasedOnParent();
 		D3DXMatrixDecompose(localScale, localRotationQuaternion, localPosition, localMatrix);
 

@@ -4,7 +4,7 @@
 
 GameObject::GameObject(Graphics * graphics) :NodeWithChildren(graphics) {
 	localMatrix = D3DXMatrixTransformation(localMatrix, NULL, NULL, localScale, NULL,
-		D3DXQuaternionRotationYawPitchRoll(localRotationQuaternion, localRotation->y, localRotation->x, localRotation->z),
+		D3DXQuaternionRotationYawPitchRoll(localRotationQuaternion, localRotation->z, localRotation->y, localRotation->x),
 		localPosition);
 	worldMatrix = CalculateWorldMatrixBasedOnParent();
 	D3DXMatrixDecompose(scale, rotationQuaternion, position, worldMatrix);
@@ -20,7 +20,7 @@ void GameObject::Update() {
 	}
 
 	localMatrix = D3DXMatrixTransformation(localMatrix, NULL, NULL, localScale, NULL,
-		D3DXQuaternionRotationYawPitchRoll(localRotationQuaternion, localRotation->y, localRotation->x, localRotation->z),
+		D3DXQuaternionRotationYawPitchRoll(localRotationQuaternion, localRotation->z, localRotation->y, localRotation->x),
 		localPosition);
 	worldMatrix = CalculateWorldMatrixBasedOnParent();
 	D3DXMatrixDecompose(scale, rotationQuaternion, position, worldMatrix);
@@ -95,14 +95,14 @@ bool GameObject::CheckIsInFrustum(D3DXPLANE* frustumPlane, vector<D3DXVECTOR3*> 
 }
 
 bool GameObject::CheckBSP(vector<BSPPlane*> BSPPlanes, vector<int> cameraBSPRelationWithPlane, vector<D3DXVECTOR3*> m_vertices) {
-	float const drawTolerability = 1.0f;
+	float const drawTolerability = 0.1f;
 	for (size_t i = 0; i < BSPPlanes.size(); i++)
 	{
 		int vertexOut = 0;
 		for (size_t j = 0; j < m_vertices.size(); j++)
 		{
-			if ((cameraBSPRelationWithPlane[i] > 0 && D3DXPlaneDotCoord(&BSPPlanes[i]->GetPlane(), m_vertices[j]) < -drawTolerability) ||
-				(cameraBSPRelationWithPlane[i] < 0 && D3DXPlaneDotCoord(&BSPPlanes[i]->GetPlane(), m_vertices[j]) > drawTolerability)) {
+			if ((cameraBSPRelationWithPlane[i] >= 0 && D3DXPlaneDotCoord(&BSPPlanes[i]->GetPlane(), m_vertices[j]) <= -drawTolerability) ||
+				(cameraBSPRelationWithPlane[i] <= 0 && D3DXPlaneDotCoord(&BSPPlanes[i]->GetPlane(), m_vertices[j]) >= drawTolerability)) {
 				vertexOut++;
 			}
 		}
@@ -135,6 +135,18 @@ Component* GameObject::GetComponent()
 	return NULL;
 }
 
+vector<NodeWithChildren*> GameObject::GetChilds() {
+	return childrens;
+}
+GameObject* GameObject::GetChildByName(string name) {
+	for (size_t i = 0; i < childrens.size(); i++)
+	{
+		if (childrens[i]->GetName() == name) {
+			return (GameObject*)childrens[i];
+		}
+	}
+	return NULL;
+}
 bool GameObject::RemoveComponent(Node* componentToRemove) { return true; }
 
 void GameObject::SetBSPPlanes(vector<BSPPlane*> BSP_Planes) {
