@@ -1,8 +1,8 @@
 # lqnengine
 
-Hello! This engine was created on my study in Image Campus, Argentina.
+Hello! This engine was created during my studies on Image Campus, Argentina.
 
-It was made using C++ and DirectX9.0c
+C++ and DirectX9.0c
 
 Support:
   -3D Models and Scenes, using AssImp.
@@ -15,4 +15,4 @@ Support:
   -Sprites
   -Input
   
-If I can help anyway to understand something or you need help on your own engine, just send me a message.
+If I can help anyway to understand something or you need help on your own engine, just send me a message!
