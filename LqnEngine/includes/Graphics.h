@@ -2,16 +2,20 @@
 #define GRAPHICS_H
 using namespace std;
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <D3D9Types.h>
+//#include <d3d9.h>
+//#include <d3dx9.h>
+//#include <D3D9Types.h>
+
+//#include <d3d11.h>
+
+
 #include <Windows.h>
-#include "ImportExport.h"
-#include "Vertex.h"
-#include "VertexUV.h"
-#include "VertexBufferManager.h"
-#include "Texture.h"
-#include "LogFile.h"
+//#include "ImportExport.h"
+//#include "Vertex.h"
+//#include "VertexUV.h"
+//#include "VertexBufferManager.h"
+//#include "Texture.h"
+//#include "LogFile.h"
 #include <vector>
 
 #pragma comment (lib,"d3d9.lib")
@@ -35,14 +39,16 @@ public:
 	void Begin();
 	void End();
 	void Present();
-	void Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount);
-	void Draw3D(VertexUV* vertex, int* index, int vertexCount, int indexCount, _D3DPRIMITIVETYPE primitive);
-	void DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount);
-	IDirect3DTexture9* LoadTexture(LPCWSTR texturePath);
-	void BindTexture(Texture* textureToBind);
-	void ReleaseTexture(Texture* textureToUnload);
-	void SetViewTransform(D3DXMATRIX * viewTransform);
-	void SetProjectionMatrix(D3DXMATRIX * projectionMatrix);
+
+
+	//void Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount);
+	//void Draw3D(VertexUV* vertex, int* index, int vertexCount, int indexCount, _D3DPRIMITIVETYPE primitive);
+	//void DrawSprite(VertexUV* vertexUV, _D3DPRIMITIVETYPE primitive, float vertexCount);
+	//IDirect3DTexture9* LoadTexture(LPCWSTR texturePath);
+	//void BindTexture(Texture* textureToBind);
+	//void ReleaseTexture(Texture* textureToUnload);
+	//void SetViewTransform(D3DXMATRIX * viewTransform);
+	//void SetProjectionMatrix(D3DXMATRIX * projectionMatrix);
 };
 
 #endif

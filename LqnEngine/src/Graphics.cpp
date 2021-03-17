@@ -206,6 +206,9 @@ void Graphics::Shutdown() {
 	if (pD3D != NULL)
 		pD3D->Release();
 }
+
+/*
+
 //Draw 2D Object
 void Graphics::Draw2D(Vertex* vertex, _D3DPRIMITIVETYPE primitive, float vertexCount) {
 	vertexManager.Bind();
@@ -263,4 +266,4 @@ void Graphics::SetViewTransform(D3DXMATRIX * viewTransform) {
 
 void Graphics::SetProjectionMatrix(D3DXMATRIX * projectionMatrix) {
 	pd3dDevice->SetTransform(D3DTS_PROJECTION, projectionMatrix);
-}
+}*/
