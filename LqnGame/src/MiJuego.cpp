@@ -1,4 +1,5 @@
 #include "..\includes\MiJuego.h"
+/*
 bool MiJuego::OnInit() {
 
 	camera = new Camera(&graphics, 60, 0.1f, 100.0f);
@@ -30,7 +31,7 @@ bool MiJuego::OnInit() {
 	goMesh4 = goMesh3->GetChildByName("CuboMovible_Cube");
 
 	//2D game will be out until culling support it
-	/*
+	/ *
 	goQuad = new GameObject(&graphics);
 	camera->AddChildren(goQuad);
 	Quad * quad = new Quad(&graphics);
@@ -119,7 +120,7 @@ bool MiJuego::OnInit() {
 	quad2->gameObject->yPos = 50;
 	quad2->gameObject->zPos = 100;
 	goQuad->AddChildren(goQuad2);
-	*/
+	* /
 
 
 
@@ -175,7 +176,7 @@ bool MiJuego::OnUpdate() {
 }
 void MiJuego::OnDraw() {
 	camera->Draw();
-}
+}*/
 bool MiJuego::OnShutDown() {
 	return true;
 }

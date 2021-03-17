@@ -1,5 +1,8 @@
 #include "..\includes\Graphics.h"
 
+
+#pragma comment (lib,"d3d11.lib")
+
 bool Graphics::Initialize(HWND wndHandle, int screenWidth, int screenHeight) {
 	DXGI_SWAP_CHAIN_DESC sd = {};
 	sd.BufferDesc.Width = screenWidth;
@@ -33,6 +36,12 @@ bool Graphics::Initialize(HWND wndHandle, int screenWidth, int screenHeight) {
 	nullptr,
 	&pContext);
 
+	ID3D11Resource* pBackBuffer = nullptr;
+
+	pSwap->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBackBuffer));
+	pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pBackBufferTarget);
+
+	pBackBuffer->Release();
 	/*
 	if (!vertexManager.Create(pd3dDevice, true)) {
 		return false;
@@ -45,20 +54,27 @@ bool Graphics::Initialize(HWND wndHandle, int screenWidth, int screenHeight) {
 
 void Graphics::Present() {
 	// Present the back buffer contents to the display 
-	pd3dDevice->Present( NULL, NULL, NULL, NULL ); 
+	pSwap->Present(1u, 0u);
+	//pd3dDevice->Present( NULL, NULL, NULL, NULL ); 
 }
 
 void Graphics::Clear() {
 	// Check to make sure you have a valid Direct3D device
-	if (NULL == pd3dDevice)
+	if (NULL == pSwap)
 		return;
+
+	const float color[4] = {255,255,255,1};
+	pContext->ClearRenderTargetView(pBackBufferTarget, color);
+	//pSwap->GetBuffer
 	// Clear the back buffer to a black color
-	pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-		D3DCOLOR_XRGB(81, 81, 81), 1.0f, 0);
+	//pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
+	//	D3DCOLOR_XRGB(81, 81, 81), 1.0f, 0);
 }
 
 bool Graphics::SetupScene()
 {
+/*
+
 	HRESULT hRes;
 	// Obtengo el viewport
 	hRes = pd3dDevice->GetViewport(&viewport);
@@ -185,26 +201,33 @@ bool Graphics::SetupScene()
 	//pd3dDevice->SetRenderState(D3DRS_SPECULARENABLE, FALSE);
 	// Deshabilito el stencil
 	//pd3dDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+*/
 	return true;
 }
 
 
-void Graphics::Begin() {
-	pd3dDevice->BeginScene();
+void Graphics::Begin() 
+{
+	//pd3dDevice->BeginScene();
 }
 
-void Graphics::End() {
-	pd3dDevice->EndScene();
+void Graphics::End() 
+{
+	//pd3dDevice->EndScene();
 }
 
-void Graphics::Shutdown() {
+void Graphics::Shutdown() 
+{
 	// Release the device and the Direct3D object 
-	vertexManager.Release();
-	textureVertexManager.Release();
-	if (pd3dDevice != NULL)
-		pd3dDevice->Release();
-	if (pD3D != NULL)
-		pD3D->Release();
+	//vertexManager.Release();
+	//textureVertexManager.Release();
+
+	if (pContext != NULL)
+		pContext->Release();
+	if (pSwap != NULL)
+		pSwap->Release();
+	if (pDevice != NULL)
+		pDevice->Release();
 }
 
 /*

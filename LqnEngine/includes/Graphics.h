@@ -18,14 +18,13 @@ using namespace std;
 //#include "LogFile.h"
 #include <vector>
 
-#pragma comment (lib,"d3d9.lib")
-#pragma comment (lib,"d3dx9.lib")
 
 class LQN_API Graphics {
 public:
 	ID3D11Device* pDevice = nullptr;
 	IDXGISwapChain* pSwap = nullptr;
 	ID3D11DeviceContext* pContext = nullptr;
+	ID3D11RenderTargetView* pBackBufferTarget = nullptr;
 
 	//VertexBufferManager<Vertex, Vertex::fvf> vertexManager;
 	//VertexBufferManager<VertexUV, VertexUV::fvf> textureVertexManager;
