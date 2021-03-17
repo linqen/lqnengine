@@ -6,11 +6,11 @@ using namespace std;
 //#include <d3dx9.h>
 //#include <D3D9Types.h>
 
-//#include <d3d11.h>
+#include <d3d11.h>
 
 
 #include <Windows.h>
-//#include "ImportExport.h"
+#include "ImportExport.h"
 //#include "Vertex.h"
 //#include "VertexUV.h"
 //#include "VertexBufferManager.h"
@@ -23,14 +23,15 @@ using namespace std;
 
 class LQN_API Graphics {
 public:
-	LPDIRECT3D9 pD3D; // the Direct3d object
-	LPDIRECT3DDEVICE9 pd3dDevice; // the Direct3d Device
-	D3DVIEWPORT9 viewport;
-	VertexBufferManager<Vertex, Vertex::fvf> vertexManager;
-	VertexBufferManager<VertexUV, VertexUV::fvf> textureVertexManager;
-	Texture* lastTexture;
-	D3DXMATRIX d3dmat;
-	D3DLIGHT9 d3dLight;
+	ID3D11Device* pDevice = nullptr;
+	IDXGISwapChain* pSwap = nullptr;
+	ID3D11DeviceContext* pContext = nullptr;
+
+	//VertexBufferManager<Vertex, Vertex::fvf> vertexManager;
+	//VertexBufferManager<VertexUV, VertexUV::fvf> textureVertexManager;
+	//Texture* lastTexture;
+	//D3DXMATRIX d3dmat;
+	//D3DLIGHT9 d3dLight;
 
 	bool Initialize(HWND wndHandle, int screenWidth, int screenHeight);
 	bool SetupScene();

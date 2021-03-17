@@ -19,53 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\BSPPlane.cpp" />
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\CollisionManager.cpp" />
-    <ClCompile Include="src\Entity2D.cpp" />
-    <ClCompile Include="src\Entity3D.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
-    <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\LogFile.cpp" />
-    <ClCompile Include="src\ModelImporter.cpp" />
-    <ClCompile Include="src\ObjImporter.cpp" />
-    <ClCompile Include="src\Time.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="includes\BSPPlane.h" />
-    <ClInclude Include="includes\Camera.h" />
-    <ClInclude Include="includes\CameraMovement.h" />
-    <ClInclude Include="includes\CollisionManager.h" />
-    <ClInclude Include="includes\Component.h" />
-    <ClInclude Include="includes\Entity.h" />
-    <ClInclude Include="includes\Entity2D.h" />
-    <ClInclude Include="includes\Entity3D.h" />
     <ClInclude Include="includes\Game.h" />
-    <ClInclude Include="includes\GameObject.h" />
     <ClInclude Include="includes\Graphics.h" />
     <ClInclude Include="includes\ImportExport.h" />
-    <ClInclude Include="includes\Input.h" />
-    <ClInclude Include="includes\KeyCode.h" />
     <ClInclude Include="includes\LogFile.h" />
-    <ClInclude Include="includes\Mesh.h" />
-    <ClInclude Include="includes\ModelImporter.h" />
-    <ClInclude Include="includes\Node.h" />
-    <ClInclude Include="includes\NodeWithChildren.h" />
-    <ClInclude Include="includes\ObjImporter.h" />
-    <ClInclude Include="includes\Quad.h" />
-    <ClInclude Include="includes\Sprite.h" />
-    <ClInclude Include="includes\SpriteAnimation.h" />
-    <ClInclude Include="includes\Texture.h" />
-    <ClInclude Include="includes\TextureManager.h" />
-    <ClInclude Include="includes\Tile.h" />
-    <ClInclude Include="includes\TileMap.h" />
-    <ClInclude Include="includes\Time.h" />
-    <ClInclude Include="includes\Vertex.h" />
-    <ClInclude Include="includes\VertexBufferManager.h" />
-    <ClInclude Include="includes\VertexUV.h" />
     <ClInclude Include="includes\Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -122,11 +85,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>.\assimp-4.1.0\lib\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(DXSDK_DIR)LIB\x86;</LibraryPath>
-    <IncludePath>.\assimp-4.1.0\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(DXSDK_DIR)Include\</IncludePath>
+    <LibraryPath>.\assimp-4.1.0\lib\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;</LibraryPath>
+    <IncludePath>.\assimp-4.1.0\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>.\assimp-4.1.0\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>.\assimp-4.1.0\lib\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -147,7 +112,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>d3d9.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -160,6 +125,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

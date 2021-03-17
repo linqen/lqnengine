@@ -1,45 +1,45 @@
 #include "..\includes\Graphics.h"
 
 bool Graphics::Initialize(HWND wndHandle, int screenWidth, int screenHeight) {
-	pD3D = NULL;
-	pd3dDevice = NULL;
+	DXGI_SWAP_CHAIN_DESC sd = {};
+	sd.BufferDesc.Width = screenWidth;
+	sd.BufferDesc.Height = screenHeight;
+	sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+	sd.BufferDesc.RefreshRate.Numerator = 0;
+	sd.BufferDesc.RefreshRate.Denominator = 0;
+	sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+	sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+	sd.SampleDesc.Count = 1;
+	sd.SampleDesc.Quality = 0;
+	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	sd.BufferCount = 1;
+	sd.OutputWindow = wndHandle;
+	sd.Windowed = TRUE;
+	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+	sd.Flags = 0;
 
-	// Create the DirectX object
-	if (NULL == (pD3D = Direct3DCreate9(D3D_SDK_VERSION)))
-	{
-		return false;
-	}
-	// Fill the presentation parameters structure
-	D3DPRESENT_PARAMETERS d3dpp;
-	ZeroMemory(&d3dpp, sizeof(d3dpp));
-	d3dpp.Windowed = TRUE;
-	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
-	d3dpp.SwapEffect = D3DSWAPEFFECT_COPY;
-	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-	d3dpp.BackBufferCount = 1;
-	d3dpp.BackBufferHeight = screenHeight;
-	d3dpp.BackBufferWidth = screenWidth;
-	d3dpp.hDeviceWindow = wndHandle;
-	d3dpp.EnableAutoDepthStencil = TRUE;
-	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
-	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
 
-	// Create a default DirectX device 
-	if( FAILED( pD3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, wndHandle, D3DCREATE_HARDWARE_VERTEXPROCESSING, &d3dpp, &pd3dDevice ) ) ) 
-	{ 
-		return false;
-	}
+	D3D11CreateDeviceAndSwapChain(
+	nullptr, 
+	D3D_DRIVER_TYPE_HARDWARE,
+	nullptr,
+	0,
+	nullptr,
+	0,
+	D3D11_SDK_VERSION,
+	&sd,
+	&pSwap,
+	&pDevice,
+	nullptr,
+	&pContext);
 
-	//D3DCAPS9 caps;
-	//pd3dDevice->GetDeviceCaps(&caps);
-	//DWORD maxLights = caps.MaxActiveLights;
-
+	/*
 	if (!vertexManager.Create(pd3dDevice, true)) {
 		return false;
 	}
 	if (!textureVertexManager.Create(pd3dDevice, true)) {
 		return false;
-	}
+	}*/
 	return Graphics::SetupScene();
 }
 

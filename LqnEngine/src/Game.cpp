@@ -1,4 +1,6 @@
 #include "..\includes\Game.h"
+#include "..\includes\LogFile.h"
+
 #define LOGNAME "ErrorLog.txt"
 Game::Game() {
 }
@@ -25,16 +27,18 @@ bool Game::Initialize(HINSTANCE hInstance) {
 		return false;
 	}
 
+	/*
 
 	if (!Time::Initialize()) {
 		LogFile::Write("Can't initialize timer");
 		return false;
-	}
+	}*/
 
 	if (!graphics.Initialize(window.getHwnd(), screenWidth, screenHeight)) {
 		LogFile::Write("Can't load engine");
 		return false;
 	}
+	/*
 
 	if (!textureManager.Create(&graphics)) {
 		LogFile::Write("Can't create texture manager");
@@ -51,7 +55,7 @@ bool Game::Initialize(HINSTANCE hInstance) {
 	if (!modelImporter.Initialize(&graphics, &textureManager)) {
 		LogFile::Write("Can't initialize model Importer");
 		return false;
-	}
+	}*/
 
 	OnInit();
 	return true;
@@ -72,21 +76,21 @@ void Game::Loop() {
 		}
 		else
 		{
-			input.Frame();
+			//input.Frame();
 			done = !OnUpdate();
-			colManager.CheckCollision();
+			//colManager.CheckCollision();
 			graphics.Clear();
 			graphics.Begin();
 			OnDraw();
 			graphics.End();
 			graphics.Present();
-			Time::SetFrameTime();
+			//Time::SetFrameTime();
 		}
 	}
 }
 bool Game::Shutdown() {
 	graphics.Shutdown();
-	input.Shutdown();
+	//input.Shutdown();
 	return true;
 }
 
